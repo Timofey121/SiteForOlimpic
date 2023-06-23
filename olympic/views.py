@@ -1,12 +1,10 @@
-from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
 
-from olympic.forms import LoginUserForm, RegisterForm
+from olympic.forms import LoginUserForm
 from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates
 from olympic.utils import menu, DataMixin, additional_menu
 
@@ -157,34 +155,16 @@ def Notification(request):
                    })
 
 
-class RegisterUser(DataMixin, CreateView):
-    form_class = RegisterForm
-    template_name = 'olympic/register.html'
-    success_url = reverse_lazy('login')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Регистрация")
-        return dict(list(context.items()) + list(c_def.items()))
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('home')
+def RegisterUser(request):
+    return render(request, 'olympic/login1.html',
+                  {"menu": menu,
+                   "additional_menu": additional_menu,
+                   'title': 'Регистрация',
+                   })
 
 
-class LoginUser(DataMixin, LoginView):
-    form_class = LoginUserForm
-    template_name = 'olympic/login.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Авторизация")
-        return dict(list(context.items()) + list(c_def.items()))
-
-    # Перенаправление на страницу после удачной авторизации
-    def get_success_url(self):
-        return reverse_lazy('home')
+def LoginUser(request):
+    pass
 
 
 def logout_user(request):
