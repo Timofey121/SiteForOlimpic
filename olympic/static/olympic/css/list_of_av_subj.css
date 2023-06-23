@@ -1,0 +1,1232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+html, body {
+    overflow-x: hidden;
+}
+body {
+    background-image: url(../images/t1.png);
+
+}
+
+.container {
+    max-width: 1660px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nav {
+    background: #F4F3F4;
+    border-radius: 0px 0px 50px 50px;
+    height: 130px;
+    position: absolute;
+    width: 100%;
+}
+.nav .container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.navigation_links {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+
+}
+.navigation_links a {
+    text-decoration: none;
+    color: #2A222BCC;
+}
+.nav_link {
+    margin-right: 40px;
+}
+.nav_link:last-child {
+    margin-right: 0;
+}
+
+.navigation_links_mobile, .nav_mobile, .mobile_nav {
+    display: none;
+}
+
+.logo_cont {
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    color: #4D4D4D;
+}
+
+
+.logo_cont svg {
+    height: 80px;
+}
+.logo_title {
+    font-family: 'Irish Grover', cursive;
+    font-weight: 400;
+    font-size: 34px;
+    margin-left: 14px;
+}
+.account_cont {
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    position: relative;
+}
+.connect_container {
+    display: none;
+    opacity: 0;
+}
+.connect_container_active {
+    display: block;
+    position: absolute;
+    width: 283px;
+    bottom: -112px;
+    padding: 11px 13px;
+    left: -170px;
+    z-index: 1000;
+    border: 1px solid hsla(0, 0%, 80%, 1);
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 16px;
+    color: rgba(42, 34, 43, 0.80);
+    opacity: 1;
+    animation: opa .3s ease-in;
+}
+@keyframes opa {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    5% {
+        display: block;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.connect_container::before, .connect_container::after {
+    content: '';
+    position: absolute;
+    left: 185px; top: -20px;
+    border: 10px solid transparent;
+    border-bottom: 10px solid hsla(0, 0%, 80%, 1);
+    transition: all .3s ease-in;
+
+}
+.connect_container::after {
+    border-bottom: 10px solid white;
+    top: -18px;
+}
+.connect_button {
+    height: 30px;
+    width: 150px;
+    color: #fff;
+    background-color: #EE3035;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-top: 7px;
+}
+.account_cont svg {
+    margin-right: 30px;
+    height: 51px;
+    width: 51px;
+}
+.account_button {
+    border: 0;
+    background-color: #EE3035;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 10px;
+    line-height: 27px;
+    padding: 12px 26px;
+}
+.icon_menu {
+    display: none;
+}
+.li_of_av_title {
+    padding-top: 210px;
+    font-size: 38px;
+    font-weight: 700;
+    color: #2A222B;
+}
+.li_of_av_subtitle {
+    margin-top: 4px;
+    font-size: 20px;
+    font-weight: 400;
+    color: hsla(293, 12%, 15%, 0.8);
+}
+.list_of_available_subj {
+    margin-top: 40px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px 20px;
+    margin-bottom: 50px;
+    align-content: center;
+}
+.list_of_available_subj a {
+    text-decoration: none;
+}
+.subject_card {
+    position: relative;
+    width: calc((100%/6)-10px);
+    height: 100px;
+    border-radius: 20px;
+    background-color: #fff;
+    border: 1px solid hsla(0, 0%, 47%, 0.5);
+    transition: all .3s ease-in;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.subject_card:hover {
+    border: 0;
+    background-color: #EE3035;
+    color: #fff;
+}
+.white_dot {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+.subject_card img {
+    width: 38px;
+    height: 38px;
+    margin-right: 12px;
+}
+.sub_card_txt {
+    height: 54px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sub_card_title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2A222B;
+    font-family: 'Raleway', sans-serif;
+    transition: all .3s ease-in;
+}
+.subject_card:hover .sub_card_title {
+    color: #fff;
+}
+.sub_card_class {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400px;
+    color: hsla(299, 11%, 15%, 0.7);
+    transition: all .3s ease-in;
+}
+.subject_card:hover .sub_card_class {
+    color: hsla(0, 0%, 100%, 0.8);
+}
+.li_of_av_line {
+    width: 100%;
+    height: 1px;
+    background-color: hsla(0, 0%, 47%, 0.3);
+}
+
+.show_olympiads {
+    padding-top: 40px;
+}
+
+.show_olimp label {
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #777777;
+}
+.show_olimp button {
+    border: 0;
+    font-size: 18px;
+    font-weight: 400;
+    color: #777777;
+    background-color: inherit;
+    text-decoration: underline;
+    margin-left: 10px;
+}
+.selected_olympiads {
+    margin-top: 70px;
+    margin-bottom: 140px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 20px 20px;
+}
+.olimp_card {
+    width: calc((100%/2)-10px);
+    height: 460px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 14px 0px #2575FC4D;
+    position: relative;
+    overflow: hidden;
+}
+.olimp_card::before {
+    content: "";
+    position: absolute;
+    width: 500%;
+    height: 500%;
+    top: -200%;
+    left: -200%;
+    z-index: -1;
+    background-image: url(../images/cellsheet.png);
+    background-repeat: repeat;
+    transform: rotate(345deg) scale(.3);
+}
+.yellow_dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    right: 40px;
+    top: 40px;
+    background-color: #FFE471;
+}
+.olimp_card_container {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.olimp_card_intro {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.olimp_card_img {
+    width: 38px;
+    height: 38px;
+    margin-right: 20px;
+}
+.olimp_card_intro_txt {
+    width: 690px;
+    display: flex;
+    flex-direction: column;
+}
+.card_olimp_title {
+    font-size: 34px;
+    font-weight: 700;
+    color: #2575FC;
+    text-transform: uppercase;
+}
+
+.olimp_card:nth-child(odd) .card_olimp_title{
+    color: #5D25FC;
+
+}
+
+.olimp_description {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.olimp_subtitle {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 400;
+    color: #2A222B;
+}
+.olimp_class {
+    font-size: 20px;
+    font-weight: 600;
+    color: hsla(0, 0%, 30%, 0.8);
+}
+.olimp_desc {
+    margin-top: 40px;
+}
+.description_criterion {
+    display: inline-block;
+    width: 292px;
+    color: hsla(0, 0%, 30%, 0.8);
+    font-size: 24px;
+    font-weight: 400;
+
+}
+.information_about_the_olimp {
+    color: #4C4C4C;
+    font-size: 24px;
+    font-weight: 600;
+}
+.classification_of_the_olympiad {
+    font-size: 24px;
+    font-weight: 400;
+    color: #4C4C4C;
+    margin-top: 53px;
+}
+.classification_of_the_olympiad .classificaiton_olimp_selection {
+    font-weight: 700;
+}
+.olimp_card_button_cont {
+    margin-top: 45px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.olimp_card_button_cont button {
+    height: 56px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: #FFFFFF;
+    width: 19vw;
+    max-width: 362px;
+    border-radius: 20px;
+    background-color: #EE3035;
+    border: none;
+    transition: all .3s ease-in;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.olimp_card_button_cont button:hover {
+    border: 1px solid hsla(0, 0%, 47%, 0.2);
+    background-color: #FFFFFF;
+    color: #2A222B;
+}
+
+
+
+
+.footer {
+    background: #F4F3F4;
+    border-radius: 50px 50px 0px 0px;
+}
+.footer a {
+    text-decoration: none;
+}
+.footer_inner {
+    display: flex;
+    flex-direction: row;
+    padding-top: 60px;
+}
+.footer_txt {
+    display: flex;
+    flex-direction: column;
+}
+.footer_inner_mobile {
+    display: none;
+}
+.footer_qr {
+    margin-right: 65px;
+}
+.footer_qr img {
+    width: 215px;
+    height: 215px;
+}
+
+.footer_columns, .footer_columns_1, .footer_columns_2 {
+    display: flex;
+    flex-direction: row;
+}
+.footer_columns {
+    justify-content: space-between;
+    color: #2A222B;
+    width: 100%;
+}
+.footer_columns_1 {
+    width: 840px;
+}
+.footer_columns_1 .footer_column:first-child {
+    margin-right: 250px;
+}
+.footer_columns_2 .footer_column:first-child {
+    margin-right: 150px;
+}
+.footer_title {
+    color: #777777;
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 22px ;
+}
+.footer_link {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 400;
+}
+.footer_link a {
+    text-decoration: none;
+    color: #2A222B;
+}
+.footer_links .footer_link {
+    margin-bottom: 10px;
+}
+.footer_links .footer_link:last-child {
+    margin-bottom: 0;
+}
+.footer_links img:first-child {
+    margin-right: 20px;
+}
+.footer_links img {
+    height: 40px;
+    width: 40px;
+}
+.footer_line {
+    margin-top: 40px;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(119, 119, 119, 0.2);
+}
+.end {
+    display: block;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #2A222B;
+}
+@media screen and (max-width: 1700px) {
+
+    .nav_link {
+    margin-right: 30px;
+}
+.logo_cont svg {
+    height: 60px;
+}
+.logo_title {
+    margin-left: 5px;
+    font-size: 32px;
+}
+.account_cont svg {
+    margin-right: 13px;
+}
+.account_button {
+    padding: 10px 24px;
+    font-size: 18px;
+}
+.logo_cont{
+    margin-right: 10px;
+}
+.account_cont {
+    margin-left: 5px;
+}
+
+
+
+
+
+    .sub_card_title {
+        font-size: 16px;
+    }
+    .sub_card_class {
+        font-size: 14px;
+    }
+        .subject_card {
+    padding-left: 15px;
+    }
+    .olimp_card_button_cont button {
+        font-size: 18px;
+    }
+    .description_criterion {
+        font-size: 22px;
+        width: 240px;
+    }
+    .information_about_the_olimp {
+        font-size: 22px;
+    }
+    .classification_of_the_olympiad {
+        font-size: 22px;
+    }
+    .selected_olympiads {
+        margin-bottom: 100px;
+    }
+
+
+    .footer_inner {
+        padding-top: 50px;
+    }
+    .footer_qr {
+        margin-right: 50px;
+    }
+
+    .footer_txt {
+        width: 100%;
+    }
+    .footer_columns {
+        justify-content: start;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .footer_columns_1 {
+        min-width: 50%;
+        width: auto;
+    }
+    .footer_column {
+        min-width: 202px;
+        width: 20vw;
+        margin-right: 20px;
+    }
+    .footer_columns_2 {
+        width: auto;
+        justify-content: start;
+    }
+    .footer_columns_1 .footer_column:first-child {
+        margin-right: 20px;
+        width: 18vw;
+    }
+    .footer_columns_1 .footer_column:last-child {
+        margin-right: 20px;
+        width: 22vw;
+    }
+    .footer_columns_2 .footer_column:first-child {
+        margin-right:0;
+        width: 18vw;
+    }
+    .footer_columns_2 .footer_column:last-child {
+        width: auto;
+        max-width: 150px;
+    }
+
+}
+@media screen and (max-width: 1420px) {
+    .nav {
+        height: 100px;
+    }
+    .navigation_links {
+        font-size: 16px;
+    }
+
+    .logo_cont svg {
+        height: 50px;
+        width: 50px;
+    }
+    .logo_title {
+        margin-left: 5px;
+        font-size: 28px;
+    }
+    .account_button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+
+
+    .li_of_av_title {
+        padding-top: 140px;
+        font-size: 34px;
+    }
+    .li_of_av_subtitle {
+        font-size: 18px;
+    }
+    .list_of_available_subj {
+        grid-template-columns: repeat(5, 1fr);
+        margin-bottom: 20px;
+    }
+    .show_olympiads {
+        padding-top: 20px;
+    }
+    .show_olimp label {
+        font-size: 16px;
+    }
+    .show_olimp button {
+        font-size: 16px;
+    }
+    .selected_olympiads {
+        margin-top: 20px;
+        margin-bottom: 80px;
+    }
+
+    .subject_card {
+        padding-left: 12px;
+    }
+    .subject_card img {
+        width: 34px;
+        height: 34px;
+        margin-right: 12px;
+    }
+    .description_criterion {
+        font-size: 20px;
+        width: 200px;
+    }
+    .information_about_the_olimp {
+        font-size: 20px;
+    }
+    .classification_of_the_olympiad {
+        font-size: 20px;
+    }
+    .olimp_subtitle {
+    font-size: 16px;
+    }
+    .olimp_class {
+        font-size: 18px;
+    }
+    .olimp_card_button_cont {
+        justify-content: space-around;
+    }
+    .olimp_card_button_cont button {
+        width: 18vw;
+    }
+
+    .footer_qr {
+        display: flex;
+        align-items: center;
+    }
+
+    .footer_qr img {
+        height: 200px;
+        width: 200px;
+    }
+    .footer_title {
+        font-size: 18px;
+    }
+    .footer_link {
+        font-size: 16px;
+    }
+
+}
+
+@media screen and (max-width: 1200px) {
+    .list_of_available_subj {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .li_of_av_title {
+        padding-top: 120px;
+    }
+    .subject_card {
+        width: calc((100%/4)-10px);
+    }
+    .olimp_desc_line {
+        display: flex;
+        flex-direction: column;
+    }
+    .olimp_subtitle {
+    font-size: 14px;
+    }
+    .olimp_class {
+        font-size: 14px;
+    }
+    .olimp_card_button_cont button {
+        width: 17vw;
+    }
+    .nav {
+        height: 80px;
+        border-radius: 0 0 20px 20px;
+        z-index: 100;
+        transition: all .3s ease-in;
+    }
+    .nav_active {
+        border-radius: 0;
+    }
+    .logo_cont svg {
+        height: 60px;
+    }
+    .logo_title {
+        font-size: 34px;
+        margin-left: 10px;
+    }
+    .navigation_links, .account_cont {
+        display: none;
+    }
+
+    .icon_menu {
+        display: block;
+    }
+    .mobile_nav {
+    display: none;
+  }
+    .icon_menu {
+    position: relative;
+    height: 25px;
+    width: 30px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .icon_menu span {
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: #2A222B;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  .icon_menu .center_span_icon {
+    top: 11px;
+  }
+  .icon_menu span:last-child {
+    top: 22px;
+  }
+  .mobile_nav:checked ~ .icon_menu {
+    overflow: hidden;
+  }
+  .mobile_nav:checked ~ .icon_menu span:first-child {
+    top: 11px;
+    transform: rotate(135deg);
+  }
+  .mobile_nav:checked ~ .icon_menu span:last-child {
+    top: 11px;
+    transform: rotate(-135deg);
+  }
+  .mobile_nav:checked ~ .icon_menu .center_span_icon {
+    display: none;
+  }
+.nav_mobile {
+    display: block;
+    position: absolute;
+    top: -146px;
+    left: 0;
+    right: 0;
+    background: #F4F3F4;
+    z-index: 1000;
+    height: auto;
+    padding-top: 5px;
+    transition: all .3s ease-in;
+    z-index: 1;
+    border-radius: 0 0 20px 20px;
+    border-bottom: 1px #2A222B solid;
+}
+.nav_mobile_active {
+    top: 80px;
+}
+.account_cont_mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+.account_button_mobile {
+    border: 0;
+    background-color: #EE3035;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 10px;
+    line-height: 20px;
+    padding: 7px 21px;
+    margin-left: 10px;
+}
+.connect_container_active {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 8px auto 0;
+    opacity: 1;
+    animation: opa .3s ease-in;
+}
+.connect_container::before, .connect_container::after {
+    left: 40px;
+}
+.navigation_links_mobile {
+    display: block;
+    list-style-type: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+}
+.nav_link_mobile {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+}
+.nav_link_mobile a {
+    text-decoration: none;
+    color: #2A222BCC;
+}
+
+.footer_line {
+    width: 100%;
+    margin: 25px 0 5px;
+}
+.footer_column {
+    min-width: 0;
+}
+
+.footer_qr {
+    margin-right: 20px;
+}
+.footer_columns_1 .footer_column:first-child {
+    margin-right: 10px;
+}
+.footer_columns_1 .footer_column:last-child {
+    margin-right: 10px;
+
+}
+.footer_columns_2 .footer_column:first-child {
+    margin-right:  10px;
+}
+
+.footer_columns_2 .footer_column:last-child {
+    width: auto;
+    min-width: 100px;
+    margin-right: 0;
+}
+.footer_columns_2 .footer_column:last-child img:last-of-type {
+    margin-right: 0;
+}
+.social {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+}
+        /* Portrait tablets and small desktops */
+
+@media screen and (max-width: 1024px) {
+    .list_of_available_subj {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .subject_card {
+        width: calc((100%/3)-10px);
+    }
+        .olimp_desc_line {
+        display: flex;
+        flex-direction: column;
+    }
+    .olimp_subtitle {
+    font-size: 14px;
+    }
+    .olimp_class {
+        font-size: 14px;
+    }
+    .olimp_card_button_cont button {
+        width: 17vw;
+    }
+
+
+
+
+    .footer {
+        border-radius: 20px 20px 0px 0px;
+    }
+    .footer_inner_mobile {
+        display: flex;
+        padding-top: 30px;
+        flex-direction: column;
+    }
+    .footer_inner {
+        display: none;
+    }
+    .footer_qr {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+    }
+    .footer_qr_cont, .footer_qr .footer_column {
+        width: 50%;
+    }
+    .footer_qr .footer_column {
+        margin-top: 5px;
+    }
+    .footer_columns, .footer_columns_1, .footer_columns_2 {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer_column {
+        width: 100%;
+        margin: 0;
+    }
+    .footer_link {
+        width: 100%;
+        font-size: 18px;
+    }
+    .footer_title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .footer_txt {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+
+    .footer_mobile_links_col_1, .footer_mobile_links_col_2 {
+        width: 50%;
+    }
+    .footer_mobile_links_col_2 .footer_column:last-child {
+        margin-top: 20px;
+    }
+    .footer_qr_cont {
+        margin-right: 0;
+    }
+    .footer_qr img {
+        height: 150px;
+        width: 150px;
+    }
+
+    .footer_links img {
+        height: 30px;
+        width: 30px;
+    }
+    .social {
+        display: block;
+    }
+    .end {
+        font-size: 14px;
+    }
+
+}
+@media screen and (max-width: 980px) {
+        .selected_olympiads {
+    grid-template-columns: 1fr;
+    }
+    .olimp_card {
+        height: 420px;
+    }
+    .olimp_card_button_cont {
+        justify-content: space-between;
+    }
+    .olimp_card_button_cont button {
+        width: 39vw;
+        max-width: 362px;
+        font-size: 22px;
+    }
+    .olimp_subtitle {
+        font-size: 18px;
+    }
+    .olimp_class {
+        font-size: 20px;
+    }
+    .olimp_desc_line {
+        flex-direction: row;
+    }
+    .description_criterion {
+        font-size: 22px;
+        width: 280px;
+    }
+    .information_about_the_olimp {
+        font-size: 22px;
+    }
+    .classification_of_the_olympiad {
+        font-size: 22px;
+        margin-top: 40px;
+    }
+}
+        /* Landscape phones and portrait tablets */
+@media screen and (max-width: 768px) {
+    .list_of_available_subj {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .subject_card {
+        width: calc((100%/2)-10px);
+    }
+    .olimp_card {
+        height: auto;
+    }
+    .olimp_card_button_cont {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+       .olimp_card_button_cont button {
+        width: 80vw;
+        font-size: 20px;
+    }
+    .olimp_card_button_cont button:first-child {
+        margin-bottom: 10px;
+    }
+    .olimp_desc_line {
+        display: flex;
+        flex-direction: column;
+    }
+    .olimp_subtitle {
+    font-size: 14px;
+    }
+    .olimp_class {
+        font-size: 14px;
+    }
+    .description_criterion {
+        font-size: 20px;
+        width: 200px;
+    }
+    .information_about_the_olimp {
+        font-size: 20px;
+    }
+    .classification_of_the_olympiad {
+        font-size: 20px;
+    }
+    .li_of_av_title {
+        font-size: 30px;
+    }
+    .li_of_av_subtitle {
+        font-size: 18px;
+    }
+    .selected_olympiads {
+        margin-bottom: 30px;
+    }
+    .footer_link {
+        width: 100%;
+        font-size: 16px;
+    }
+    .footer_title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    .footer_qr .footer_column {
+        padding-left: 10px;
+    }
+    .footer_mobile_links_col_2 {
+        padding-left: 10px;
+    }
+}
+        /* Landscape phones and smaller */
+
+@media screen and (max-width: 480px) {
+    .li_of_av_title {
+        font-size: 24px;
+    }
+    .li_of_av_subtitle {
+        font-size: 16px;
+    }
+    .show_olimp label {
+        font-size: 14px;
+    }
+    .show_olimp button {
+        font-size: 14px;
+    }
+    .show_olympiads {
+        padding-top: 20px;
+    }
+    .list_of_available_subj {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 10px;
+        margin-top: 20px;
+    }
+    .subject_card {
+        width: calc((100%/2)-5px);
+    }
+    .subject_card {
+        padding-left: 10px;
+    }
+    .subject_card img {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+    }
+    .sub_card_txt {
+        height: 40px;
+    }
+    .sub_card_title {
+        font-size: 14px;
+    }
+    .sub_card_class {
+        font-size: 12px;
+    }
+    .olimp_card_container {
+    margin-left: 20px;
+    margin-right: 20px;
+    }
+    .yellow_dot {
+        top: 20px;
+        right: 20px;
+    }
+    .olimp_card_intro {
+        padding-top: 20px;
+    }
+    .olimp_card_img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+    .card_olimp_title {
+        font-size: 28px;
+    }
+    .description_criterion {
+        font-size: 16px;
+    }
+    .information_about_the_olimp {
+        font-size: 16px;
+    }
+    .olimp_subtitle {
+        font-size: 12px;
+    }
+    .olimp_class {
+        font-size: 12px;
+    }
+    .olimp_desc {
+        margin-top: 20px;
+    }
+    .classification_of_the_olympiad {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+    .olimp_card_button_cont {
+        margin-top: 20px;
+    }
+    .olimp_card_button_cont button {
+        font-size: 18px;
+        height: 44px;
+        max-width: 280px;
+    }
+    .footer_qr .footer_column {
+        padding-left: 10px;
+    }
+    .footer_mobile_links_col_2 {
+        padding-left: 10px;
+    }
+    .footer_link {
+        width: 100%;
+        font-size: 14px;
+    }
+    .footer_title {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .selection_from_the_list {
+        width: 200px;
+        font-size: 14px;
+    }
+}
+
+.selection_from_the_list {
+    width: 245px;
+    height: 34px;
+    border-radius: 10px;
+    outline: none;
+    padding-left: 12px;
+    border: 1px solid hsla(0, 0%, 47%, 0.3);
+    color: hsla(218, 9%, 20%, 0.7);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.11px;
+    background-color: #FFFFFF;
+}
+
+.selection_from_the_list option {
+    color: hsla(218, 9%, 20%, 0.7);
+}
+
+@media screen and (max-width: 480px) {
+    .olimp_choose_button {
+        margin-left: 0;
+        font-size: 14px;
+        width: 105px;
+    }
+}
+
+.olimp_choose_button {
+    margin-left: 10px;
+    width: 116px;
+    height: 34px;
+    background-color: #008ED5;
+    border-radius: 10px;
+    opacity: .7;
+    border: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.37px;
+    color: #fff;
+    cursor: pointer;
+}
