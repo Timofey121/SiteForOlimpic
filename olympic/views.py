@@ -111,6 +111,7 @@ def Notification(request):
                            'olympiads': search_olympiads,
                            'message': f"Ваш запрос в поиске → {search}",
                            'categories': Subjects.objects.all(),
+                           'text_for_search': search,
                            })
 
         elif 'cancel' in request.POST:
@@ -121,28 +122,29 @@ def Notification(request):
                            'olympiads': Olympiads.objects.all(),
                            'message': '',
                            'categories': Subjects.objects.all(),
+                           'text_for_search': '',
                            })
 
-        elif 'choice' in request.POST:
-            if request.POST['select-action'] == 'connect':
-                for key, val in request.POST.items():
-                    if ('yes_no' in key) and val == 'on':
-                        title = str(key).replace('yes_no_', '')
-                        telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
-                        if not NotificationDates.objects.filter(title=title, telegram_id=telegram_id).exists():
-                            record = Olympiads.objects.get(title=title)
-                            start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
-                                record.site, record.sub, record.rsoch
-                            NotificationDates.objects.create(telegram_id=telegram_id, title=title, start=start,
-                                                             site=site, stage=stage, schedule=schedule,
-                                                             sub=sub, rsoch=rsoch)
-            elif request.POST['select-action'] == 'delete':
-                for key, val in request.POST.items():
-                    if ('yes_no' in key) and val == 'on':
-                        title = str(key).replace('yes_no_', '')
-                        telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
-                        if NotificationDates.objects.filter(title=title, telegram_id=telegram_id).exists():
-                            NotificationDates.objects.get(title=title).delete()
+        # elif 'choice' in request.POST:
+        #     if request.POST['select-action'] == 'connect':
+        #         for key, val in request.POST.items():
+        #             if ('yes_no' in key) and val == 'on':
+        #                 title = str(key).replace('yes_no_', '')
+        #                 telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
+        #                 if not NotificationDates.objects.filter(title=title, telegram_id=telegram_id).exists():
+        #                     record = Olympiads.objects.get(title=title)
+        #                     start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
+        #                         record.site, record.sub, record.rsoch
+        #                     NotificationDates.objects.create(telegram_id=telegram_id, title=title, start=start,
+        #                                                      site=site, stage=stage, schedule=schedule,
+        #                                                      sub=sub, rsoch=rsoch)
+        #     elif request.POST['select-action'] == 'delete':
+        #         for key, val in request.POST.items():
+        #             if ('yes_no' in key) and val == 'on':
+        #                 title = str(key).replace('yes_no_', '')
+        #                 telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
+        #                 if NotificationDates.objects.filter(title=title, telegram_id=telegram_id).exists():
+        #                     NotificationDates.objects.get(title=title).delete()
 
     return render(request, 'olympic/information_about_subjects.html',
                   {"menu": menu,
@@ -151,6 +153,7 @@ def Notification(request):
                    'olympiads': Olympiads.objects.all(),
                    'message': '',
                    'categories': Subjects.objects.all(),
+                   'text_for_search': '',
                    })
 
 
