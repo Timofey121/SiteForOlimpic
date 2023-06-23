@@ -9,8 +9,7 @@ class LoginUserForm(AuthenticationForm):  # наследование от обы
 
 
 class RegisterForm(UserCreationForm):
-    username = forms.CharField(label='Логин', widget=forms.PasswordInput(attrs={'class': 'form-input'}),
-                               max_length=100)
+    username = forms.CharField(label='Логин', widget=forms.TextInput(), max_length=100, initial='')
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))

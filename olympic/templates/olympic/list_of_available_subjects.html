@@ -54,8 +54,8 @@
                 <button class="account_button"> {{ user.username }} | <a style="color: white" href="{% url 'logout' %}">Выйти</a>
                 </button>
             {% else %}
-                <button class="account_button"><a href="{% url 'registration' %}">Регистрация</a> | <a
-                        href="{% url 'login' %}">Войти</a></button>
+                <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> |
+                    <a style="color: white" href="{% url 'login' %}">Войти</a></button>
             {% endif %}
             <div class="connect_container">
                 Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>

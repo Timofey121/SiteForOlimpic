@@ -91,14 +91,24 @@
     </div>
 </div>
 
-<form action="" method="post" class="register_form">
+<form action="{% url 'login' %}" method="post" class="register_form">
+    {% csrf_token %}
+
     <div class="register_title_cont">
         <div class="register_title">
             Регистрация на сайте
         </div>
     </div>
+
+    {#    {% for f in form %}#}
+    {#        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>#}
+    {#        <div class="form-error">{{ f.errors }}</div>#}
+    {#    {% endfor %}#}
+
     <div class="form_cont">
+
         <div class="input_cont">
+            <div class="form-error">{{ form.username.errors }}</div>
             <div class="input_title">
                 Логин
             </div>
@@ -106,12 +116,12 @@
                 <path d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z"
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
-            <input type="text" name="login" id="login_input" placeholder="admin" required>
-            <label for="login_input" class="label_for_input">
-
-            </label>
+            {{ form.username }}
+            <label for="login_input" class="label_for_input"></label>
         </div>
+
         <div class="input_cont">
+            <div class="form-error">{{ form.email.errors }}</div>
             <div class="input_title">
                 E-mail
             </div>
@@ -119,12 +129,12 @@
                 <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19.6 8.25L12.53 12.67C12.21 12.87 11.79 12.87 11.47 12.67L4.4 8.25C4.29973 8.19371 4.21192 8.11766 4.14189 8.02645C4.07186 7.93525 4.02106 7.83078 3.99258 7.71937C3.96409 7.60796 3.9585 7.49194 3.97616 7.37831C3.99381 7.26468 4.03434 7.15581 4.09528 7.0583C4.15623 6.96079 4.23632 6.87666 4.33073 6.811C4.42513 6.74533 4.53187 6.69951 4.6445 6.6763C4.75712 6.65309 4.87328 6.65297 4.98595 6.67595C5.09863 6.69893 5.20546 6.74453 5.3 6.81L12 11L18.7 6.81C18.7945 6.74453 18.9014 6.69893 19.014 6.67595C19.1267 6.65297 19.2429 6.65309 19.3555 6.6763C19.4681 6.69951 19.5749 6.74533 19.6693 6.811C19.7637 6.87666 19.8438 6.96079 19.9047 7.0583C19.9657 7.15581 20.0062 7.26468 20.0238 7.37831C20.0415 7.49194 20.0359 7.60796 20.0074 7.71937C19.9789 7.83078 19.9281 7.93525 19.8581 8.02645C19.7881 8.11766 19.7003 8.19371 19.6 8.25Z"
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
-            <input type="email" name="email" id="email_input" placeholder="youremail@mail.ru" required>
-            <label for="email_input" class="label_for_input">
+            {{ form.email }}
+            <label for="email_input" class="label_for_input"></label>
 
-            </label>
         </div>
         <div class="input_cont">
+            <div class="form-error">{{ form.password1.errors }}</div>
             <div class="input_title">
                 Пароль
             </div>
@@ -132,12 +142,12 @@
                 <path d="M20 12C20 10.897 19.103 10 18 10H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V10H6C4.897 10 4 10.897 4 12V20C4 21.103 4.897 22 6 22H18C19.103 22 20 21.103 20 20V12ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V10H9V7Z"
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
-            <input type="password" name="password" id="password_input" placeholder="" required required maxlength="16">
-            <label for="password_input" class="label_for_input">
-
-            </label>
+            {{ form.password1 }}
+            <label for="password_input" class="label_for_input"></label>
         </div>
+
         <div class="input_cont">
+            <div class="form-error">{{ form.password2.errors }}</div>
             <div class="input_title">
                 Подтвердите пароль
             </div>
@@ -145,17 +155,19 @@
                 <path d="M20 12C20 10.897 19.103 10 18 10H17V7C17 4.243 14.757 2 12 2C9.243 2 7 4.243 7 7V10H6C4.897 10 4 10.897 4 12V20C4 21.103 4.897 22 6 22H18C19.103 22 20 21.103 20 20V12ZM9 7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V10H9V7Z"
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
-            <input type="password" name="repeatpassword" id="repeatpassword_input" required required maxlength="16">
+            {{ form.password2 }}
             <label for="repeatpassword_input" class="label_for_input">
 
             </label>
         </div>
-        <button class="submit_button" type="submit">
+
+        <button name='regist' class="submit_button" type="submit">
             Зарегистрироваться
         </button>
     </div>
+
     <div class="question">
-        Уже есть аккаунт? <a href="login.html">Войти</a>
+        Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
     </div>
 </form>
 

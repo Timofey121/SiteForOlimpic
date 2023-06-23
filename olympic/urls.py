@@ -13,7 +13,7 @@ urlpatterns = [
     path('notification/', Notification, name='notification'),
 
     path('login/', LoginUser, name='login'),
-    path('registration/', RegisterUser, name='registration'),
+    path('registration/', RegisterUser.as_view(), name='registration'),
     path('logout/', logout_user, name='logout'),
 ]
 
