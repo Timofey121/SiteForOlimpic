@@ -1,11 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{ title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="{% static 'olympic/images/main.ico' %}" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&family=Open+Sans:wght@400;600;700&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
@@ -84,15 +86,21 @@
             </button>
         </div>
         <ul class="navigation_links_mobile">
-            <li class="nav_link_mobile"><a href="">Главная</a></li>
-            <li class="nav_link_mobile"><a href="">Информация об олимпиадах</a></li>
-            <li class="nav_link_mobile"><a href="">Подключение/Удаление уведомлений</a></li>
+            {% for m in menu %}
+                <li class="nav_link"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+            {% endfor %}
+            {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
+                {% for m in additional_menu %}
+                    <li class="nav_link"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 </div>
 
-<form action="{% url 'login' %}" method="post" class="register_form">
+<form action="" method="post" class="register_form" enctype="multipart/form-data">
     {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
 
     <div class="register_title_cont">
         <div class="register_title">
@@ -100,15 +108,12 @@
         </div>
     </div>
 
-    {#    {% for f in form %}#}
-    {#        <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>#}
-    {#        <div class="form-error">{{ f.errors }}</div>#}
-    {#    {% endfor %}#}
 
     <div class="form_cont">
-
+        {% for f in form %}
+            <div style="font-size: 18px;margin-top: 12px; color: red; text-align: center; list-style-type:none">{{ f.errors }}</div>
+        {% endfor %}
         <div class="input_cont">
-            <div class="form-error">{{ form.username.errors }}</div>
             <div class="input_title">
                 Логин
             </div>
@@ -117,11 +122,9 @@
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
             {{ form.username }}
-            <label for="login_input" class="label_for_input"></label>
         </div>
 
         <div class="input_cont">
-            <div class="form-error">{{ form.email.errors }}</div>
             <div class="input_title">
                 E-mail
             </div>
@@ -130,11 +133,9 @@
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
             {{ form.email }}
-            <label for="email_input" class="label_for_input"></label>
 
         </div>
         <div class="input_cont">
-            <div class="form-error">{{ form.password1.errors }}</div>
             <div class="input_title">
                 Пароль
             </div>
@@ -143,11 +144,9 @@
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
             {{ form.password1 }}
-            <label for="password_input" class="label_for_input"></label>
         </div>
 
         <div class="input_cont">
-            <div class="form-error">{{ form.password2.errors }}</div>
             <div class="input_title">
                 Подтвердите пароль
             </div>
@@ -156,9 +155,6 @@
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
             {{ form.password2 }}
-            <label for="repeatpassword_input" class="label_for_input">
-
-            </label>
         </div>
 
         <button name='regist' class="submit_button" type="submit">

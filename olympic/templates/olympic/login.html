@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="{% static 'olympic/images/main.ico' %}" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&family=Open+Sans:wght@400;600;700&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
@@ -140,7 +142,7 @@
         </button>
     </div>
     <div class="question">
-        У вас еще нет аккаунта?<br><a href="site1/register.html">Зарегистрироваться</a>
+        У вас еще нет аккаунта?<br><a href="{% url 'registration' %}">Зарегистрироваться</a>
     </div>
 </form>
 

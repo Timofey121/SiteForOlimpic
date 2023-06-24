@@ -1,10 +1,11 @@
 from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from olympic.forms import LoginUserForm, RegisterForm
+from olympic.forms import RegisterForm, LoginUserForm
 from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates
 from olympic.utils import menu, additional_menu, DataMixin
 
@@ -25,7 +26,9 @@ def AllOlympiads(request):
                                'title': 'Олимпиады',
                                'categories': Subjects.objects.all(),
                                'olympiads': NotificationDates.objects.filter(user=telegram_id).all(),
-                               'text': "Показать все олимпиады"})
+                               'text': "Показать все олимпиады",
+                               'flag': True,
+                               })
             else:
                 usr = request.user.username
                 return render(request, 'olympic/list_of_available_subjects.html',
@@ -34,7 +37,9 @@ def AllOlympiads(request):
                                'title': 'Олимпиады',
                                'categories': Subjects.objects.all(),
                                'olympiads': NotificationDates.objects.filter(user=usr).all(),
-                               'text': "Показать все олимпиады"})
+                               'text': "Показать все олимпиады",
+                               'flag': True,
+                               })
 
     return render(request, 'olympic/list_of_available_subjects.html',
                   {"menu": menu,
@@ -42,7 +47,9 @@ def AllOlympiads(request):
                    'title': 'Олимпиады',
                    'categories': Subjects.objects.all(),
                    'olympiads': Olympiads.objects.all(),
-                   'text': "Показать только те олимпиады, к которым у меня подключены уведомления"})
+                   'text': "Показать только те олимпиады, к которым у меня подключены уведомления",
+                   'flag': False,
+                   })
 
 
 def FilterOlympiads(request, sub_slug):
@@ -60,7 +67,7 @@ def FilterOlympiads(request, sub_slug):
                                                                              sub__slug=sub_slug).all(),
                                'text': "Показать все олимпиады",
                                "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
-                               'c': c
+                               'flag': True,
                                })
             else:
                 usr = request.user.username
@@ -73,7 +80,7 @@ def FilterOlympiads(request, sub_slug):
                                                                              sub__slug=sub_slug).all(),
                                'text': "Показать все олимпиады",
                                "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
-                               'c': c
+                               'flag': True,
                                })
 
     return render(request, 'olympic/list_of_available_subjects.html',
@@ -84,7 +91,7 @@ def FilterOlympiads(request, sub_slug):
                    'olympiads': Olympiads.objects.filter(sub__slug=sub_slug),
                    'text': "Показать только те олимпиады, к которым у меня подключены уведомления",
                    "bad_text": f"Нет ближайших олимпиад по предмету {c.subject}!",
-                   'c': c
+                   'flag': False,
                    })
 
 
@@ -107,7 +114,6 @@ def Notification(request):
                            "additional_menu": additional_menu,
                            'title': 'Подключение/Удаление уведомлений',
                            'olympiads': search_olympiads,
-                           'message': f"Ваш запрос в поиске → {search}",
                            'categories': Subjects.objects.all(),
                            'text_for_search': search,
                            })
@@ -118,7 +124,6 @@ def Notification(request):
                            "additional_menu": additional_menu,
                            'title': 'Подключение/Удаление уведомлений',
                            'olympiads': Olympiads.objects.all(),
-                           'message': '',
                            'categories': Subjects.objects.all(),
                            'text_for_search': '',
                            })
@@ -149,7 +154,6 @@ def Notification(request):
                    "additional_menu": additional_menu,
                    'title': 'Подключение/Удаление уведомлений',
                    'olympiads': Olympiads.objects.all(),
-                   'message': '',
                    'categories': Subjects.objects.all(),
                    'text_for_search': '',
                    })
@@ -171,12 +175,17 @@ class RegisterUser(DataMixin, CreateView):
         return redirect('home')
 
 
-def LoginUser(request):
-    return render(request, 'olympic/login1.html',
-                  {"menu": menu,
-                   "additional_menu": additional_menu,
-                   'title': 'Регистрация',
-                   })
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'olympic/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Авторизация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 def logout_user(request):

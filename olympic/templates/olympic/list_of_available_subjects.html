@@ -152,8 +152,13 @@
             <form action="" class="activities_olimp" method="post">
                 {% csrf_token %}
                 <select name="select" class="selection_from_the_list">
-                    <option value="all">Показать все олимпиады</option>
-                    <option value="someone">Показать олимпиады с уведомлениями</option>
+                    {% if flag is False %}
+                        <option value="all">Показать все олимпиады</option>
+                        <option value="someone">Показать олимпиады с уведомлениями</option>
+                    {% else %}
+                        <option value="someone">Показать олимпиады с уведомлениями</option>
+                        <option value="all">Показать все олимпиады</option>
+                    {% endif %}
                 </select>
                 <button name="choice" type="submit" class="olimp_choose_button">
                     Применить
