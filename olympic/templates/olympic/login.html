@@ -49,9 +49,8 @@
                 <path d="M25.5 51C18.737 51 12.251 48.3134 7.46878 43.5312C2.6866 38.749 0 32.263 0 25.5C0 18.737 2.6866 12.251 7.46878 7.46878C12.251 2.6866 18.737 0 25.5 0C32.263 0 38.749 2.6866 43.5312 7.46878C48.3134 12.251 51 18.737 51 25.5C51 32.263 48.3134 38.749 43.5312 43.5312C38.749 48.3134 32.263 51 25.5 51ZM28.1998 25.0378C29.9665 24.4022 31.4522 23.1637 32.3955 21.5403C33.3388 19.917 33.6791 18.0129 33.3565 16.1633C33.0339 14.3137 32.0691 12.6372 30.632 11.429C29.1948 10.2209 27.3775 9.55845 25.5 9.55845C23.6225 9.55845 21.8052 10.2209 20.368 11.429C18.9309 12.6372 17.9661 14.3137 17.6435 16.1633C17.3209 18.0129 17.6612 19.917 18.6045 21.5403C19.5478 23.1637 21.0335 24.4022 22.8002 25.0378C17.4388 26.3319 12.75 31.1578 12.75 35.0625C12.75 36.3216 13.2122 38.2341 15.9375 38.2341H35.0625C37.7878 38.2341 38.25 36.3216 38.25 35.0625C38.25 31.161 33.5644 26.3288 28.1998 25.0378Z"
                       fill="#777777" fill-opacity="0.3"/>
             </svg>
-            <button class="account_button">
-                Войти
-            </button>
+            <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> | <a
+                    style="color: white" href="{% url 'login' %}">Войти</a></button>
             <div class="connect_container">
                 Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
                 <button class="connect_button">
@@ -75,9 +74,8 @@
                 <path d="M25.5 51C18.737 51 12.251 48.3134 7.46878 43.5312C2.6866 38.749 0 32.263 0 25.5C0 18.737 2.6866 12.251 7.46878 7.46878C12.251 2.6866 18.737 0 25.5 0C32.263 0 38.749 2.6866 43.5312 7.46878C48.3134 12.251 51 18.737 51 25.5C51 32.263 48.3134 38.749 43.5312 43.5312C38.749 48.3134 32.263 51 25.5 51ZM28.1998 25.0378C29.9665 24.4022 31.4522 23.1637 32.3955 21.5403C33.3388 19.917 33.6791 18.0129 33.3565 16.1633C33.0339 14.3137 32.0691 12.6372 30.632 11.429C29.1948 10.2209 27.3775 9.55845 25.5 9.55845C23.6225 9.55845 21.8052 10.2209 20.368 11.429C18.9309 12.6372 17.9661 14.3137 17.6435 16.1633C17.3209 18.0129 17.6612 19.917 18.6045 21.5403C19.5478 23.1637 21.0335 24.4022 22.8002 25.0378C17.4388 26.3319 12.75 31.1578 12.75 35.0625C12.75 36.3216 13.2122 38.2341 15.9375 38.2341H35.0625C37.7878 38.2341 38.25 36.3216 38.25 35.0625C38.25 31.161 33.5644 26.3288 28.1998 25.0378Z"
                       fill="#777777" fill-opacity="0.3"/>
             </svg>
-            <button class="account_button_mobile">
-                Войти
-            </button>
+            <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> | <a
+                    style="color: white" href="{% url 'login' %}">Войти</a></button>
         </div>
         <div class="connect_container">
             Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
@@ -94,12 +92,19 @@
 </div>
 
 <form action="" method="post" class="register_form">
+    {% csrf_token %}
+
     <div class="register_title_cont">
         <div class="register_title">
             Авторизация
         </div>
     </div>
+
     <div class="form_cont">
+        <div style="font-size: 18px;margin-top: 12px; color: red; text-align: center; list-style-type:none" class="form-error">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+            <div style="font-size: 18px;margin-top: 12px; color: red; text-align: center; list-style-type:none">{{ f.errors }}</div>
+        {% endfor %}
         <div class="input_cont">
             <div class="input_title">
                 Логин
@@ -109,7 +114,7 @@
                 <path d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z"
                       fill="#2A222B" fill-opacity="0.3"/>
             </svg>
-            <input type="text" name="login" id="login_input" placeholder="admin" required>
+            {{ form.username }}
             <label for="login_input" class="label_for_input">
 
             </label>
@@ -132,7 +137,7 @@
                       fill="#6C6C6C"/>
             </svg>
 
-            <input type="password" name="password" id="password_input" placeholder="" required maxlength="16">
+            {{ form.password }}
             <label for="password_input" class="label_for_input">
 
             </label>

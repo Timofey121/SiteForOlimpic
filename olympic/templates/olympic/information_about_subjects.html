@@ -52,8 +52,9 @@
                 <button class="account_button"> {{ user.username }} | <a style="color: white" href="{% url 'logout' %}">Выйти</a>
                 </button>
             {% else %}
-                <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> | <a
-                       style="color: white" href="{% url 'login' %}">Войти</a></button>
+                <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> |
+                    <a
+                            style="color: white" href="{% url 'login' %}">Войти</a></button>
             {% endif %}
             <div class="connect_container">
                 Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
@@ -125,82 +126,83 @@
         </div>
     </div>
 </section>
-<section class="activities_with_the_olympiad">
-    <div class="container">
-        <form action="" class="activities_olimp" method="post">
-            {% csrf_token %}
+<form action="" class="activities_olimp" method="post">
+    {% csrf_token %}
+    <section class="activities_with_the_olympiad">
+        <div class="container">
             <select name="select" id="" class="selection_from_the_list">
                 <option value="nothing">Выберите из списка</option>
                 <option value="add">Подключить уведомления</option>
                 <option value="delete">Удалить уведомления</option>
             </select>
-            <button name="choice" type="submit" class="olimp_choose_button">
+            <button type="submit" class="olimp_choose_button">
                 Применить
             </button>
-        </form>
-    </div>
-</section>
-<section class="olimpialds">
-    <div class="container">
-        <div class="selected_olympiads">
-            {% for p in olympiads %}
-                <div class="olimp_inner">
-                    <form action="" class="choose_this_olympiad">
-                        {% csrf_token %}
-                        <label for="choose_this_olympiad_checkbox">Выбрать эту олимпиаду</label>
-                        <input type="checkbox" id="choose_this_olympiad_checkbox">
-                    </form>
-                    <div class="olimp_card">
-                        <div class="yellow_dot"></div>
-                        <div class="olimp_card_container">
-                            <div class="olimp_card_intro">
-                                {% for c in categories %}
-                                    {% if p.sub|stringformat:"s" == c.subject %}
-                                        <img src="../../../media/{{ c.photo }}" alt="" class="olimp_card_img">
-                                    {% endif %}
-                                {% endfor %}
-                                <div class="olimp_card_intro_txt">
-                                    <span class="card_olimp_title">{{ p.sub }}</span>
-                                    <div class="olimp_description">
-                                        <span class="olimp_subtitle">{{ p.title }}</span>
-                                        <span class="olimp_class">1-11 классы</span>
+        </div>
+    </section>
+    <section class="olimpialds">
+        <div class="container">
+            <div class="selected_olympiads">
+                {% for p in olympiads %}
+                    <div class="olimp_inner">
+                        <div class="choose_this_olympiad">
+                            <label for="choose_this_olympiad_checkbox">Выбрать олимпиаду</label>
+                            <input type="checkbox" name="choose" value="{{ p.title }}"
+                                   id="choose_this_olympiad_checkbox">
+                        </div>
+                        <div class="olimp_card">
+                            <div class="yellow_dot"></div>
+                            <div class="olimp_card_container">
+                                <div class="olimp_card_intro">
+                                    {% for c in categories %}
+                                        {% if p.sub|stringformat:"s" == c.subject %}
+                                            <img src="../../../media/{{ c.photo }}" alt="" class="olimp_card_img">
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="olimp_card_intro_txt">
+                                        <span class="card_olimp_title">{{ p.sub }}</span>
+                                        <div class="olimp_description">
+                                            <span class="olimp_subtitle">{{ p.title }}</span>
+                                            <span class="olimp_class">1-11 классы</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="olimp_desc">
-                                <div class="olimp_desc_line">
-                                    <span class="description_criterion">Начало олимпиады:</span>
-                                    <span class="information_about_the_olimp">{{ p.start }}</span>
+                                <div class="olimp_desc">
+                                    <div class="olimp_desc_line">
+                                        <span class="description_criterion">Начало олимпиады:</span>
+                                        <span class="information_about_the_olimp">{{ p.start }}</span>
+                                    </div>
+                                    <div class="olimp_desc_line">
+                                        <span class="description_criterion">Этап олимпиады:</span>
+                                        <span class="information_about_the_olimp">{{ p.stage }}</span>
+                                    </div>
                                 </div>
-                                <div class="olimp_desc_line">
-                                    <span class="description_criterion">Этап олимпиады:</span>
-                                    <span class="information_about_the_olimp">{{ p.stage }}</span>
+                                {% if p.rsoch is False %}
+                                    <div class="classification_of_the_olympiad">
+                                        Олимпиада <span class="classificaiton_olimp_selection">НЕ входит в РСОШ</span>
+                                    </div>
+                                {% else %}
+                                    <div class="classification_of_the_olympiad">
+                                        Олимпиада <span class="classificaiton_olimp_selection">входит в РСОШ</span>
+                                    </div>
+                                {% endif %}
+                                <div class="olimp_card_button_cont">
+                                    <a href="{{ p.schedule }}">
+                                        <button>Посмотреть расписание</button>
+                                    </a>
+                                    <a href="{{ p.site }}">
+                                        <button>Перейти на сайт олимпиады</button>
+                                    </a>
                                 </div>
-                            </div>
-                            {% if p.rsoch is False %}
-                                <div class="classification_of_the_olympiad">
-                                    Олимпиада <span class="classificaiton_olimp_selection">НЕ входит в РСОШ</span>
-                                </div>
-                            {% else %}
-                                <div class="classification_of_the_olympiad">
-                                    Олимпиада <span class="classificaiton_olimp_selection">входит в РСОШ</span>
-                                </div>
-                            {% endif %}
-                            <div class="olimp_card_button_cont">
-                                <a href="{{ p.schedule }}">
-                                    <button>Посмотреть расписание</button>
-                                </a>
-                                <a href="{{ p.site }}">
-                                    <button>Перейти на сайт олимпиады</button>
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
+
 <div class="footer">
     <div class="container">
         <div class="footer_inner">

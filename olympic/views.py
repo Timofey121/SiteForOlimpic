@@ -98,6 +98,7 @@ def FilterOlympiads(request, sub_slug):
 def Notification(request):
     if request.method == "POST":
         print(request.POST)
+        print(request.POST.getlist('choose'))
 
         if 'find' in request.POST:
             search = str(request.POST['search'])
