@@ -161,22 +161,28 @@ def Notification(request):
 
 
 def token(request):
+    alert_text = ''
     if request.method == 'POST':
         if 'password' in request.POST:
-            print(request.POST['password'])
-            # UserNameAndTelegramID.objects.create()
+            token = request.POST['password']
+            if SecretToken.objects.filter(secret_token=token).exists():
+                tg_id = SecretToken.objects.get(secret_token=token).telegram_id
+                if not UserNameAndTelegramID.objects.filter(telegram_id=tg_id).exists():
+                    UserNameAndTelegramID.objects.create(telegram_id=tg_id, user=request.user)
+            else:
+                alert_text = 'Нет Телеграмм аккаунта с таким Секретным Токеном'
         else:
-            pass
+            UserNameAndTelegramID.objects.filter(user=request.user).delete()
 
     usr = request.user.username
     flag = UserNameAndTelegramID.objects.filter(user=usr).exists()
-    print(UserNameAndTelegramID.objects.filter(user=usr))
     return render(request, 'olympic/secret_token_pager.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,
                    'title': 'Синхронизация с Телеграмм Ботом',
                    'form': SecretTokenForm(),
                    'flag': flag,
+                   'alert_text': alert_text,
                    })
 
 
