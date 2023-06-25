@@ -170,6 +170,7 @@ def token(request):
 
     usr = request.user.username
     flag = UserNameAndTelegramID.objects.filter(user=usr).exists()
+    print(UserNameAndTelegramID.objects.filter(user=usr))
     return render(request, 'olympic/secret_token_pager.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,

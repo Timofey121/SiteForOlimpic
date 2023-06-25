@@ -49,14 +49,20 @@
                 <path d="M25.5 51C18.737 51 12.251 48.3134 7.46878 43.5312C2.6866 38.749 0 32.263 0 25.5C0 18.737 2.6866 12.251 7.46878 7.46878C12.251 2.6866 18.737 0 25.5 0C32.263 0 38.749 2.6866 43.5312 7.46878C48.3134 12.251 51 18.737 51 25.5C51 32.263 48.3134 38.749 43.5312 43.5312C38.749 48.3134 32.263 51 25.5 51ZM28.1998 25.0378C29.9665 24.4022 31.4522 23.1637 32.3955 21.5403C33.3388 19.917 33.6791 18.0129 33.3565 16.1633C33.0339 14.3137 32.0691 12.6372 30.632 11.429C29.1948 10.2209 27.3775 9.55845 25.5 9.55845C23.6225 9.55845 21.8052 10.2209 20.368 11.429C18.9309 12.6372 17.9661 14.3137 17.6435 16.1633C17.3209 18.0129 17.6612 19.917 18.6045 21.5403C19.5478 23.1637 21.0335 24.4022 22.8002 25.0378C17.4388 26.3319 12.75 31.1578 12.75 35.0625C12.75 36.3216 13.2122 38.2341 15.9375 38.2341H35.0625C37.7878 38.2341 38.25 36.3216 38.25 35.0625C38.25 31.161 33.5644 26.3288 28.1998 25.0378Z"
                       fill="#777777" fill-opacity="0.3"/>
             </svg>
-            <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> | <a
-                    style="color: white" href="{% url 'login' %}">Войти</a></button>
-            <div class="connect_container">
-                Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
-                <button class="connect_button">
-                    <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
+            {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
+                <button class="account_button"> {{ user.username }} | <a style="color: white" href="{% url 'logout' %}">Выйти</a>
                 </button>
-            </div>
+                <div class="connect_container">
+                    Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
+                    <button class="connect_button">
+                        <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
+                    </button>
+                </div>
+            {% else %}
+                <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> |
+                    <a
+                            style="color: white" href="{% url 'login' %}">Войти</a></button>
+            {% endif %}
         </div>
         <input type="checkbox" id="mobile_nav" class="mobile_nav"/>
         <label for="mobile_nav" class="icon_menu">
@@ -74,19 +80,30 @@
                 <path d="M25.5 51C18.737 51 12.251 48.3134 7.46878 43.5312C2.6866 38.749 0 32.263 0 25.5C0 18.737 2.6866 12.251 7.46878 7.46878C12.251 2.6866 18.737 0 25.5 0C32.263 0 38.749 2.6866 43.5312 7.46878C48.3134 12.251 51 18.737 51 25.5C51 32.263 48.3134 38.749 43.5312 43.5312C38.749 48.3134 32.263 51 25.5 51ZM28.1998 25.0378C29.9665 24.4022 31.4522 23.1637 32.3955 21.5403C33.3388 19.917 33.6791 18.0129 33.3565 16.1633C33.0339 14.3137 32.0691 12.6372 30.632 11.429C29.1948 10.2209 27.3775 9.55845 25.5 9.55845C23.6225 9.55845 21.8052 10.2209 20.368 11.429C18.9309 12.6372 17.9661 14.3137 17.6435 16.1633C17.3209 18.0129 17.6612 19.917 18.6045 21.5403C19.5478 23.1637 21.0335 24.4022 22.8002 25.0378C17.4388 26.3319 12.75 31.1578 12.75 35.0625C12.75 36.3216 13.2122 38.2341 15.9375 38.2341H35.0625C37.7878 38.2341 38.25 36.3216 38.25 35.0625C38.25 31.161 33.5644 26.3288 28.1998 25.0378Z"
                       fill="#777777" fill-opacity="0.3"/>
             </svg>
-            <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> | <a
-                    style="color: white" href="{% url 'login' %}">Войти</a></button>
-        </div>
-        <div class="connect_container">
-            Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
-            <button class="connect_button">
-                <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
-            </button>
+            {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
+                <button class="account_button"> {{ user.username }} | <a style="color: white" href="{% url 'logout' %}">Выйти</a>
+                </button>
+                <div class="connect_container">
+                    Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
+                    <button class="connect_button">
+                        <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
+                    </button>
+                </div>
+            {% else %}
+                <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> |
+                    <a
+                            style="color: white" href="{% url 'login' %}">Войти</a></button>
+            {% endif %}
         </div>
         <ul class="navigation_links_mobile">
-            <li class="nav_link_mobile"><a href="">Главная</a></li>
-            <li class="nav_link_mobile"><a href="">Информация об олимпиадах</a></li>
-            <li class="nav_link_mobile"><a href="">Подключение/Удаление уведомлений</a></li>
+            {% for m in menu %}
+                <li class="nav_link_mobile"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+            {% endfor %}
+            {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
+                {% for m in additional_menu %}
+                    <li class="nav_link_mobile"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 </div>
