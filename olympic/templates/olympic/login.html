@@ -139,9 +139,7 @@
             </svg>
 
             {{ form.password }}
-            <label for="password_input" class="label_for_input">
-
-            </label>
+            <label for="password_input" class="label_for_input"></label>
         </div>
         <button class="submit_button" type="submit">
             Войти
@@ -273,11 +271,11 @@
                                 <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
                             {% endfor %}
                             {% if request.user.is_authenticated %}
-                            {# проверка авторизованости пользователя #}
-                            {% for m in additional_menu %}
-                                <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
-                            {% endfor %}
-                        {% endif %}
+                                {# проверка авторизованости пользователя #}
+                                {% for m in additional_menu %}
+                                    <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>

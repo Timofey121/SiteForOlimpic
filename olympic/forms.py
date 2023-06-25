@@ -9,7 +9,8 @@ class LoginUserForm(AuthenticationForm):  # наследование от обы
 
 
 class SecretTokenForm(UserCreationForm):
-    password = forms.CharField(label='Секретный Токен из Телеграмм Бота')
+    password = forms.CharField(label='Секретный Токен из Телеграмм Бота',
+                               widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
 
 class RegisterForm(UserCreationForm):

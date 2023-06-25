@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm
-from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates
+from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID
 from olympic.utils import menu, additional_menu, DataMixin
 
 
@@ -162,10 +162,14 @@ def Notification(request):
 
 def token(request):
     if request.method == 'POST':
-        print(request.POST)
+        if 'password' in request.POST:
+            print(request.POST['password'])
+            # UserNameAndTelegramID.objects.create()
+        else:
+            pass
 
     usr = request.user.username
-    flag = SecretToken.objects.filter(secret_token=usr).exists()
+    flag = UserNameAndTelegramID.objects.filter(user=usr).exists()
     return render(request, 'olympic/secret_token_pager.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,
