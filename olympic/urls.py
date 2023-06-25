@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('notification/', Notification, name='notification'),
 
+    path('SecretToken/', token, name='secret_token'),
     path('login/', LoginUser.as_view(), name='login'),
     path('registration/', RegisterUser.as_view(), name='registration'),
     path('logout/', logout_user, name='logout'),

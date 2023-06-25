@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from olympic.forms import RegisterForm, LoginUserForm
+from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm
 from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates
 from olympic.utils import menu, additional_menu, DataMixin
 
@@ -18,6 +18,7 @@ def main(request):
 def AllOlympiads(request):
     if request.method == "POST":
         if 'someone' in request.POST['select']:
+            usr = request.user.username
             if SecretToken.objects.filter(secret_token=request.user.username).exists():
                 telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
                 return render(request, 'olympic/list_of_available_subjects.html',
@@ -25,21 +26,21 @@ def AllOlympiads(request):
                                "additional_menu": additional_menu,
                                'title': 'Олимпиады',
                                'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(user=telegram_id).all(),
+                               'olympiads': NotificationDates.objects.filter(
+                                   user=telegram_id).all() + NotificationDates.objects.filter(
+                                   user=usr).all(),
                                'text': "Показать все олимпиады",
                                'flag': True,
                                })
-            else:
-                usr = request.user.username
-                return render(request, 'olympic/list_of_available_subjects.html',
-                              {"menu": menu,
-                               "additional_menu": additional_menu,
-                               'title': 'Олимпиады',
-                               'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(user=usr).all(),
-                               'text': "Показать все олимпиады",
-                               'flag': True,
-                               })
+            return render(request, 'olympic/list_of_available_subjects.html',
+                          {"menu": menu,
+                           "additional_menu": additional_menu,
+                           'title': 'Олимпиады',
+                           'categories': Subjects.objects.all(),
+                           'olympiads': NotificationDates.objects.filter(user=usr).all(),
+                           'text': "Показать все олимпиады",
+                           'flag': True,
+                           })
 
     return render(request, 'olympic/list_of_available_subjects.html',
                   {"menu": menu,
@@ -56,6 +57,7 @@ def FilterOlympiads(request, sub_slug):
     c = Subjects.objects.get(slug=sub_slug)
     if request.method == "POST":
         if 'someone' in request.POST['select']:
+            usr = request.user.username
             if SecretToken.objects.filter(secret_token=request.user.username).exists():
                 telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
                 return render(request, 'olympic/list_of_available_subjects.html',
@@ -63,25 +65,24 @@ def FilterOlympiads(request, sub_slug):
                                "additional_menu": additional_menu,
                                'title': f'Категория - {c.subject}',
                                'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(user=telegram_id,
-                                                                             sub__slug=sub_slug).all(),
+                               'olympiads': NotificationDates.objects.filter(
+                                   user=telegram_id, sub__slug=sub_slug).all() + NotificationDates.objects.filter(
+                                   user=usr, sub__slug=sub_slug).all(),
                                'text': "Показать все олимпиады",
                                "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                                'flag': True,
                                })
-            else:
-                usr = request.user.username
-                return render(request, 'olympic/list_of_available_subjects.html',
-                              {"menu": menu,
-                               "additional_menu": additional_menu,
-                               'title': f'Категория - {c.subject}',
-                               'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(user=usr,
-                                                                             sub__slug=sub_slug).all(),
-                               'text': "Показать все олимпиады",
-                               "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
-                               'flag': True,
-                               })
+            return render(request, 'olympic/list_of_available_subjects.html',
+                          {"menu": menu,
+                           "additional_menu": additional_menu,
+                           'title': f'Категория - {c.subject}',
+                           'categories': Subjects.objects.all(),
+                           'olympiads': NotificationDates.objects.filter(user=usr,
+                                                                         sub__slug=sub_slug).all(),
+                           'text': "Показать все олимпиады",
+                           "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
+                           'flag': True,
+                           })
 
     return render(request, 'olympic/list_of_available_subjects.html',
                   {"menu": menu,
@@ -129,26 +130,25 @@ def Notification(request):
                            'text_for_search': '',
                            })
 
-        # elif 'choice' in request.POST:
-        #     if request.POST['select-action'] == 'connect':
-        #         for key, val in request.POST.items():
-        #             if ('yes_no' in key) and val == 'on':
-        #                 title = str(key).replace('yes_no_', '')
-        #                 telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
-        #                 if not NotificationDates.objects.filter(title=title, telegram_id=telegram_id).exists():
-        #                     record = Olympiads.objects.get(title=title)
-        #                     start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
-        #                         record.site, record.sub, record.rsoch
-        #                     NotificationDates.objects.create(telegram_id=telegram_id, title=title, start=start,
-        #                                                      site=site, stage=stage, schedule=schedule,
-        #                                                      sub=sub, rsoch=rsoch)
-        #     elif request.POST['select-action'] == 'delete':
-        #         for key, val in request.POST.items():
-        #             if ('yes_no' in key) and val == 'on':
-        #                 title = str(key).replace('yes_no_', '')
-        #                 telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
-        #                 if NotificationDates.objects.filter(title=title, telegram_id=telegram_id).exists():
-        #                     NotificationDates.objects.get(title=title).delete()
+        elif 'add' in request.POST['select']:
+            for title in request.POST.getlist('choose'):
+                usr = request.user.username
+                if not NotificationDates.objects.filter(title=title, user=usr).exists():
+                    record = Olympiads.objects.get(title=title)
+                    start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
+                        record.site, record.sub, record.rsoch
+                    NotificationDates.objects.create(user=usr, title=title, start=start, site=site, stage=stage,
+                                                     schedule=schedule, sub=sub, rsoch=rsoch)
+
+        elif 'delete' in request.POST['select']:
+            for title in request.POST.getlist('choose'):
+                usr = request.user.username
+                if SecretToken.objects.filter(secret_token=usr).exists():
+                    telegram_id = SecretToken.objects.filter(secret_token=usr)[0]
+                    if NotificationDates.objects.filter(title=title, user=telegram_id).exists():
+                        NotificationDates.objects.get(title=title).delete()
+                if NotificationDates.objects.filter(title=title, user=usr).exists():
+                    NotificationDates.objects.get(title=title).delete()
 
     return render(request, 'olympic/information_about_subjects.html',
                   {"menu": menu,
@@ -157,6 +157,21 @@ def Notification(request):
                    'olympiads': Olympiads.objects.all(),
                    'categories': Subjects.objects.all(),
                    'text_for_search': '',
+                   })
+
+
+def token(request):
+    if request.method == 'POST':
+        print(request.POST)
+
+    usr = request.user.username
+    flag = SecretToken.objects.filter(secret_token=usr).exists()
+    return render(request, 'olympic/secret_token_pager.html',
+                  {"menu": menu,
+                   "additional_menu": additional_menu,
+                   'title': 'Синхронизация с Телеграмм Ботом',
+                   'form': SecretTokenForm(),
+                   'flag': flag,
                    })
 
 

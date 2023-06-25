@@ -50,11 +50,11 @@
                       fill="#777777" fill-opacity="0.3"/>
             </svg>
             <button class="account_button"><a style="color: white" href="{% url 'registration' %}">Регистрация</a> | <a
-                   style="color: white" href="{% url 'login' %}">Войти</a></button>
+                    style="color: white" href="{% url 'login' %}">Войти</a></button>
             <div class="connect_container">
                 Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
                 <button class="connect_button">
-                    Подключить
+                    <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
                 </button>
             </div>
         </div>
@@ -80,7 +80,7 @@
         <div class="connect_container">
             Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
             <button class="connect_button">
-                Подключить
+                <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
             </button>
         </div>
         <ul class="navigation_links_mobile">
@@ -186,7 +186,7 @@
                                         <path d="M9.16501 9.23999L10.285 8.11999C10.4359 7.97101 10.6267 7.86903 10.8344 7.82643C11.0421 7.78382 11.2577 7.80243 11.455 7.87999L12.82 8.42499C13.0194 8.50593 13.1904 8.64408 13.3114 8.82204C13.4324 9 13.498 9.2098 13.5 9.42499V11.925C13.4988 12.0714 13.4681 12.216 13.4095 12.3502C13.351 12.4844 13.2659 12.6053 13.1594 12.7058C13.0529 12.8062 12.9272 12.8841 12.7898 12.9346C12.6524 12.9852 12.5062 13.0074 12.36 13C2.79501 12.405 0.865006 4.30499 0.500006 1.20499C0.483062 1.05276 0.498543 0.898664 0.54543 0.752845C0.592317 0.607026 0.669547 0.472786 0.77204 0.358958C0.874532 0.24513 0.999965 0.154292 1.14008 0.0924218C1.2802 0.0305513 1.43184 -0.000950098 1.58501 -1.00831e-05H4.00001C4.21551 0.00062781 4.4259 0.0657236 4.6041 0.186905C4.78231 0.308086 4.92019 0.47981 5.00001 0.67999L5.54501 2.04499C5.62513 2.24152 5.64558 2.45731 5.60378 2.6654C5.56199 2.87348 5.45981 3.06464 5.31001 3.21499L4.19001 4.33499C4.19001 4.33499 4.83501 8.69999 9.16501 9.23999Z"
                                               fill="#777777" fill-opacity="0.4"/>
                                     </svg>
-                                    <a href="tel:8 (800) 800-00-20">8 (800) 800-00-20</a>
+                                    <a href="tel:8 (927) 742-65-64">8 (927) 742-65-64</a>
                                 </div>
                                 <div class="footer_link">
                                     <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
@@ -195,25 +195,29 @@
                                               fill="#777777" fill-opacity="0.4"/>
                                     </svg>
 
-                                    <a href="email:youremail@mail.ru">youremail@mail.ru</a>
+                                    <a href="email:ale3jurtaev@gmail.com">ale3jurtaev@gmail.com</a>
                                 </div>
                             </div>
                         </div>
                         <div class="footer_column">
                             <div class="footer_title">Меню</div>
                             <div class="footer_links">
-                                <div class="footer_link"><a href="../index.html">Главная</a></div>
-                                <div class="footer_link"><a href="">Информация об олимпиадах</a></div>
-                                <div class="footer_link"><a href="">Подключение/Удаление уведомлений</a></div>
+                                {% for m in menu %}
+                                    <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
+                                {% endfor %}
+                                {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
+                                    {% for m in additional_menu %}
+                                        <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                     <div class="footer_columns_2">
                         <div class="footer_column">
-                            <div class="footer_title">Авторизация</div>
+                            <div class="footer_title">Синхронизация</div>
                             <div class="footer_links">
-                                <div class="footer_link"><a href="">Вход</a></div>
-                                <div class="footer_link"><a href="">Регистрация</a></div>
+                                <div class="footer_link"><a href='{% url 'secret_token' %}'>Синхронизировать</a></div>
                             </div>
                         </div>
                         <div class="footer_column">
@@ -260,7 +264,7 @@
                                 <path d="M9.16501 9.23999L10.285 8.11999C10.4359 7.97101 10.6267 7.86903 10.8344 7.82643C11.0421 7.78382 11.2577 7.80243 11.455 7.87999L12.82 8.42499C13.0194 8.50593 13.1904 8.64408 13.3114 8.82204C13.4324 9 13.498 9.2098 13.5 9.42499V11.925C13.4988 12.0714 13.4681 12.216 13.4095 12.3502C13.351 12.4844 13.2659 12.6053 13.1594 12.7058C13.0529 12.8062 12.9272 12.8841 12.7898 12.9346C12.6524 12.9852 12.5062 13.0074 12.36 13C2.79501 12.405 0.865006 4.30499 0.500006 1.20499C0.483062 1.05276 0.498543 0.898664 0.54543 0.752845C0.592317 0.607026 0.669547 0.472786 0.77204 0.358958C0.874532 0.24513 0.999965 0.154292 1.14008 0.0924218C1.2802 0.0305513 1.43184 -0.000950098 1.58501 -1.00831e-05H4.00001C4.21551 0.00062781 4.4259 0.0657236 4.6041 0.186905C4.78231 0.308086 4.92019 0.47981 5.00001 0.67999L5.54501 2.04499C5.62513 2.24152 5.64558 2.45731 5.60378 2.6654C5.56199 2.87348 5.45981 3.06464 5.31001 3.21499L4.19001 4.33499C4.19001 4.33499 4.83501 8.69999 9.16501 9.23999Z"
                                       fill="#777777" fill-opacity="0.4"/>
                             </svg>
-                            <a href="tel:8 (800) 800-00-20">8 (800) 800-00-20</a>
+                            <a href="tel:8 (927) 742-65-64">8 (927) 742-65-64</a>
                         </div>
                         <div class="footer_link">
                             <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
@@ -268,7 +272,7 @@
                                 <path d="M12.3333 0.166656H1.66665C0.933313 0.166656 0.33998 0.766656 0.33998 1.49999L0.333313 9.49999C0.333313 10.2333 0.933313 10.8333 1.66665 10.8333H12.3333C13.0666 10.8333 13.6666 10.2333 13.6666 9.49999V1.49999C13.6666 0.766656 13.0666 0.166656 12.3333 0.166656ZM12.0666 2.99999L7.35331 5.94666C7.13998 6.07999 6.85998 6.07999 6.64665 5.94666L1.93331 2.99999C1.86646 2.96246 1.80793 2.91176 1.76124 2.85096C1.71455 2.79015 1.68069 2.72051 1.6617 2.64624C1.64271 2.57196 1.63898 2.49461 1.65075 2.41886C1.66252 2.34311 1.68954 2.27053 1.73017 2.20552C1.7708 2.14051 1.8242 2.08443 1.88713 2.04065C1.95006 1.99688 2.02123 1.96633 2.09631 1.95086C2.17139 1.93538 2.24883 1.9353 2.32395 1.95062C2.39906 1.96594 2.47029 1.99634 2.53331 2.03999L6.99998 4.83332L11.4666 2.03999C11.5297 1.99634 11.6009 1.96594 11.676 1.95062C11.7511 1.9353 11.8286 1.93538 11.9036 1.95086C11.9787 1.96633 12.0499 1.99688 12.1128 2.04065C12.1758 2.08443 12.2292 2.14051 12.2698 2.20552C12.3104 2.27053 12.3374 2.34311 12.3492 2.41886C12.361 2.49461 12.3573 2.57196 12.3383 2.64624C12.3193 2.72051 12.2854 2.79015 12.2387 2.85096C12.192 2.91176 12.1335 2.96246 12.0666 2.99999Z"
                                       fill="#777777" fill-opacity="0.4"/>
                             </svg>
-                            <a href="email:youremail@mail.ru">youremail@mail.ru</a>
+                            <a href="email:ale3jurtaev@gmail.com">ale3jurtaev@gmail.com</a>
                         </div>
                     </div>
                 </div>
@@ -278,19 +282,21 @@
                     <div class="footer_column">
                         <div class="footer_title">Меню</div>
                         <div class="footer_links">
-                            <div class="footer_link"><a href="../index.html">Главная</a></div>
-                            <div class="footer_link"><a href="">Информация об олимпиадах</a></div>
-                            <div class="footer_link"><a href="">Подключение/Удаление уведомлений</a></div>
+                            {% for m in menu %}
+                                <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
+                            {% endfor %}
+                            {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
+                                {% for m in additional_menu %}
+                                    <div class="footer_link"><a href="{% url m.url_name %}">{{ m.title }}</a></div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="footer_mobile_links_col_2">
-                    <div class="footer_column">
-                        <div class="footer_title">Авторизация</div>
-                        <div class="footer_links">
-                            <div class="footer_link"><a href="">Вход</a></div>
-                            <div class="footer_link"><a href="">Регистрация</a></div>
-                        </div>
+                    <div class="footer_title">Синхронизация</div>
+                    <div class="footer_links">
+                        <div class="footer_link"><a href='{% url 'secret_token' %}'>Синхронизировать</a></div>
                     </div>
                     <div class="footer_column">
                         <div class="footer_title">Соц. сети</div>
