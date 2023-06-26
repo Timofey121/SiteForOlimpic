@@ -19,16 +19,14 @@ def AllOlympiads(request):
     if request.method == "POST":
         if 'someone' in request.POST['select']:
             usr = request.user.username
-            if SecretToken.objects.filter(secret_token=request.user.username).exists():
-                telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
+            if UserNameAndTelegramID.objects.filter(user=request.user.username).exists():
+                telegram_id = UserNameAndTelegramID.objects.get(user=request.user.username).telegram_id
                 return render(request, 'olympic/list_of_available_subjects.html',
                               {"menu": menu,
                                "additional_menu": additional_menu,
                                'title': 'Олимпиады',
                                'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(
-                                   user=telegram_id).all() + NotificationDates.objects.filter(
-                                   user=usr).all(),
+                               'olympiads': NotificationDates.objects.filter(Q(user=telegram_id) | Q(user=usr)).all(),
                                'text': "Показать все олимпиады",
                                'flag': True,
                                })
@@ -58,16 +56,15 @@ def FilterOlympiads(request, sub_slug):
     if request.method == "POST":
         if 'someone' in request.POST['select']:
             usr = request.user.username
-            if SecretToken.objects.filter(secret_token=request.user.username).exists():
-                telegram_id = SecretToken.objects.filter(secret_token=request.user.username)[0]
+            if UserNameAndTelegramID.objects.filter(user=request.user.username).exists():
+                telegram_id = UserNameAndTelegramID.objects.get(user=request.user.username).telegram_id
                 return render(request, 'olympic/list_of_available_subjects.html',
                               {"menu": menu,
                                "additional_menu": additional_menu,
                                'title': f'Категория - {c.subject}',
                                'categories': Subjects.objects.all(),
                                'olympiads': NotificationDates.objects.filter(
-                                   user=telegram_id, sub__slug=sub_slug).all() + NotificationDates.objects.filter(
-                                   user=usr, sub__slug=sub_slug).all(),
+                                   Q(user=telegram_id, sub__slug=sub_slug) | Q(user=usr, sub__slug=sub_slug)).all(),
                                'text': "Показать все олимпиады",
                                "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                                'flag': True,
@@ -98,8 +95,6 @@ def FilterOlympiads(request, sub_slug):
 
 def Notification(request):
     if request.method == "POST":
-        print(request.POST)
-        print(request.POST.getlist('choose'))
 
         if 'find' in request.POST:
             search = str(request.POST['search'])
@@ -143,8 +138,8 @@ def Notification(request):
         elif 'delete' in request.POST['select']:
             for title in request.POST.getlist('choose'):
                 usr = request.user.username
-                if SecretToken.objects.filter(secret_token=usr).exists():
-                    telegram_id = SecretToken.objects.filter(secret_token=usr)[0]
+                if UserNameAndTelegramID.objects.filter(user=usr).exists():
+                    telegram_id = UserNameAndTelegramID.objects.get(user=usr).telegram_id
                     if NotificationDates.objects.filter(title=title, user=telegram_id).exists():
                         NotificationDates.objects.get(title=title).delete()
                 if NotificationDates.objects.filter(title=title, user=usr).exists():
