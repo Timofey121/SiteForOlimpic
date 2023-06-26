@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
@@ -6,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm
-from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID
+from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite
 from olympic.utils import menu, additional_menu, DataMixin
 
 
@@ -193,6 +195,9 @@ class RegisterUser(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
+        RegistrationSite.objects.create(user=self.request.POST['username'], email=self.request.POST['email'],
+                                        data_registration=datetime.datetime.now().strftime('%d-%m-%Y'),
+                                        blocked=False)
         login(self.request, user)
         return redirect('home')
 
