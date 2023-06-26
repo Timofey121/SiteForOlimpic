@@ -1,12 +1,24 @@
 from django.contrib import admin
 
-from olympic.models import Registration, Olympiads, NotificationDates, Feedback, TechnicalSupport, Payment, Subjects, \
-    SecretToken, UserNameAndTelegramID
+from olympic.models import RegistrationSite, RegistrationTelegram, Olympiads, NotificationDates, Feedback, \
+    TechnicalSupport, Payment, \
+    Subjects, SecretToken, UserNameAndTelegramID
 
 
 # Register your models here.
 
-class RegistrationAdmin(admin.ModelAdmin):
+class RegistrationSiteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'email', 'blocked', 'data_registration')  # отображение этих в полей
+    list_display_links = (
+        'user', 'email', 'data_registration')  # кликабельные поля в админке, для перехода на запись в БД
+    search_fields = ('email', 'user')  # поля, по которым можно искать записи
+    list_editable = ('blocked',)  # поля, которые можно изменить, прямо в списке записей
+
+    # поля, отображаемые в форме редактирования, некоторые не редактируемые
+    fields = ('user', 'email', 'data_registration', 'blocked')
+
+
+class RegistrationTelegramAdmin(admin.ModelAdmin):
     list_display = ('telegram_id', 'full_name', 'blocked', 'data_registration')  # отображение этих в полей
     list_display_links = (
         'telegram_id', 'full_name', 'data_registration')  # кликабельные поля в админке, для перехода на запись в БД
@@ -71,7 +83,8 @@ class UserNameAndTelegramIDAdmin(admin.ModelAdmin):
     search_fields = ('telegram_id', 'user')  # поля, по которым можно искать записи
 
 
-admin.site.register(Registration, RegistrationAdmin)
+admin.site.register(RegistrationSite, RegistrationSiteAdmin)
+admin.site.register(RegistrationTelegram, RegistrationTelegramAdmin)
 admin.site.register(Olympiads, OlympiadsAdmin)
 admin.site.register(NotificationDates, NotificationDatesAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
