@@ -33,6 +33,7 @@ class OlympiadsAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'sub', 'title', 'start', 'stage', 'rsoch')  # отображение этих в полей
     list_display_links = ('id', 'title')  # кликабельные поля в админке, для перехода на запись в БД
+    list_editable = ('rsoch',)  # поля, которые можно изменить, прямо в списке записей
     search_fields = ('sub', 'title')  # поля, по которым можно искать записи
 
     # поля, отображаемые в форме редактирования, некоторые не редактируемые
