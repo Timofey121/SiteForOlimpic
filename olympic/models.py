@@ -56,7 +56,7 @@ class Olympiads(models.Model):
     class Meta:
         verbose_name = 'Олимпиада'  # название нашей модели в единственном числе
         verbose_name_plural = 'Олимпиады'  # название нашей модели во множественном числе
-        ordering = ['title', 'start']  # сортировка
+        ordering = ['sub', 'start']  # сортировка
 
 
 class Subjects(models.Model):
