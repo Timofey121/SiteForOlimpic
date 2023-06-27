@@ -59,23 +59,6 @@ class Olympiads(models.Model):
         ordering = ['sub', 'start']  # сортировка
 
 
-class Subjects(models.Model):
-    subject = models.CharField(max_length=2000, verbose_name="Предмет")
-    slug = models.SlugField(max_length=2000, unique=True, db_index=True, verbose_name="URL")
-    photo = models.ImageField(upload_to="subjects/", verbose_name="Фото")
-
-    def __str__(self):
-        return self.subject
-
-    def get_absolute_url(self):
-        return reverse('subject', kwargs={'sub_slug': self.slug})
-
-    class Meta:
-        verbose_name = 'Предмет'  # название нашей модели в единственном числе
-        verbose_name_plural = 'Предметы'  # название нашей модели во множественном числе
-        ordering = ['subject']  # сортировка
-
-
 class NotificationDates(models.Model):
     user = models.CharField(max_length=2000, verbose_name="Пользователь или его Telegram_ID")
 
@@ -98,6 +81,23 @@ class NotificationDates(models.Model):
         verbose_name = 'Подключенное уведомление'  # название нашей модели в единственном числе
         verbose_name_plural = 'Подключенные уведомления'  # название нашей модели во множественном числе
         ordering = ['user', 'start']  # сортировка
+
+
+class Subjects(models.Model):
+    subject = models.CharField(max_length=2000, verbose_name="Предмет")
+    slug = models.SlugField(max_length=2000, unique=True, db_index=True, verbose_name="URL")
+    photo = models.ImageField(upload_to="subjects/", verbose_name="Фото")
+
+    def __str__(self):
+        return self.subject
+
+    def get_absolute_url(self):
+        return reverse('subject', kwargs={'sub_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Предмет'  # название нашей модели в единственном числе
+        verbose_name_plural = 'Предметы'  # название нашей модели во множественном числе
+        ordering = ['subject']  # сортировка
 
 
 class SecretToken(models.Model):

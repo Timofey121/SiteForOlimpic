@@ -31,7 +31,7 @@ class RegistrationTelegramAdmin(admin.ModelAdmin):
 
 class OlympiadsAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'sub', 'title', 'start', 'stage', 'schedule', 'site', 'rsoch')  # отображение этих в полей
+        'id', 'sub', 'title', 'start', 'stage', 'rsoch')  # отображение этих в полей
     list_display_links = ('id', 'title')  # кликабельные поля в админке, для перехода на запись в БД
     search_fields = ('sub', 'title')  # поля, по которым можно искать записи
 
