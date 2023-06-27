@@ -42,7 +42,7 @@ class OlympiadsAdmin(admin.ModelAdmin):
 
 class NotificationDatesAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'sub', 'user', 'title', 'start', 'stage', 'schedule', 'site', 'rsoch')  # отображение этих в полей
+        'id', 'sub', 'user', 'title', 'start', 'stage', 'rsoch')  # отображение этих в полей
     list_display_links = ('user', 'title')  # кликабельные поля в админке, для перехода на запись в БД
     search_fields = ('user', 'sub', 'title')  # поля, по которым можно искать записи
     list_editable = ('rsoch',)  # поля, которые можно изменить, прямо в списке записей
