@@ -128,10 +128,12 @@ def Notification(request):
                            })
 
         elif 'add' in request.POST['select']:
-            for title in request.POST.getlist('choose'):
+            for itm in request.POST.getlist('choose'):
+                title, sub = itm.split('-')
+                sub_id = Subjects.objects.get(subject=sub).id
                 usr = request.user.username
                 if not NotificationDates.objects.filter(title=title, user=usr).exists():
-                    record = Olympiads.objects.get(title=title)
+                    record = Olympiads.objects.get(title=title, sub_id=sub_id)
                     start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
                         record.site, record.sub, record.rsoch
                     NotificationDates.objects.create(user=usr, title=title, start=start, site=site, stage=stage,
