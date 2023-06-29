@@ -138,15 +138,17 @@
         </div>
     </div>
 </section>
-<form action="" class="activities_olimp" method="post">
+<form action="" class="main_form" method="post">
     {% csrf_token %}
     <section class="activities_with_the_olympiad">
         <div class="container">
-            <select name="select" id="" class="selection_from_the_list">
-                <option value="nothing">Выберите из списка</option>
-                <option value="add">Подключить уведомления</option>
-                <option value="delete">Удалить уведомления</option>
-            </select>
+            <div class="activities_olimp">
+                <select name="select" id="" class="selection_from_the_list">
+                    <option value="nothing">Выберите из списка</option>
+                    <option value="add">Подключить уведомления</option>
+                    <option value="delete">Удалить уведомления</option>
+                </select>
+            </div>
             <button type="submit" class="olimp_choose_button">
                 Применить
             </button>
@@ -159,7 +161,7 @@
                     <div class="olimp_inner">
                         <div class="choose_this_olympiad">
                             <label for="choose_this_olympiad_checkbox">Выбрать олимпиаду</label>
-                            <input type="checkbox" name="choose" value="{{ p.title }}-{{ p.sub }}"
+                            <input type="checkbox" name="choose" value="{{ p.title }}"
                                    id="choose_this_olympiad_checkbox">
                         </div>
                         <div class="olimp_card">
