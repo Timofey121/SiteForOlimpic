@@ -161,7 +161,7 @@
                     <div class="olimp_inner">
                         <div class="choose_this_olympiad">
                             <label for="choose_this_olympiad_checkbox">Выбрать олимпиаду</label>
-                            <input type="checkbox" name="choose" value="{{ p.title }}"
+                            <input type="checkbox" name="choose" value="{{ p.title }}-{{ p.sub }}"
                                    id="choose_this_olympiad_checkbox">
                         </div>
                         <div class="olimp_card">
@@ -201,12 +201,12 @@
                                     </div>
                                 {% endif %}
                                 <div class="olimp_card_button_cont">
-                                    <a href="{{ p.schedule }}">
+                                    <form action="{{ p.schedule }}" target="_blank">
                                         <button>Посмотреть расписание</button>
-                                    </a>
-                                    <a href="{{ p.site }}">
+                                    </form>
+                                    <form action="{{ p.site }}" target="_blank">
                                         <button>Перейти на сайт олимпиады</button>
-                                    </a>
+                                    </form>
                                 </div>
                                 <br>
                             </div>

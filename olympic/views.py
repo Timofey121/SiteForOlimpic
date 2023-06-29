@@ -23,12 +23,18 @@ def AllOlympiads(request):
             usr = request.user.username
             if UserNameAndTelegramID.objects.filter(user=request.user.username).exists():
                 telegram_id = UserNameAndTelegramID.objects.get(user=request.user.username).telegram_id
+                g = NotificationDates.objects.filter(user=telegram_id).all()
+                h = NotificationDates.objects.filter(user=usr).all()
+                gen = []
+                for itm in h:
+                    if not g.filter(title=itm.title, start=itm.start, sub_id=itm.sub).exists():
+                        gen.append(itm)
                 return render(request, 'olympic/list_of_available_subjects.html',
                               {"menu": menu,
                                "additional_menu": additional_menu,
                                'title': 'Олимпиады',
                                'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(Q(user=telegram_id) | Q(user=usr)).all(),
+                               'olympiads': gen + list(g),
                                'text': "Показать все олимпиады",
                                'flag': True,
                                })
@@ -60,13 +66,18 @@ def FilterOlympiads(request, sub_slug):
             usr = request.user.username
             if UserNameAndTelegramID.objects.filter(user=request.user.username).exists():
                 telegram_id = UserNameAndTelegramID.objects.get(user=request.user.username).telegram_id
+                g = NotificationDates.objects.filter(user=telegram_id, sub__slug=sub_slug).all()
+                h = NotificationDates.objects.filter(user=usr, sub__slug=sub_slug).all()
+                gen = []
+                for itm in h:
+                    if not g.filter(title=itm.title, start=itm.start, sub_id=itm.sub).exists():
+                        gen.append(itm)
                 return render(request, 'olympic/list_of_available_subjects.html',
                               {"menu": menu,
                                "additional_menu": additional_menu,
                                'title': f'Категория - {c.subject}',
                                'categories': Subjects.objects.all(),
-                               'olympiads': NotificationDates.objects.filter(
-                                   Q(user=telegram_id, sub__slug=sub_slug) | Q(user=usr, sub__slug=sub_slug)).all(),
+                               'olympiads': gen + list(g),
                                'text': "Показать все олимпиады",
                                "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                                'flag': True,

@@ -209,12 +209,12 @@
                         {% endif %}
 
                         <div class="olimp_card_button_cont">
-                            <a href="{{ p.schedule }}">
+                            <form action="{{ p.schedule }}" target="_blank">
                                 <button>Посмотреть расписание</button>
-                            </a>
-                            <a href="{{ p.site }}">
+                            </form>
+                            <form action="{{ p.site }}" target="_blank">
                                 <button>Перейти на сайт олимпиады</button>
-                            </a>
+                            </form>
                         </div>
                     </div>
 
