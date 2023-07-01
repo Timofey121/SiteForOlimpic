@@ -9,7 +9,7 @@ html, body {
 }
 body {
     background-image: url(../images/t1.png);
-    width: 100%;
+
 }
 
 .container {
@@ -271,7 +271,7 @@ body {
 }
 .olimp_card {
     width: calc((100%/2)-10px);
-    height: auto;
+    height: 460px;
     border-radius: 20px;
     box-shadow: 0px 0px 14px 0px #2575FC4D;
     position: relative;
@@ -378,7 +378,6 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 .olimp_card_button_cont button {
     height: 56px;
@@ -978,7 +977,7 @@ body {
     grid-template-columns: 1fr;
     }
     .olimp_card {
-        height: auto;
+        height: 420px;
     }
     .olimp_card_button_cont {
         justify-content: space-between;
@@ -1184,3 +1183,50 @@ body {
 
 
 
+@media screen and (max-width: 480px) {
+    .selection_from_the_list {
+        width: 200px;
+        font-size: 14px;
+    }
+}
+
+.selection_from_the_list {
+    width: 245px;
+    height: 34px;
+    border-radius: 10px;
+    outline: none;
+    padding-left: 12px;
+    border: 1px solid hsla(0, 0%, 47%, 0.3);
+    color: hsla(218, 9%, 20%, 0.7);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.11px;
+    background-color: #FFFFFF;
+}
+
+.selection_from_the_list option {
+    color: hsla(218, 9%, 20%, 0.7);
+}
+
+@media screen and (max-width: 480px) {
+    .olimp_choose_button {
+        margin-left: 0;
+        font-size: 14px;
+        width: 105px;
+    }
+}
+
+.olimp_choose_button {
+    margin-left: 10px;
+    width: 116px;
+    height: 34px;
+    background-color: #008ED5;
+    border-radius: 10px;
+    opacity: .7;
+    border: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.37px;
+    color: #fff;
+    cursor: pointer;
+}
