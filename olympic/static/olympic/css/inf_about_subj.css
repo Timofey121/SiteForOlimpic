@@ -337,7 +337,7 @@ body {
 }
 
 .olimp_card {
-    height: 460px;
+    height: auto;
     border-radius: 20px;
     box-shadow: 0px 0px 14px 0px #2575FC4D;
     position: relative;
@@ -459,6 +459,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .olimp_card_button_cont button {
