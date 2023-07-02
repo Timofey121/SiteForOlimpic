@@ -16,6 +16,7 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('registration/', RegisterUser.as_view(), name='registration'),
     path('logout/', logout_user, name='logout'),
+    path('password_reset/', password_reset, name='password_reset'),
 ]
 
 if settings.DEBUG:

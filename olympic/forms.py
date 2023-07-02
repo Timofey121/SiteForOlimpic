@@ -13,6 +13,10 @@ class SecretTokenForm(UserCreationForm):
                                widget=forms.TextInput(attrs={'class': 'form-input'}))
 
 
+class PasswordReset(UserCreationForm):
+    login_or_email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-input'}))
+
+
 class RegisterForm(UserCreationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(), max_length=100, initial='')
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))

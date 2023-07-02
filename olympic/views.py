@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm
+from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset
 from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite
 from olympic.utils import menu, additional_menu, DataMixin
 
@@ -168,6 +168,20 @@ def Notification(request):
                    'categories': Subjects.objects.all(),
                    'text_for_search': '',
                    })
+
+
+def password_reset(request):
+    if request.method == 'POST':
+        print(request.POST)
+
+    return render(request, 'olympic/password_reset.html',
+                  {
+                      "menu": menu,
+                      "additional_menu": additional_menu,
+                      'title': 'Сброс Пароля',
+                      'form': PasswordReset(),
+
+                  })
 
 
 def token(request):
