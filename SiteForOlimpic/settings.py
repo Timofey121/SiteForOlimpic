@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from environs import Env
 
 from django.urls import include, path
 
@@ -132,3 +133,13 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
 ]
 
+
+# Теперь используем вместо библиотеки python-dotenv библиотеку environs
+env = Env()
+env.read_env()
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ale3jurtaev@gmail.com'
+EMAIL_HOST_PASSWORD = 'jngjzzapihalmkqd'

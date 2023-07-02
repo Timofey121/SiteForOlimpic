@@ -1,14 +1,19 @@
 import datetime
+from secrets import token_hex
+from django.contrib.auth.models import User
 
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.core.mail import EmailMultiAlternatives
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset
-from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite
+from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser
+from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite, \
+    ResetPassword
 from olympic.utils import menu, additional_menu, DataMixin
 
 
@@ -107,8 +112,9 @@ def FilterOlympiads(request, sub_slug):
 
 
 def Notification(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     if request.method == "POST":
-
         if 'find' in request.POST:
             search = str(request.POST['search'])
             search_olympiads = list(Olympiads.objects.filter(
@@ -171,20 +177,54 @@ def Notification(request):
 
 
 def password_reset(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
-        print(request.POST)
-
+        usr_or_email, usr = request.POST['login_or_email'], ''
+        if RegistrationSite.objects.filter(user=usr_or_email).exists():
+            usr = RegistrationSite.objects.get(user=usr_or_email)
+        elif RegistrationSite.objects.filter(email=usr_or_email).exists():
+            usr = RegistrationSite.objects.get(email=usr_or_email)
+        if usr != '':
+            tkn = token_hex(32)
+            reset_url = (request.build_absolute_uri() + tkn)
+            data = {
+                'username': usr.user,
+                'url': reset_url,
+            }
+            html_body = render_to_string('olympic/email_templates/reset_password.html', data)
+            msg = EmailMultiAlternatives(subject='Сброс-Пароля-[olympic]', to=[f'{usr.email}'])
+            msg.attach_alternative(html_body, 'text/html')
+            msg.send()
+            ResetPassword.objects.create(user=usr.user, token=tkn)
     return render(request, 'olympic/password_reset.html',
                   {
                       "menu": menu,
                       "additional_menu": additional_menu,
                       'title': 'Сброс Пароля',
                       'form': PasswordReset(),
+                  })
 
+
+def password_reset_for_usr(request, token):
+    if request.method == 'POST':
+        new_password = request.POST['new_password']
+        username = ResetPassword.objects.get(token=token).user
+        u = User.objects.get(username__exact=username)
+        u.set_password(new_password)
+        u.save()
+        ResetPassword.objects.get(token=token).delete()
+    return render(request, 'olympic/password_reset_for_usr.html',
+                  {"menu": menu,
+                      "additional_menu": additional_menu,
+                      'title': 'Сброс Пароля',
+                      'form': PasswordResetForUser(),
                   })
 
 
 def token(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     alert_text = ''
     if request.method == 'POST':
         if 'password' in request.POST:
@@ -197,7 +237,6 @@ def token(request):
                 alert_text = 'Нет Телеграмм аккаунта с таким Секретным Токеном'
         else:
             UserNameAndTelegramID.objects.filter(user=request.user).delete()
-
     usr = request.user.username
     flag = UserNameAndTelegramID.objects.filter(user=usr).exists()
     return render(request, 'olympic/secret_token_pager.html',

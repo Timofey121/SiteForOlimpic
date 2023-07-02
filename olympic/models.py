@@ -38,6 +38,22 @@ class RegistrationSite(models.Model):
         ordering = ['user', '-data_registration']  # сортировка
 
 
+class ResetPassword(models.Model):
+    # id - PrimaryKey внесен в БД по умолчанию
+    user = models.CharField(max_length=2000, verbose_name="Имя пользователя")
+    token = models.CharField(max_length=2000, verbose_name="Токен")
+
+    # Тогда при выводе всех записей, для различия записей, будет отображаться их title
+    def __str__(self):
+        return self.user
+
+    # Класс для работы с моделью в Админ-панели
+    class Meta:
+        verbose_name = 'Сброс Пароля'  # название нашей модели в единственном числе
+        verbose_name_plural = 'Сброс пароля'  # название нашей модели во множественном числе
+        ordering = ['user']  # сортировка
+
+
 class Olympiads(models.Model):
     title = models.CharField(max_length=2000, verbose_name="Название олимпиады")
     start = models.CharField(max_length=2000, verbose_name="Дата начала олимпиады")

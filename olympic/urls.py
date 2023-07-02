@@ -17,6 +17,7 @@ urlpatterns = [
     path('registration/', RegisterUser.as_view(), name='registration'),
     path('logout/', logout_user, name='logout'),
     path('password_reset/', password_reset, name='password_reset'),
+    path('password_reset/<slug:token>', password_reset_for_usr, name='password_reset_for_usr'),
 ]
 
 if settings.DEBUG:

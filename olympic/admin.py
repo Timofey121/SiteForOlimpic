@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from olympic.models import RegistrationSite, RegistrationTelegram, Olympiads, NotificationDates, Feedback, \
     TechnicalSupport, Payment, \
-    Subjects, SecretToken, UserNameAndTelegramID
+    Subjects, SecretToken, UserNameAndTelegramID, ResetPassword
 
 
 # Register your models here.
@@ -78,6 +78,12 @@ class SecretTokenAdmin(admin.ModelAdmin):
     search_fields = ('telegram_id',)  # поля, по которым можно искать записи
 
 
+class ResetPasswordAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'token',)  # отображение этих в полей
+    list_display_links = ('user',)  # кликабельные поля в админке, для перехода на запись в БД
+    search_fields = ('user',)  # поля, по которым можно искать записи
+
+
 class UserNameAndTelegramIDAdmin(admin.ModelAdmin):
     list_display = ('id', 'telegram_id', 'user',)  # отображение этих в полей
     list_display_links = ('telegram_id',)  # кликабельные поля в админке, для перехода на запись в БД
@@ -87,6 +93,7 @@ class UserNameAndTelegramIDAdmin(admin.ModelAdmin):
 admin.site.register(RegistrationSite, RegistrationSiteAdmin)
 admin.site.register(RegistrationTelegram, RegistrationTelegramAdmin)
 admin.site.register(Olympiads, OlympiadsAdmin)
+admin.site.register(ResetPassword, ResetPasswordAdmin)
 admin.site.register(NotificationDates, NotificationDatesAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(TechnicalSupport, TechnicalSupportAdmin)
