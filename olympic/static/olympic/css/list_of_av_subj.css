@@ -493,6 +493,69 @@ body {
     line-height: 24px;
     color: #2A222B;
 }
+.intro_search_cont {
+    position: relative;
+    margin-top: 40px;
+}
+
+.search_field {
+    width: 540px;
+    height: 46px;
+    padding-left: 20px;
+    color: #2E3136;
+    font-size: 16px;
+    background-color: #F4F3F4;
+    z-index: 1;
+    outline: none;
+    border: #777777 1px solid;
+    border-radius: 10px;
+    border: 1px solid hsla(0, 0%, 47%, 0.2);
+}
+
+.search_field::placeholder, .search_field::-webkit-input-placeholder, .search_field::-moz-placeholder {
+    font-size: 16px;
+    color: #2E3136;
+    opacity: .5;
+}
+
+.glass {
+    border: 0;
+    background-color: inherit;
+    position: absolute;
+    left: 501.67px;
+    top: 14px;
+    width: 15.83px;
+    height: 15.83px;
+    cursor: pointer;
+}
+
+.find_button {
+    width: 120px;
+    height: 44px;
+    background-color: #008ED5;
+    border-radius: 10px;
+    opacity: .7;
+    border: 0;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20.37px;
+    color: #fff;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.reset_button {
+    margin-left: 20px;
+    border: 0;
+    background-color: inherit;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20.37px;
+    color: #777777;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1700px) {
 
     .nav_link {
@@ -690,7 +753,21 @@ body {
     .footer_link {
         font-size: 16px;
     }
+    .intro_search_cont {
+        margin-top: 30px;
+    }
 
+    .search_field {
+        height: 42px;
+    }
+
+    .glass {
+        top: 12px;
+    }
+
+    .find_button {
+        height: 42px;
+    }
 }
 
 @media screen and (max-width: 1200px) {
@@ -1076,6 +1153,33 @@ body {
     .footer_mobile_links_col_2 {
         padding-left: 10px;
     }
+    .intro_search_cont {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .intro_search_cont span:last-child {
+        margin-top: 10px;
+    }
+
+    .search_field {
+        width: 100%;
+    }
+
+    .glass {
+        left: 93%;
+    }
+
+    .find_button {
+        margin-left: 0;
+    }
+
+    .reset_button {
+        margin-left: 15px;
+    }
+
 }
         /* Landscape phones and smaller */
 
