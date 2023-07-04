@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-from environs import Env
 
 from django.urls import include, path
+from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'olympic.apps.OlympicConfig',
     'debug_toolbar',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -133,7 +134,6 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
 ]
 
-
 # Теперь используем вместо библиотеки python-dotenv библиотеку environs
 env = Env()
 env.read_env()
@@ -141,5 +141,14 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ale3jurtaev@gmail.com'
-EMAIL_HOST_PASSWORD = 'jngjzzapihalmkqd'
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = "redis://" + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = "redis://" + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

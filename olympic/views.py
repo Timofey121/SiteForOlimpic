@@ -1,20 +1,21 @@
 import datetime
 from secrets import token_hex
-from django.contrib.auth.models import User
 
 from django.contrib.auth import logout, login
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.core.mail import EmailMultiAlternatives
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from olympic.forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser
-from olympic.models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite, \
+from .forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser
+from .models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite, \
     ResetPassword
-from olympic.utils import menu, additional_menu, DataMixin
+from .service import send_email
+from .tasks import send_span_email
+from .utils import menu, additional_menu, DataMixin
 
 
 def main(request):
@@ -192,11 +193,14 @@ def password_reset(request):
                 'username': usr.user,
                 'url': reset_url,
             }
+
             html_body = render_to_string('olympic/email_templates/reset_password.html', data)
-            msg = EmailMultiAlternatives(subject='Сброс-Пароля-[olympic]', to=[f'{usr.email}'])
-            msg.attach_alternative(html_body, 'text/html')
-            msg.send()
+
+            # USE CELERY FOR MY TASK
+            send_span_email.delay(usr.email, html_body)
+
             ResetPassword.objects.create(user=usr.user, token=tkn)
+            return redirect('login')
     return render(request, 'olympic/password_reset.html',
                   {
                       "menu": menu,
@@ -207,6 +211,8 @@ def password_reset(request):
 
 
 def password_reset_for_usr(request, token):
+    if not ResetPassword.objects.filter(token=token).exists():
+        return redirect('home')
     if request.method == 'POST':
         new_password = request.POST['new_password']
         username = ResetPassword.objects.get(token=token).user
@@ -214,12 +220,13 @@ def password_reset_for_usr(request, token):
         u.set_password(new_password)
         u.save()
         ResetPassword.objects.get(token=token).delete()
+        return redirect('login')
     return render(request, 'olympic/password_reset_for_usr.html',
                   {"menu": menu,
-                      "additional_menu": additional_menu,
-                      'title': 'Сброс Пароля',
-                      'form': PasswordResetForUser(),
-                  })
+                   "additional_menu": additional_menu,
+                   'title': 'Сброс Пароля',
+                   'form': PasswordResetForUser(),
+                   })
 
 
 def token(request):
