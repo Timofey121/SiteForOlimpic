@@ -19,8 +19,8 @@ app.autodiscover_tasks()
 # https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html
 # CREATE TASK, который выполняется каждые 12 часов
 app.conf.beat_schedule = {
-    'send-notification-every-10-minute': {
+    'send-notification-every-12-hour': {
         'task': 'olympic.tasks.send_notification_email_from_olympic',
         'schedule': crontab(hour='*/12')
-    }
+    },
 }
