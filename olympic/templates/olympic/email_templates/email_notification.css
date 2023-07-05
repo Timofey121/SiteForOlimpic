@@ -1,0 +1,110 @@
+@media (max-width: 1700px) {
+    .description_criterion {
+        font-size: 22px !important;
+        width: 240px !important;
+    }
+
+    .olimp_card_button_cont a {
+        font-size: 18px !important;
+        width: 45% !important;
+    }
+
+}
+
+@media (max-width: 1420px) {
+    .olimp_subtitle {
+        font-size: 16px !important;
+    }
+
+    .olimp_class {
+        font-size: 18px !important;
+    }
+
+    .description_criterion {
+        font-size: 20px !important;
+        width: 200px !important;
+    }
+
+    .olimp_card_button_cont {
+        justify-content: space-around !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .olimp_subtitle {
+        font-size: 14px !important;
+    }
+
+    .olimp_desc_line {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .olimp_class {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 980px) {
+    .olimp_desc_line {
+        flex-direction: row !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .olimp_desc_line {
+        flex-direction: column !important;
+    }
+
+    .olimp_card_button_cont {
+        flex-direction: column !important;
+    }
+
+    .olimp_card_button_cont a {
+        margin-right: auto;
+        margin-left: auto;
+        width: 90% !important;
+    }
+
+    .olimp_card_button_cont a:first-child {
+        margin-bottom: 10px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .yellow_dot {
+        top: 20px !important;
+        right: 20px !important;
+    }
+
+    .olimp_card_container {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+    }
+
+    .olimp_card_intro {
+        padding-top: 20px !important;
+    }
+
+    .card_olimp_title {
+        font-size: 28px !important;
+    }
+
+    .olimp_subtitle {
+        font-size: 12px !important;
+
+    }
+
+    .olimp_class {
+        font-size: 12px !important;
+    }
+
+    .olimp_desc {
+        margin-top: 20px !important;
+    }
+
+    .description_criterion {
+        font-size: 16px !important;
+    }
+}

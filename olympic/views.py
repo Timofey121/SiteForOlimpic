@@ -13,7 +13,6 @@ from django.views.generic import CreateView
 from .forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser
 from .models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite, \
     ResetPassword
-from .service import send_email
 from .tasks import send_span_email
 from .utils import menu, additional_menu, DataMixin
 
@@ -147,10 +146,10 @@ def Notification(request):
 
         elif 'add' in request.POST['select']:
             for itm in request.POST.getlist('choose'):
-                title, sub = itm.split('-')
+                title, sub = itm.split('это_!!!_бу-бу_разделитель')
                 sub_id = Subjects.objects.get(subject=sub).id
                 usr = request.user.username
-                if not NotificationDates.objects.filter(title=title, user=usr).exists():
+                if not NotificationDates.objects.filter(title=title, user=usr, sub=sub_id).exists():
                     record = Olympiads.objects.get(title=title, sub_id=sub_id)
                     start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
                         record.site, record.sub, record.rsoch
@@ -197,7 +196,7 @@ def password_reset(request):
             html_body = render_to_string('olympic/email_templates/reset_password.html', data)
 
             # USE CELERY FOR MY TASK
-            send_span_email.delay(usr.email, html_body)
+            send_span_email.delay('Сброс-Пароля-[olympic]', usr.email, html_body)
 
             ResetPassword.objects.create(user=usr.user, token=tkn)
             return redirect('login')
