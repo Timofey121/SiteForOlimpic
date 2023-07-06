@@ -1,0 +1,11 @@
+captcha
+django-celery-beat
+django-debug-toolbar
+django-recaptcha
+env
+environs
+flower
+lxml
+pip-chill
+redis
+schedule

@@ -157,14 +157,15 @@ def Notification(request):
                                                      schedule=schedule, sub=sub, rsoch=rsoch)
 
         elif 'delete' in request.POST['select']:
-            for title in request.POST.getlist('choose'):
+            for itm in request.POST.getlist('choose'):
+                title, sub = itm.split('это_!!!_бу-бу_разделитель')
                 usr = request.user.username
                 if UserNameAndTelegramID.objects.filter(user=usr).exists():
                     telegram_id = UserNameAndTelegramID.objects.get(user=usr).telegram_id
                     if NotificationDates.objects.filter(title=title, user=telegram_id).exists():
-                        NotificationDates.objects.get(title=title).delete()
+                        NotificationDates.objects.get(title=title, sub=sub).delete()
                 if NotificationDates.objects.filter(title=title, user=usr).exists():
-                    NotificationDates.objects.get(title=title).delete()
+                    NotificationDates.objects.get(title=title, sub=sub).delete()
 
     return render(request, 'olympic/information_about_subjects.html',
                   {"menu": menu,

@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+#  database:
+#   Если надо указать подходящий image, то это делается так -> image: postgres:10.1-alpine
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data/ - Сохранение данных на физическом носители
+#    ports:
+#      - 5432:5432
+  web:
+    build: .
+          # Указание на Dockerfile
+          # '.' значит, что Dockerfile находится в одной директории с этим файлом
+    command: python /usr/src/SiteForOlympic/manage.py runserver 0.0.0.0:8888
+    volumes:
+      - .:/usr/src/SiteForOlympic
+    ports:
+      - 8888:8888
+
+#    depends_on:
+#      - database
+
+# volumes:
+#  postgres_data:
