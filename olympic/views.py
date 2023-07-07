@@ -4,6 +4,7 @@ from secrets import token_hex
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -13,6 +14,7 @@ from django.views.generic import CreateView
 from .forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser
 from .models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite, \
     ResetPassword
+from .service import translate_english_letters_into_russian
 from .tasks import send_span_email
 from .utils import menu, additional_menu, DataMixin
 
@@ -23,6 +25,11 @@ def main(request):
 
 
 def AllOlympiads(request):
+    all_olympiads = Olympiads.objects.all()
+    paginator = Paginator(all_olympiads, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     if request.method == "POST":
         if 'someone' in request.POST['select']:
             usr = request.user.username
@@ -58,7 +65,9 @@ def AllOlympiads(request):
                    "additional_menu": additional_menu,
                    'title': 'Олимпиады',
                    'categories': Subjects.objects.all(),
-                   'olympiads': Olympiads.objects.all(),
+                   'olympiads': all_olympiads,
+                   'page_obj': page_obj,
+                   'paginator': paginator,
                    'text': "Показать только те олимпиады, к которым у меня подключены уведомления",
                    'flag': False,
                    })
@@ -117,12 +126,25 @@ def Notification(request):
     if request.method == "POST":
         if 'find' in request.POST:
             search = str(request.POST['search'])
-            search_olympiads = list(Olympiads.objects.filter(
-                Q(title__contains=search) | Q(title__contains=search.capitalize()) | Q(
-                    title__contains=search.lower())))
+            translate_search = translate_english_letters_into_russian(search)
+            search_olympiads = list(
+                Olympiads.objects.filter(
+                    Q(title__contains=search) |
+                    Q(title__contains=search.capitalize()) |
+                    Q(title__contains=search.lower()) |
+                    Q(title__contains=translate_search) |
+                    Q(title__contains=translate_search.capitalize()) |
+                    Q(title__contains=translate_search.lower())
+                )
+            )
             for itm in Subjects.objects.filter(
-                    Q(subject__contains=search.capitalize()) | Q(subject__contains=search) | Q(
-                        subject__contains=search.lower())).values():
+                    Q(subject__contains=search.capitalize()) |
+                    Q(subject__contains=search) |
+                    Q(subject__contains=search.lower()) |
+                    Q(subject__contains=translate_search.capitalize()) |
+                    Q(subject__contains=translate_search) |
+                    Q(subject__contains=translate_search.lower())
+            ).values():
                 sub_slug = itm['slug']
                 search_olympiads += list(Olympiads.objects.filter(Q(sub__slug__contains=sub_slug)))
             return render(request, 'olympic/information_about_subjects.html',
@@ -158,14 +180,15 @@ def Notification(request):
 
         elif 'delete' in request.POST['select']:
             for itm in request.POST.getlist('choose'):
-                title, sub = itm.split('это_!!!_бу-бу_разделитель')
+                title, sub_name = itm.split('это_!!!_бу-бу_разделитель')
+                sub = Subjects.objects.get(subject=sub_name).id
                 usr = request.user.username
                 if UserNameAndTelegramID.objects.filter(user=usr).exists():
                     telegram_id = UserNameAndTelegramID.objects.get(user=usr).telegram_id
-                    if NotificationDates.objects.filter(title=title, user=telegram_id).exists():
-                        NotificationDates.objects.get(title=title, sub=sub).delete()
-                if NotificationDates.objects.filter(title=title, user=usr).exists():
-                    NotificationDates.objects.get(title=title, sub=sub).delete()
+                    if NotificationDates.objects.filter(title=title, user=telegram_id, sub=sub).exists():
+                        NotificationDates.objects.get(title=title, user=telegram_id, sub=sub).delete()
+                if NotificationDates.objects.filter(title=title, user=usr, sub=sub).exists():
+                    NotificationDates.objects.get(title=title, user=usr, sub=sub).delete()
 
     return render(request, 'olympic/information_about_subjects.html',
                   {"menu": menu,

@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
 #  database:
@@ -15,7 +15,7 @@ services:
     volumes:
       - .:/usr/src/SiteForOlympic
     ports:
-      - 8888:8888
+      - 8080:8080
 
 #    depends_on:
 #      - database

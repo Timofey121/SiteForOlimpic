@@ -9,6 +9,7 @@ additional_menu = [
 
 class DataMixin:  # убираем дублирование кода
     # paginate_by = 2  # В класс ListView встроена пагинация, paginate_by = сколько записей на одной странице отображать
+    paginate_by = 6
 
     def get_user_context(self, **kwargs):  # создаем нужный контекст по умолчанию
         context = kwargs
