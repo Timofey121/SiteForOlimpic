@@ -7,8 +7,6 @@ from .models import RegistrationSite, UserNameAndTelegramID, NotificationDates, 
 from .service import send_email
 
 
-# https://www.youtube.com/playlist?list=PLF-NY6ldwAWqjBkanP1Tl50kDpIYXJBna
-
 @app.task
 def send_span_email(name_email, user_email, body):
     send_email(name_email, user_email, body)

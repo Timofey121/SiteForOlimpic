@@ -9,14 +9,6 @@ app = Celery('SiteForOlimpic')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-# RUN CELERY:
-# celery -A SiteForOlimpic worker -l info
-# celery -A SiteForOlimpic beat -l info
-
-# RUN FLOWER:
-# https://flower.readthedocs.io/en/latest/man.html
-
-# https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html
 # CREATE TASK, который выполняется каждые 12 часов
 app.conf.beat_schedule = {
     'send-notification-every-12-hour': {

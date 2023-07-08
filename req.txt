@@ -7,5 +7,6 @@ environs
 flower
 lxml
 pip-chill
+psycopg2-binary
 redis
 schedule
