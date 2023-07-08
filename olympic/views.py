@@ -26,7 +26,7 @@ def main(request):
 
 def AllOlympiads(request):
     all_olympiads = Olympiads.objects.all()
-    paginator = Paginator(all_olympiads, 10)
+    paginator = Paginator(all_olympiads, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -79,7 +79,7 @@ def AllOlympiads(request):
 
 def FilterOlympiads(request, sub_slug):
     all_olympiads = Olympiads.objects.all()
-    paginator = Paginator(all_olympiads, 10)
+    paginator = Paginator(all_olympiads, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     c = Subjects.objects.get(slug=sub_slug)
@@ -107,7 +107,7 @@ def FilterOlympiads(request, sub_slug):
                                'flag': True,
                                })
             all_olympiads = NotificationDates.objects.filter(user=usr, sub__slug=sub_slug).all(),
-            paginator = Paginator(all_olympiads, 10)
+            paginator = Paginator(all_olympiads, 6)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
             return render(request, 'olympic/list_of_available_subjects.html',
@@ -142,7 +142,7 @@ def Notification(request):
     if not request.user.is_authenticated:
         return redirect('home')
     all_olympiads = Olympiads.objects.all()
-    paginator = Paginator(all_olympiads, 10)
+    paginator = Paginator(all_olympiads, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     if request.method == "POST":
@@ -170,7 +170,7 @@ def Notification(request):
                 sub_slug = itm['slug']
                 search_olympiads += list(Olympiads.objects.filter(Q(sub__slug__contains=sub_slug)))
             all_olympiads = search_olympiads
-            paginator = Paginator(all_olympiads, 10)
+            paginator = Paginator(all_olympiads, 6)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
             return render(request, 'olympic/information_about_subjects.html',
