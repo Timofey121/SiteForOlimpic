@@ -584,6 +584,51 @@ body {
     background-color: rgba(119, 119, 119, 0.2);
 }
 
+.list-pages {
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+
+.list-pages ul {
+    margin: 20px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list-pages ul li {
+    display: inline-block;
+    margin: 0 20px 0 0;
+}
+
+.list-pages a {
+    color: #000;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.list-pages .page-num, .page-num-selected {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    padding: 16px 0 0 0;
+    border: 1px solid #d0d0d0;
+    border-radius: 40px;
+}
+
+.list-pages .page-num:hover {
+    box-shadow: 3px 3px 1px #d0d0d0;
+}
+
+.list-pages .page-num-selected {
+    border: none;
+    color: #000;
+    font-size: 20px;
+}
+
+.list-pages .page-num-selected:hover {
+    box-shadow: none;
+}
+
 .end {
     display: block;
     margin-top: 10px;
@@ -595,6 +640,50 @@ body {
 }
 
 @media screen and (max-width: 1700px) {
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 20px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
 
     .nav_link {
         margin-right: 30px;
@@ -706,6 +795,51 @@ body {
         height: 100px;
     }
 
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 20px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
+
     .navigation_links {
         font-size: 16px;
     }
@@ -815,6 +949,51 @@ body {
         border-radius: 0 0 20px 20px;
         z-index: 100;
         transition: all .3s ease-in;
+    }
+
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 20px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
     }
 
     .nav_active {
@@ -1039,7 +1218,50 @@ body {
 /* Portrait tablets and small desktops */
 
 @media screen and (max-width: 1024px) {
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
 
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 20px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 24px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
 
     .search_field {
         width: 400px;
@@ -1207,11 +1429,100 @@ body {
         font-size: 22px;
         margin-top: 40px;
     }
+
 }
 
 /* Landscape phones and portrait tablets */
 @media screen and (max-width: 768px) {
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
 
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 20px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
+
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 20px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
 
     .intro_title {
         font-size: 30px;
@@ -1317,7 +1628,50 @@ body {
 /* Landscape phones and smaller */
 
 @media screen and (max-width: 480px) {
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
 
+    .list-pages ul {
+        margin: 20px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 10px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 18px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 20px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
 
     .intro_title {
         font-size: 24px;
@@ -1454,5 +1808,99 @@ body {
 @media screen and (max-width: 320px) {
     .activities_olimp {
         grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+
+    .list-pages ul {
+        margin: 5px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 5px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 15px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .list-pages {
+        text-align: center;
+        margin: 0 0 20px 0;
+    }
+
+    .list-pages ul {
+        margin: 5px 0 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .list-pages ul li {
+        display: inline-block;
+        margin: 0 2px 0 0;
+    }
+
+    .list-pages a {
+        color: #000;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .list-pages .page-num, .page-num-selected {
+        display: inline-block;
+        width: 40px;
+        height: 50px;
+        padding: 16px 0 0 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 40px;
+    }
+
+    .list-pages .page-num:hover {
+        box-shadow: 3px 3px 1px #d0d0d0;
+    }
+
+    .list-pages .page-num-selected {
+        border: none;
+        color: #000;
+        font-size: 15px;
+    }
+
+    .list-pages .page-num-selected:hover {
+        box-shadow: none;
     }
 }

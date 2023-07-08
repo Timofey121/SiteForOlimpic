@@ -48,6 +48,8 @@ def AllOlympiads(request):
                                'categories': Subjects.objects.all(),
                                'olympiads': gen + list(g),
                                'text': "Показать все олимпиады",
+                               'page_obj': page_obj,
+                               'paginator': paginator,
                                'flag': True,
                                })
             return render(request, 'olympic/list_of_available_subjects.html',
@@ -57,6 +59,8 @@ def AllOlympiads(request):
                            'categories': Subjects.objects.all(),
                            'olympiads': NotificationDates.objects.filter(user=usr).all(),
                            'text': "Показать все олимпиады",
+                           'page_obj': page_obj,
+                           'paginator': paginator,
                            'flag': True,
                            })
 
@@ -74,6 +78,10 @@ def AllOlympiads(request):
 
 
 def FilterOlympiads(request, sub_slug):
+    all_olympiads = Olympiads.objects.all()
+    paginator = Paginator(all_olympiads, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     c = Subjects.objects.get(slug=sub_slug)
     if request.method == "POST":
         if 'someone' in request.POST['select']:
@@ -93,9 +101,15 @@ def FilterOlympiads(request, sub_slug):
                                'categories': Subjects.objects.all(),
                                'olympiads': gen + list(g),
                                'text': "Показать все олимпиады",
+                               'page_obj': page_obj,
+                               'paginator': paginator,
                                "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                                'flag': True,
                                })
+            all_olympiads = NotificationDates.objects.filter(user=usr, sub__slug=sub_slug).all(),
+            paginator = Paginator(all_olympiads, 10)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             return render(request, 'olympic/list_of_available_subjects.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
@@ -106,6 +120,8 @@ def FilterOlympiads(request, sub_slug):
                            'text': "Показать все олимпиады",
                            "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                            'flag': True,
+                           'paginator': paginator,
+                           'page_obj': page_obj,
                            })
 
     return render(request, 'olympic/list_of_available_subjects.html',
@@ -115,6 +131,8 @@ def FilterOlympiads(request, sub_slug):
                    'categories': Subjects.objects.all(),
                    'olympiads': Olympiads.objects.filter(sub__slug=sub_slug),
                    'text': "Показать только те олимпиады, к которым у меня подключены уведомления",
+                   'page_obj': page_obj,
+                   'paginator': paginator,
                    "bad_text": f"Нет ближайших олимпиад по предмету {c.subject}!",
                    'flag': False,
                    })
@@ -123,6 +141,10 @@ def FilterOlympiads(request, sub_slug):
 def Notification(request):
     if not request.user.is_authenticated:
         return redirect('home')
+    all_olympiads = Olympiads.objects.all()
+    paginator = Paginator(all_olympiads, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     if request.method == "POST":
         if 'find' in request.POST:
             search = str(request.POST['search'])
@@ -147,11 +169,16 @@ def Notification(request):
             ).values():
                 sub_slug = itm['slug']
                 search_olympiads += list(Olympiads.objects.filter(Q(sub__slug__contains=sub_slug)))
+            all_olympiads = search_olympiads
+            paginator = Paginator(all_olympiads, 10)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             return render(request, 'olympic/information_about_subjects.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
                            'title': 'Подключение/Удаление уведомлений',
-                           'olympiads': search_olympiads,
+                           'page_obj': page_obj,
+                           'paginator': paginator,
                            'categories': Subjects.objects.all(),
                            'text_for_search': search,
                            })
@@ -161,7 +188,8 @@ def Notification(request):
                           {"menu": menu,
                            "additional_menu": additional_menu,
                            'title': 'Подключение/Удаление уведомлений',
-                           'olympiads': Olympiads.objects.all(),
+                           'page_obj': page_obj,
+                           'paginator': paginator,
                            'categories': Subjects.objects.all(),
                            'text_for_search': '',
                            })
@@ -194,7 +222,8 @@ def Notification(request):
                   {"menu": menu,
                    "additional_menu": additional_menu,
                    'title': 'Подключение/Удаление уведомлений',
-                   'olympiads': Olympiads.objects.all(),
+                   'page_obj': page_obj,
+                   'paginator': paginator,
                    'categories': Subjects.objects.all(),
                    'text_for_search': '',
                    })

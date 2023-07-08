@@ -169,6 +169,40 @@
                 </button>
             </form>
         {% endif %}
+        {% if page_obj.has_other_pages %}
+            <nav class="list-pages">
+                <ul>
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">
+                            <li class="page-num">
+                                &lt;
+                            </li>
+                        </a>
+                    {% endif %}
+
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="page-num page-num-selected">{{ p }}</li>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                            <a href="?page={{ p }}">
+                                <li class="page-num">
+                                    {{ p }}
+                                </li>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">
+                            <li class="page-num">
+                                &gt;
+                            </li>
+                        </a>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        {% endif %}
         <div class="selected_olympiads">
             {% for p in page_obj %}
                 <div class="olimp_card">
