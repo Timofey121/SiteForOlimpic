@@ -3,7 +3,7 @@ import datetime
 from django.template.loader import render_to_string
 
 from SiteForOlimpic.celery import app
-from .models import RegistrationSite, UserNameAndTelegramID, NotificationDates, Olympiads
+from .models import RegistrationSite, UserNameAndTelegramID, NotificationDates, Olympiads, ResetPassword
 from .service import send_email
 
 
@@ -33,3 +33,15 @@ def send_notification_email_from_olympic():
                 'notification': final_notifications,
             })
             send_email('Подключенные уведомления', user.email, html_body)
+
+
+@app.task
+def delete_token_every_24_hours():
+    all_token = ResetPassword.objects.all()
+    for itm in all_token:
+        data_created = datetime.datetime.strptime(itm.data_created, '%H:%M %d.%m.%Y').date()
+        now = datetime.datetime.strptime(datetime.datetime.today().strftime('%H:%M %d.%m.%Y'), '%H:%M %d.%m.%Y').date()
+        flag = ((data_created - now) > datetime.timedelta(hours=24))
+        flag1 = ((data_created - now) < datetime.timedelta(hours=0))
+        if flag is True or flag1 is True:
+            ResetPassword.objects.filter(user=itm.user, token=itm.token, data_created=data_created).delete()

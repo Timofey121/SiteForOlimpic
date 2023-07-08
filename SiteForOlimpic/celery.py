@@ -15,4 +15,8 @@ app.conf.beat_schedule = {
         'task': 'olympic.tasks.send_notification_email_from_olympic',
         'schedule': crontab(hour='*/12')
     },
+    'delete_needs_token_every_24_hours': {
+        'task': 'olympic.tasks.delete_token_every_24_hours',
+        'schedule': crontab(hour='*/24')
+    },
 }

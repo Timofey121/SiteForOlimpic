@@ -42,8 +42,7 @@ class ResetPassword(models.Model):
     # id - PrimaryKey внесен в БД по умолчанию
     user = models.CharField(max_length=2000, verbose_name="Имя пользователя")
     token = models.CharField(max_length=2000, verbose_name="Токен")
-    data_created = models.DateField(auto_now_add=True, verbose_name="Время создания ссылки для сброса пароля",
-                                    null=True)
+    data_created = models.DateField(auto_now_add=True, verbose_name="Время создания ссылки для сброса пароля")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):

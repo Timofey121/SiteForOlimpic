@@ -79,7 +79,7 @@ class SecretTokenAdmin(admin.ModelAdmin):
 
 
 class ResetPasswordAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'token',)  # отображение этих в полей
+    list_display = ('id', 'user', 'token', 'data_created')  # отображение этих в полей
     list_display_links = ('user',)  # кликабельные поля в админке, для перехода на запись в БД
     search_fields = ('user',)  # поля, по которым можно искать записи
 
