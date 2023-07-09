@@ -246,10 +246,9 @@ def password_reset(request):
                 'url': reset_url,
             }
             html_body = render_to_string('olympic/email_templates/reset_password.html', data)
-            # USE CELERY FOR MY TASK
-            send_span_email.delay('Сброс-Пароля-[olympic]', usr.email, html_body)
-            now = datetime.datetime.now().strftime('%d.%m.%Y')
+            now = datetime.datetime.now().strftime('%Y-%m-%d')
             ResetPassword.objects.create(user=usr.user, token=tkn, data_created=now)
+            send_span_email.delay('Сброс-Пароля-[olympic]', usr.email, html_body)
             return redirect('login')
     return render(request, 'olympic/password_reset.html', {
         "menu": menu,

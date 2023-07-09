@@ -18,3 +18,7 @@ def translate_english_letters_into_russian(text: str):
                       "йцукенгшщзхъфывапролджэячсмитьбю.ё"
                       'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,Ё'))
     return text.translate(layout)
+
+
+def add_olympiads_to_bd():
+    pass

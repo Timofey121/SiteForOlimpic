@@ -15,7 +15,7 @@ services:
     volumes:
       - .:/usr/src/SiteForOlympic
     ports:
-      - "8001:8001"
+      - "1337:8001"
     environment:
       - DEBUG=1
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
@@ -24,9 +24,12 @@ services:
     depends_on:
       - redis
 
-  celery:
+  redis:
+    image: "redis:alpine"
+
+  celery-worker:
     build: .
-    command: bash -c "celery -A SiteForOlimpic worker -l INFO && celery -A SiteForOlimpic beat -l info"
+    command: celery -A SiteForOlimpic worker -l INFO
     volumes:
       - .:/usr/src/SiteForOlympic
     environment:
@@ -35,11 +38,21 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
     depends_on:
-      - django
       - redis
 
-  redis:
-    image: "redis:alpine"
+  celery-beat:
+    build: .
+    command: celery -A SiteForOlimpic beat -l INFO
+    volumes:
+      - .:/usr/src/SiteForOlympic
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
 
 
 #volumes:
