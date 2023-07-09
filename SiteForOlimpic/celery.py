@@ -19,4 +19,8 @@ app.conf.beat_schedule = {
         'task': 'olympic.tasks.delete_token_every_day',
         'schedule': crontab(hour='*/24')
     },
+    'add_olympiads_to_bd_every_2.5_day': {
+        'task': 'olympic.tasks.add_olympiads_to_bd',
+        'schedule': crontab(hour='*/120')
+    },
 }

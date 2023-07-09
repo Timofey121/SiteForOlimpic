@@ -29,10 +29,11 @@ def send_notification_email_from_olympic():
                 flag1 = ((data - now) > datetime.timedelta(days=0))
                 if flag is True and flag1 is True:
                     final_notifications.append(notif)
-            html_body = render_to_string('olympic/email_templates/email_notification.html', {
-                'notification': final_notifications,
-            })
-            send_email('Подключенные уведомления', user.email, html_body)
+            if len(final_notifications) > 0:
+                html_body = render_to_string('olympic/email_templates/email_notification.html', {
+                    'notification': final_notifications,
+                })
+                send_email('Подключенные уведомления', user.email, html_body)
 
 
 @app.task
@@ -43,4 +44,4 @@ def delete_token_every_day():
         now = datetime.datetime.now().date()
         flag = ((now - data_created) >= datetime.timedelta(days=1))
         if flag is True:
-            ResetPassword.objects.filter(user=itm.user, token=itm.token, data_created=data_created).delete()
+            ResetPassword.objects.filter(data_created=data_created).delete()
