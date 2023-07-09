@@ -1,3 +1,4 @@
+beautifulsoup4
 captcha
 django-celery-beat
 django-debug-toolbar
@@ -8,5 +9,9 @@ flower
 lxml
 pip-chill
 psycopg2-binary
+pysocks
 redis
 schedule
+selenium
+webdriver-manager
+xvfbwrapper
