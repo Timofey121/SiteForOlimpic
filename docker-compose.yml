@@ -1,26 +1,16 @@
 version: '3.3'
 
 services:
-
   django:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    build: ./
     container_name: django_olympic
-    command: bash -c "
-      python /usr/src/SiteForOlympic/manage.py makemigrations &&
-      python /usr/src/SiteForOlympic/manage.py migrate --noinput &&
-      python /usr/src/SiteForOlympic/manage.py runserver 0.0.0.0:8001
-      "
+    command: python manage.py runserver 0.0.0.0:8001
     volumes:
-      - .:/usr/src/SiteForOlympic
+      - .:/usr/src/app
     ports:
       - "1337:8001"
-    environment:
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER = redis://redis:6379/0
-      - CELERY_BACKEND = redis://redis:6379/0
+    env_file:
+      - ./.env.dev
     depends_on:
       - redis
 
@@ -30,7 +20,7 @@ services:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - FLOWER_PORT=8888
     ports:
-       - "1338:8888"
+      - "1338:8888"
 
   redis:
     image: "redis:alpine"
@@ -38,8 +28,6 @@ services:
   celery-worker:
     build: .
     command: celery -A SiteForOlimpic worker -l INFO
-    volumes:
-      - .:/usr/src/SiteForOlympic
     environment:
       - DEBUG=1
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
@@ -51,8 +39,6 @@ services:
   celery-beat:
     build: .
     command: celery -A SiteForOlimpic beat -l INFO
-    volumes:
-      - .:/usr/src/SiteForOlympic
     environment:
       - DEBUG=1
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
@@ -60,8 +46,3 @@ services:
       - CELERY_BACKEND=redis://redis:6379/0
     depends_on:
       - redis
-
-
-
-#volumes:
-#  pgdata:

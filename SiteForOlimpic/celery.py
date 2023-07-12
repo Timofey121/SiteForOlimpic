@@ -9,7 +9,7 @@ app = Celery('SiteForOlimpic')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-# CREATE TASK, который выполняется каждые 12 часов
+
 app.conf.beat_schedule = {
     'send-notification-every-12-hour': {
         'task': 'olympic.tasks.send_notification_email_from_olympic',
@@ -20,7 +20,7 @@ app.conf.beat_schedule = {
         'schedule': crontab(hour='*/24')
     },
     'add_olympiads_to_bd_every_2.5_day': {
-        'task': 'olympic.tasks.add_olympiads_to_bd',
+        'task': 'olympic.tasks.add_olympiads',
         'schedule': crontab(hour='*/120')
     },
 }

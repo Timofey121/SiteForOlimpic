@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from xvfbwrapper import Xvfb
 
-from .models import Subjects, Olympiads, NotificationDates
+from .models import Subjects, Olympiads
 from .templates.dictionary import numbers, months, months2, subjects_rsosh
 
 
@@ -114,14 +114,15 @@ def add_olympiads_to_bd():
                         now = datetime.datetime.strptime(datetime.datetime.today().strftime('%Y%m%d'), '%Y%m%d').date()
                         if data > now:
                             f = (title in subjects_rsosh[subjects[i].lower().capitalize()])
-                            Olympiads.objects.create(title, start, stage, schedule, site, f, sub_id).save()
-                            for tg in NotificationDates.objects.filter(sub_id=sub_id).all():
-                                if NotificationDates.objects.filter(tg.user, title, start, stage, schedule, site, f,
-                                                                    sub_id).exists():
-                                    flag = bool(NotificationDates.objects.get(tg.user, sub_id).rsoch)
-                                    if (flag is False) or (f is True and flag is True):
-                                        NotificationDates.objects.create(tg.user, title, start, stage, schedule, site,
-                                                                         f, sub_id).save()
+                            Olympiads.objects.create(title=title, start=start, stage=stage, schedule=schedule,
+                                                     site=site, rsoch=f, sub_id=sub_id).save()
+                            # for tg in NotificationDates.objects.filter(sub_id=sub_id).all():
+                            #     if NotificationDates.objects.filter(tg.user, title, start, stage, schedule, site, f,
+                            #                                         sub_id).exists():
+                            #         flag = bool(NotificationDates.objects.get(tg.user, sub_id).rsoch)
+                            #         if (flag is False) or (f is True and flag is True):
+                            #             NotificationDates.objects.create(tg.user, title, start, stage, schedule, site,
+                            #                                              f, sub_id).save()
                 except Exception as ex:
                     pass
         except Exception as ex:
