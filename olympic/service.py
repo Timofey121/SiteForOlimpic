@@ -52,9 +52,10 @@ def add_olympiads_to_bd():
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument("--no-sandbox")
             options.add_argument('--start-maximized')
-            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+            driver = webdriver.Chrome(options=options)
             URL = f'https://olimpiada.ru/activities?type=any&subject%5B{numbers[subjects[i].strip().capitalize()]}' \
                   f'%5D=on&class=any&period_date=&period=week'
+            print(subjects[i], URL)
             driver.get(URL)
 
             for j in range(10):

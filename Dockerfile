@@ -30,4 +30,4 @@ COPY . .
 RUN chmod +x entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 
-# docker rmi siteforolimpic_django siteforolimpic_celery-worker siteforolimpic_celery-beat siteforolimpic_nginx
+# docker rmi siteforolimpic_worker siteforolimpic_beat siteforolimpic_webapp siteforolimpic_nginx siteforolimpic_web

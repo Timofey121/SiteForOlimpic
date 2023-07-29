@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  django:
+  webapp:
     build: ./
     container_name: django_olympic
     command: python manage.py runserver 0.0.0.0:8001
@@ -11,38 +11,40 @@ services:
       - "1337:8001"
     env_file:
       - ./.env.dev
-    depends_on:
-      - redis
 
   flower:
     image: mher/flower
     environment:
-      - CELERY_BROKER_URL=redis://redis:6379/0
       - FLOWER_PORT=8888
+      - CELERY_BROKER_URL=redis://redis:6379/0
     ports:
       - "1338:8888"
 
   redis:
     image: "redis:alpine"
+    restart: always
 
-  celery-worker:
+  worker:
+    restart: always
     build: .
-    command: celery -A SiteForOlimpic worker -l INFO
-    environment:
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+    volumes:
+      - .:/usr/src/app
     depends_on:
       - redis
+      - webapp
+    env_file:
+      - ./.env.dev
+    command: 'celery -A SiteForOlimpic worker -l info'
 
-  celery-beat:
+  beat:
+    restart: always
     build: .
-    command: celery -A SiteForOlimpic beat -l INFO
-    environment:
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+    volumes:
+      - .:/usr/src/app
     depends_on:
       - redis
+      - webapp
+      - worker
+    env_file:
+      - ./.env.dev
+    command: 'celery -A SiteForOlimpic beat -l info'
