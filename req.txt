@@ -15,3 +15,5 @@ schedule
 selenium
 webdriver-manager
 xvfbwrapper
+gunicorn
+Django

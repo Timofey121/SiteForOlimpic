@@ -122,7 +122,7 @@
         <div class="list_of_available_subj">
             <a href="{% url 'info' %}" class="subject_card">
                 <div class="white_dot"></div>
-                <img src="../../../media/subjects/all_category.png" alt="">
+                <img src="../../static/olympic/images/subjects/all_category.png" alt="">
                 <div class="sub_card_txt">
                     <div class="sub_card_title">
                         Все категории
@@ -135,7 +135,7 @@
             {% for c in categories %}
                 <a href="{{ c.get_absolute_url }}" class="subject_card">
                     <div class="white_dot"></div>
-                    <img src="../../../media/{{ c.photo }}" alt="">
+                    <img src="../../static/olympic/images/{{ c.photo }}" alt="">
                     <div class="sub_card_txt">
                         <div class="sub_card_title">
                             {{ c.subject }}
@@ -211,7 +211,7 @@
                         <div class="olimp_card_intro">
                             {% for c in categories %}
                                 {% if p.sub|stringformat:"s" == c.subject %}
-                                    <img src="../../../media/{{ c.photo }}" alt="" class="olimp_card_img">
+                                    <img src="../../static/olympic/images/{{ c.photo }}" alt="" class="olimp_card_img">
                                 {% endif %}
                             {% endfor %}
                             <div class="olimp_card_intro_txt">

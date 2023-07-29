@@ -5,14 +5,14 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.prod
-    command: gunicorn SiteForOlimpic.wsgi:application --bind 0.0.0.0:8000
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn SiteForOlimpic.wsgi:application --bind 0.0.0.0:8000"
     # Открываем порт 8000 наружу
     expose:
       - 8000
     # Подключаем статические и медиа файлы
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
     env_file:
       - ./.env.prod
 
@@ -20,8 +20,8 @@ services:
     build: ./nginx
     # Подключаем статические и медиа файлы
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
     ports:
       - "1337:80"
     depends_on:
