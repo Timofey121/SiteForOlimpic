@@ -10,8 +10,7 @@ from .service import send_email, add_olympiads_to_bd
 @app.task(bind=True, default_retry_delay=5 * 60)
 def send_span_email(self, name_email, user_email, body):
     try:
-        # send_email(name_email, user_email, body)
-        print('2345tredsaweqr546uiyutyh')
+        send_email(name_email, user_email, body)
     except Exception as exc:
         return self.retry(exc=exc, countdown=60)
 

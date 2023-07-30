@@ -1,8 +1,5 @@
 https://django.fun/ru/articles/tutorials/dokerizaciya-django-s-pomoshyu-postgres-gunicorn-i-nginx/
 
-docker-compose -f docker-compose.prod.yml up -d --build
-docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
-
 sudo -S apt-get update -y &&  sudo -S apt-get dist-upgrade -y && sudo -S apt-get autoremove -y && sudo -S apt-get clean && sleep 1 && clear && sudo su
 apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -29,3 +26,6 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
+docker-compose -f docker-compose.prod.yml -d --build
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear

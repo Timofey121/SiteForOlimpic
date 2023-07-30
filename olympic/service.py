@@ -5,8 +5,6 @@ import requests
 from bs4 import BeautifulSoup
 from django.core.mail import send_mail
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from xvfbwrapper import Xvfb
 
 from .models import Subjects, Olympiads
