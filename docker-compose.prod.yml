@@ -70,6 +70,7 @@ services:
       - ./.env.prod
     command: 'celery -A SiteForOlimpic beat -l info'
 
+
 volumes:
   static_volume:
   media_volume:
