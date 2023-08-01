@@ -17,12 +17,13 @@ adduser timofey
 apt install sudo
 usermod -aG sudo timofey
 groups timofey
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo chmod +x /usr/local/bin/docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-docker-compose -f docker-compose.prod.yml -d --build
+docker-compose -f docker-compose.prod.yml up -d --build
 docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
 docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
+
+docker-compose -f docker-compose.prod.yml exec web bash

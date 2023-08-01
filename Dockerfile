@@ -27,7 +27,5 @@ RUN pip install -r /usr/src/req.txt
 
 COPY . .
 
-RUN chmod +x entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 
 # docker rmi siteforolimpic_worker siteforolimpic_beat siteforolimpic_webapp siteforolimpic_nginx siteforolimpic_web

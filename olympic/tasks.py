@@ -7,7 +7,7 @@ from .models import RegistrationSite, UserNameAndTelegramID, NotificationDates, 
 from .service import send_email, add_olympiads_to_bd
 
 
-@app.task(bind=True, default_retry_delay=5 * 60)
+@app.task()
 def send_span_email(self, name_email, user_email, body):
     try:
         send_email(name_email, user_email, body)
@@ -15,7 +15,7 @@ def send_span_email(self, name_email, user_email, body):
         return self.retry(exc=exc, countdown=60)
 
 
-@app.task(bind=True, default_retry_delay=5 * 60)
+@app.task()
 def send_notification_email_from_olympic(self):
     try:
         all_users = RegistrationSite.objects.all()
@@ -42,7 +42,7 @@ def send_notification_email_from_olympic(self):
         return self.retry(exc=exc, countdown=60)
 
 
-@app.task(bind=True, default_retry_delay=5 * 60)
+@app.task()
 def delete_token_every_day(self):
     try:
         all_token = ResetPassword.objects.all()
@@ -56,7 +56,7 @@ def delete_token_every_day(self):
         return self.retry(exc=exc, countdown=7 * 60)
 
 
-@app.task(bind=True, default_retry_delay=61 * 60)
+@app.task()
 def add_olympiads(self):
     try:
         add_olympiads_to_bd()
