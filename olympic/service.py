@@ -2,12 +2,12 @@ import datetime
 import time
 
 import requests
+import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
 from django.core.mail import send_mail
-from selenium import webdriver
 from xvfbwrapper import Xvfb
 
-from .models import Subjects, Olympiads
+from .models import Subjects, Olympiads, NotificationDates
 from .templates.dictionary import numbers, months, months2, subjects_rsosh
 
 
@@ -35,38 +35,43 @@ def add_olympiads_to_bd():
                'Экономика, Русский язык, Литература, Английский язык, ' \
                'Французский язык, Немецкий язык, Астрономия, Робототехника, ' \
                'Технология, Искусство, Черчение, Психология'.split(', ')
+
+    vdisplay = Xvfb()
+    vdisplay.start()
+    options = uc.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument('--start-maximized')
+    driver = uc.Chrome(options=options)
+    time.sleep(1)
     for i in range(len(subjects)):
         try:
             sub_id = Subjects.objects.get(subject=subjects[i]).id
-            Olympiads.objects.filter(sub=sub_id).all().delete()
-            vdisplay = Xvfb()
-            vdisplay.start()
             data_start = ''
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless")
-            options.add_argument('--no-sandbox')
-            options.add_argument("--disable-extensions")
-            options.add_argument("--disable-gpu")
-            options.add_argument("--disable-dev-shm-usage")
-            options.add_argument("--no-sandbox")
-            options.add_argument('--start-maximized')
-            driver = webdriver.Chrome(options=options)
+
             URL = f'https://olimpiada.ru/activities?type=any&subject%5B{numbers[subjects[i].strip().capitalize()]}' \
                   f'%5D=on&class=any&period_date=&period=week'
             print(subjects[i], URL)
             driver.get(URL)
+
+            while 'Проверка браузера перед переходом на сайт olimpiada.ru' in driver.page_source:
+                print('ЖДУ!')
+                time.sleep(1)
 
             for j in range(10):
                 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                 time.sleep(0.05)
 
             html = driver.page_source
-            driver.close()
-            vdisplay.stop()
 
             soup = BeautifulSoup(html, "lxml")
 
             a = soup.find_all('a', 'none_a black olimp_desc')
+            Olympiads.objects.filter(sub=sub_id).all().delete()
             for item in a:
                 try:
                     url = "https://olimpiada.ru" + item.get('href')
@@ -79,6 +84,7 @@ def add_olympiads_to_bd():
 
                     fg = "https://olimpiada.ru" + soup.find_all('tr', 'notgreyclass')[0].find("a").get('href')
 
+                    print(subjects[i], url, title, href_olimp, fg)
                     if fg != 'Расписание олимпиады в этом году пока не известно':
                         url = fg
                         req = requests.get(url=url)
@@ -115,14 +121,17 @@ def add_olympiads_to_bd():
                             f = (title in subjects_rsosh[subjects[i].lower().capitalize()])
                             Olympiads.objects.create(title=title, start=start, stage=stage, schedule=schedule,
                                                      site=site, rsoch=f, sub_id=sub_id).save()
-                            # for tg in NotificationDates.objects.filter(sub_id=sub_id).all():
-                            #     if NotificationDates.objects.filter(tg.user, title, start, stage, schedule, site, f,
-                            #                                         sub_id).exists():
-                            #         flag = bool(NotificationDates.objects.get(tg.user, sub_id).rsoch)
-                            #         if (flag is False) or (f is True and flag is True):
-                            #             NotificationDates.objects.create(tg.user, title, start, stage, schedule, site,
-                            #                                              f, sub_id).save()
+                            for tg in NotificationDates.objects.filter(sub_id=sub_id).all():
+                                if NotificationDates.objects.filter(tg.user, title, start, stage, schedule, site, f,
+                                                                    sub_id).exists():
+                                    flag = bool(NotificationDates.objects.get(tg.user, sub_id).rsoch)
+                                    if (flag is False) or (f is True and flag is True):
+                                        NotificationDates.objects.create(tg.user, title, start, stage, schedule, site,
+                                                                         f, sub_id).save()
                 except Exception as ex:
                     pass
         except Exception as ex:
             pass
+
+    driver.close()
+    vdisplay.stop()
