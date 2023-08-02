@@ -32,6 +32,9 @@ services:
       - dmp_postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod.db
+    ports:
+      - "5432:5432"
+      - "5433:5433"
 
   redis:
     image: "redis:alpine"
