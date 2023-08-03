@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
                 ('telegram_id', models.CharField(max_length=2000, verbose_name='Telegram id')),
                 ('full_name', models.CharField(max_length=2000, verbose_name='Имя пользователя')),
                 ('data_registration', models.CharField(max_length=2000, verbose_name='Дата регистрации')),
-                ('blocked', models.BooleanField(max_length=2000, verbose_name='Заблокирован ли?')),
+                ('blocked', models.CharField(max_length=2000, verbose_name='Заблокирован ли?')),
             ],
             options={
                 'verbose_name': 'Регистрация Телеграмм',
