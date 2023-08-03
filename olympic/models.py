@@ -22,37 +22,37 @@ class RegistrationTelegram(models.Model):
 
 class RegistrationSite(models.Model):
     # id - PrimaryKey внесен в БД по умолчанию
-    user = models.CharField(max_length=2000, verbose_name="Имя пользователя")
+    customer = models.CharField(max_length=2000, verbose_name="Имя пользователя")
     data_registration = models.CharField(max_length=2000, verbose_name="Дата регистрации")
     email = models.CharField(max_length=2000, verbose_name="E-mail", default=None)
     blocked = models.BooleanField(max_length=2000, verbose_name="Заблокирован ли?")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):
-        return self.user
+        return self.customer
 
     # Класс для работы с моделью в Админ-панели
     class Meta:
         verbose_name = 'Регистрация Сайт'  # название нашей модели в единственном числе
         verbose_name_plural = 'Регистрация Сайт'  # название нашей модели во множественном числе
-        ordering = ['user', '-data_registration']  # сортировка
+        ordering = ['customer', '-data_registration']  # сортировка
 
 
 class ResetPassword(models.Model):
     # id - PrimaryKey внесен в БД по умолчанию
-    user = models.CharField(max_length=2000, verbose_name="Имя пользователя")
+    customer = models.CharField(max_length=2000, verbose_name="Имя пользователя")
     token = models.CharField(max_length=2000, verbose_name="Токен")
     data_created = models.DateField(verbose_name="Время создания ссылки для сброса пароля")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):
-        return self.user
+        return self.customer
 
     # Класс для работы с моделью в Админ-панели
     class Meta:
         verbose_name = 'Сброс Пароля'  # название нашей модели в единственном числе
         verbose_name_plural = 'Сброс пароля'  # название нашей модели во множественном числе
-        ordering = ['user']  # сортировка
+        ordering = ['customer']  # сортировка
 
 
 class Olympiads(models.Model):
@@ -77,7 +77,7 @@ class Olympiads(models.Model):
 
 
 class NotificationDates(models.Model):
-    user = models.CharField(max_length=2000, verbose_name="Пользователь или его Telegram_ID")
+    customer = models.CharField(max_length=2000, verbose_name="Пользователь или его Telegram_ID")
 
     title = models.CharField(max_length=2000, verbose_name="Название олимпиады")
     start = models.CharField(max_length=2000, verbose_name="Дата начала олимпиады")
@@ -97,7 +97,7 @@ class NotificationDates(models.Model):
     class Meta:
         verbose_name = 'Подключенное уведомление'  # название нашей модели в единственном числе
         verbose_name_plural = 'Подключенные уведомления'  # название нашей модели во множественном числе
-        ordering = ['user', 'start']  # сортировка
+        ordering = ['customer', 'start']  # сортировка
 
 
 class Subjects(models.Model):
@@ -135,7 +135,7 @@ class SecretToken(models.Model):
 
 class UserNameAndTelegramID(models.Model):
     telegram_id = models.CharField(max_length=2000, verbose_name="Telegram id")
-    user = models.CharField(max_length=2000, verbose_name="Пользователь")
+    customer = models.CharField(max_length=2000, verbose_name="Пользователь")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):
@@ -150,47 +150,47 @@ class UserNameAndTelegramID(models.Model):
 
 class Feedback(models.Model):
     # id - PrimaryKey внесен в БД по умолчанию
-    user = models.CharField(max_length=2000, verbose_name="Telegram id")
+    customer = models.CharField(max_length=2000, verbose_name="Пользователь")
     feedback = models.CharField(max_length=2000, verbose_name="Обратная связь")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):
-        return self.user
+        return self.customer
 
     # Класс для работы с моделью в Админ-панели
     class Meta:
         verbose_name = 'Отзыв'  # название нашей модели в единственном числе
         verbose_name_plural = 'Отзывы'  # название нашей модели во множественном числе
-        ordering = ['user']  # сортировка
+        ordering = ['customer']  # сортировка
 
 
 class TechnicalSupport(models.Model):
     # id - PrimaryKey внесен в БД по умолчанию
-    user = models.CharField(max_length=2000, verbose_name="Telegram id")
+    customer = models.CharField(max_length=2000, verbose_name="Telegram id")
     help = models.CharField(max_length=2000, verbose_name="Обращение")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):
-        return self.user
+        return self.customer
 
     # Класс для работы с моделью в Админ-панели
     class Meta:
         verbose_name = 'Обращение в помощь'  # название нашей модели в единственном числе
         verbose_name_plural = 'Обращения в помощь'  # название нашей модели во множественном числе
-        ordering = ['user', 'help']  # сортировка
+        ordering = ['customer', 'help']  # сортировка
 
 
 class Payment(models.Model):
     # id - PrimaryKey внесен в БД по умолчанию
-    user = models.CharField(max_length=2000, verbose_name="Telegram id")
+    customer = models.CharField(max_length=2000, verbose_name="Telegram id")
     data = models.CharField(max_length=2000, verbose_name="Обращение")
 
     # Тогда при выводе всех записей, для различия записей, будет отображаться их title
     def __str__(self):
-        return self.user
+        return self.customer
 
     # Класс для работы с моделью в Админ-панели
     class Meta:
         verbose_name = 'Оплата'  # название нашей модели в единственном числе
         verbose_name_plural = 'Оплата'  # название нашей модели во множественном числе
-        ordering = ['user', 'data']  # сортировка
+        ordering = ['customer', 'data']  # сортировка

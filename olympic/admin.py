@@ -8,14 +8,14 @@ from olympic.models import RegistrationSite, RegistrationTelegram, Olympiads, No
 # Register your models here.
 
 class RegistrationSiteAdmin(admin.ModelAdmin):
-    list_display = ('user', 'email', 'blocked', 'data_registration')  # отображение этих в полей
+    list_display = ('customer', 'email', 'blocked', 'data_registration')  # отображение этих в полей
     list_display_links = (
-        'user', 'email', 'data_registration')  # кликабельные поля в админке, для перехода на запись в БД
-    search_fields = ('email', 'user')  # поля, по которым можно искать записи
+        'customer', 'email', 'data_registration')  # кликабельные поля в админке, для перехода на запись в БД
+    search_fields = ('email', 'customer')  # поля, по которым можно искать записи
     list_editable = ('blocked',)  # поля, которые можно изменить, прямо в списке записей
 
     # поля, отображаемые в форме редактирования, некоторые не редактируемые
-    fields = ('user', 'email', 'data_registration', 'blocked')
+    fields = ('customer', 'email', 'data_registration', 'blocked')
 
 
 class RegistrationTelegramAdmin(admin.ModelAdmin):
@@ -42,28 +42,28 @@ class OlympiadsAdmin(admin.ModelAdmin):
 
 class NotificationDatesAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'sub', 'user', 'title', 'start', 'stage', 'rsoch')  # отображение этих в полей
-    list_display_links = ('user', 'title')  # кликабельные поля в админке, для перехода на запись в БД
-    search_fields = ('user', 'sub', 'title')  # поля, по которым можно искать записи
+        'id', 'sub', 'customer', 'title', 'start', 'stage', 'rsoch')  # отображение этих в полей
+    list_display_links = ('customer', 'title')  # кликабельные поля в админке, для перехода на запись в БД
+    search_fields = ('customer', 'sub', 'title')  # поля, по которым можно искать записи
     list_editable = ('rsoch',)  # поля, которые можно изменить, прямо в списке записей
 
     # поля, отображаемые в форме редактирования, некоторые не редактируемые
-    fields = ('sub', 'user', 'title', 'start', 'stage', 'schedule', 'site', 'rsoch')
+    fields = ('sub', 'customer', 'title', 'start', 'stage', 'schedule', 'site', 'rsoch')
 
 
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'feedback',)  # отображение этих в полей
-    search_fields = ('user',)  # поля, по которым можно искать записи
+    list_display = ('id', 'customer', 'feedback',)  # отображение этих в полей
+    search_fields = ('customer',)  # поля, по которым можно искать записи
 
 
 class TechnicalSupportAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'help',)  # отображение этих в полей
-    search_fields = ('user',)  # поля, по которым можно искать записи
+    list_display = ('id', 'customer', 'help',)  # отображение этих в полей
+    search_fields = ('customer',)  # поля, по которым можно искать записи
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'data',)  # отображение этих в полей
-    search_fields = ('user',)  # поля, по которым можно искать записи
+    list_display = ('id', 'customer', 'data',)  # отображение этих в полей
+    search_fields = ('customer',)  # поля, по которым можно искать записи
 
 
 class SubjectsAdmin(admin.ModelAdmin):
@@ -79,16 +79,16 @@ class SecretTokenAdmin(admin.ModelAdmin):
 
 
 class ResetPasswordAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'token', 'data_created')  # отображение этих в полей
-    list_display_links = ('user',)  # кликабельные поля в админке, для перехода на запись в БД
-    search_fields = ('user',)  # поля, по которым можно искать записи
-    fields = ('user', 'token', 'data_created')
+    list_display = ('id', 'customer', 'token', 'data_created')  # отображение этих в полей
+    list_display_links = ('customer',)  # кликабельные поля в админке, для перехода на запись в БД
+    search_fields = ('customer',)  # поля, по которым можно искать записи
+    fields = ('customer', 'token', 'data_created')
 
 
 class UserNameAndTelegramIDAdmin(admin.ModelAdmin):
-    list_display = ('id', 'telegram_id', 'user',)  # отображение этих в полей
+    list_display = ('id', 'telegram_id', 'customer',)  # отображение этих в полей
     list_display_links = ('telegram_id',)  # кликабельные поля в админке, для перехода на запись в БД
-    search_fields = ('telegram_id', 'user')  # поля, по которым можно искать записи
+    search_fields = ('telegram_id', 'customer')  # поля, по которым можно искать записи
 
 
 admin.site.register(RegistrationSite, RegistrationSiteAdmin)
