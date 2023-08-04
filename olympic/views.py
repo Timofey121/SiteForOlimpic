@@ -234,12 +234,12 @@ def password_reset(request):
             tkn = token_hex(32)
             reset_url = (request.build_absolute_uri() + tkn)
             data = {
-                'username': usr.user,
+                'username': usr.customer,
                 'url': reset_url,
             }
             html_body = render_to_string('olympic/email_templates/reset_password.html', data)
             now = datetime.datetime.now().strftime('%Y-%m-%d')
-            ResetPassword.objects.create(customer=usr.user, token=tkn, data_created=now)
+            ResetPassword.objects.create(customer=usr.customer, token=tkn, data_created=now)
             send_span_email.delay('Сброс-Пароля-[olympic]', usr.email, html_body)
             return redirect('login')
     return render(request, 'olympic/password_reset.html', {
@@ -255,7 +255,7 @@ def password_reset_for_usr(request, token):
         return redirect('home')
     if request.method == 'POST':
         new_password = request.POST['new_password']
-        username = ResetPassword.objects.get(token=token).user
+        username = ResetPassword.objects.get(token=token).customer
         u = User.objects.get(username__exact=username)
         u.set_password(new_password)
         u.save()
