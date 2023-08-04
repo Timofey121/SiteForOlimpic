@@ -36,10 +36,10 @@ def AllOlympiads(request):
     if request.method == "POST":
         if 'someone' in request.POST['select']:
             usr = request.user
-            if UserNameAndTelegramID.objects.filter(user=request.user.username).exists():
-                telegram_id = UserNameAndTelegramID.objects.get(user=request.user.username).telegram_id
-                g = NotificationDates.objects.filter(user=telegram_id).all()
-                h = NotificationDates.objects.filter(user=usr).all()
+            if UserNameAndTelegramID.objects.filter(customer=request.user.username).exists():
+                telegram_id = UserNameAndTelegramID.objects.get(customer=request.user.username).telegram_id
+                g = NotificationDates.objects.filter(customer=telegram_id).all()
+                h = NotificationDates.objects.filter(customer=usr).all()
                 gen = []
                 for itm in h:
                     if not g.filter(title=itm.title, start=itm.start, sub_id=itm.sub).exists():
@@ -57,7 +57,7 @@ def AllOlympiads(request):
                                'flag': True,
                                })
 
-            page_obj, paginator = pagination(NotificationDates.objects.filter(user=usr).all(), request)
+            page_obj, paginator = pagination(NotificationDates.objects.filter(customer=usr).all(), request)
             return render(request, 'olympic/list_of_available_subjects.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
@@ -87,10 +87,10 @@ def FilterOlympiads(request, sub_slug):
     if request.method == "POST":
         if 'someone' in request.POST['select']:
             usr = request.user.username
-            if UserNameAndTelegramID.objects.filter(user=request.user.username).exists():
-                telegram_id = UserNameAndTelegramID.objects.get(user=request.user.username).telegram_id
-                g = NotificationDates.objects.filter(user=telegram_id, sub__slug=sub_slug).all()
-                h = NotificationDates.objects.filter(user=usr, sub__slug=sub_slug).all()
+            if UserNameAndTelegramID.objects.filter(customer=request.user.username).exists():
+                telegram_id = UserNameAndTelegramID.objects.get(customer=request.user.username).telegram_id
+                g = NotificationDates.objects.filter(customer=telegram_id, sub__slug=sub_slug).all()
+                h = NotificationDates.objects.filter(customer=usr, sub__slug=sub_slug).all()
                 gen = []
                 for itm in h:
                     if not g.filter(title=itm.title, start=itm.start, sub_id=itm.sub).exists():
@@ -109,7 +109,7 @@ def FilterOlympiads(request, sub_slug):
                                'flag': True,
                                })
 
-            page_obj, paginator = pagination(NotificationDates.objects.filter(user=usr, sub__slug=sub_slug).all(), request)
+            page_obj, paginator = pagination(NotificationDates.objects.filter(customer=usr, sub__slug=sub_slug).all(), request)
             return render(request, 'olympic/list_of_available_subjects.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
@@ -191,11 +191,11 @@ def Notification(request):
                 title, sub = itm.split('это_!!!_бу-бу_разделитель')
                 sub_id = Subjects.objects.get(subject=sub).id
                 usr = request.user.username
-                if not NotificationDates.objects.filter(title=title, user=usr, sub=sub_id).exists():
+                if not NotificationDates.objects.filter(title=title, customer=usr, sub=sub_id).exists():
                     record = Olympiads.objects.get(title=title, sub_id=sub_id)
                     start, stage, schedule, site, sub, rsoch = record.start, record.stage, record.schedule, \
                         record.site, record.sub, record.rsoch
-                    NotificationDates.objects.create(user=usr, title=title, start=start, site=site, stage=stage,
+                    NotificationDates.objects.create(customer=usr, title=title, start=start, site=site, stage=stage,
                                                      schedule=schedule, sub=sub, rsoch=rsoch)
 
         elif 'delete' in request.POST['select']:
@@ -203,12 +203,12 @@ def Notification(request):
                 title, sub_name = itm.split('это_!!!_бу-бу_разделитель')
                 sub = Subjects.objects.get(subject=sub_name).id
                 usr = request.user.username
-                if UserNameAndTelegramID.objects.filter(user=usr).exists():
-                    telegram_id = UserNameAndTelegramID.objects.get(user=usr).telegram_id
-                    if NotificationDates.objects.filter(title=title, user=telegram_id, sub=sub).exists():
-                        NotificationDates.objects.get(title=title, user=telegram_id, sub=sub).delete()
-                if NotificationDates.objects.filter(title=title, user=usr, sub=sub).exists():
-                    NotificationDates.objects.get(title=title, user=usr, sub=sub).delete()
+                if UserNameAndTelegramID.objects.filter(customer=usr).exists():
+                    telegram_id = UserNameAndTelegramID.objects.get(customer=usr).telegram_id
+                    if NotificationDates.objects.filter(title=title, customer=telegram_id, sub=sub).exists():
+                        NotificationDates.objects.get(title=title, customer=telegram_id, sub=sub).delete()
+                if NotificationDates.objects.filter(title=title, customer=usr, sub=sub).exists():
+                    NotificationDates.objects.get(title=title, customer=usr, sub=sub).delete()
 
     return render(request, 'olympic/information_about_subjects.html',
                   {"menu": menu,
@@ -226,8 +226,8 @@ def password_reset(request):
         return redirect('home')
     if request.method == 'POST':
         usr_or_email, usr = request.POST['login_or_email'], ''
-        if RegistrationSite.objects.filter(user=usr_or_email).exists():
-            usr = RegistrationSite.objects.get(user=usr_or_email)
+        if RegistrationSite.objects.filter(customer=usr_or_email).exists():
+            usr = RegistrationSite.objects.get(customer=usr_or_email)
         elif RegistrationSite.objects.filter(email=usr_or_email).exists():
             usr = RegistrationSite.objects.get(email=usr_or_email)
         if usr != '':
@@ -239,7 +239,7 @@ def password_reset(request):
             }
             html_body = render_to_string('olympic/email_templates/reset_password.html', data)
             now = datetime.datetime.now().strftime('%Y-%m-%d')
-            ResetPassword.objects.create(user=usr.user, token=tkn, data_created=now)
+            ResetPassword.objects.create(customer=usr.user, token=tkn, data_created=now)
             send_span_email.delay('Сброс-Пароля-[olympic]', usr.email, html_body)
             return redirect('login')
     return render(request, 'olympic/password_reset.html', {
@@ -279,13 +279,13 @@ def token(request):
             if SecretToken.objects.filter(secret_token=token).exists():
                 tg_id = SecretToken.objects.get(secret_token=token).telegram_id
                 if not UserNameAndTelegramID.objects.filter(telegram_id=tg_id).exists():
-                    UserNameAndTelegramID.objects.create(telegram_id=tg_id, user=request.user)
+                    UserNameAndTelegramID.objects.create(telegram_id=tg_id, customer=request.user)
             else:
                 alert_text = 'Нет Телеграмм аккаунта с таким Секретным Токеном'
         else:
-            UserNameAndTelegramID.objects.filter(user=request.user).delete()
+            UserNameAndTelegramID.objects.filter(customer=request.user).delete()
     usr = request.user.username
-    flag = UserNameAndTelegramID.objects.filter(user=usr).exists()
+    flag = UserNameAndTelegramID.objects.filter(customer=usr).exists()
     return render(request, 'olympic/secret_token_pager.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,
@@ -308,7 +308,7 @@ class RegisterUser(DataMixin, CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        RegistrationSite.objects.create(user=self.request.POST['username'], email=self.request.POST['email'],
+        RegistrationSite.objects.create(customer=self.request.POST['username'], email=self.request.POST['email'],
                                         data_registration=datetime.datetime.now().strftime('%d-%m-%Y'),
                                         blocked=False)
         login(self.request, user)
