@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from olympic.views import error_404
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('olympic.urls'))
 ]
 
-handler404 = 'olimpic.views.error_404'
+handler404 = error_404
