@@ -22,4 +22,4 @@ urlpatterns = [
     path('', include('olympic.urls'))
 ]
 
-handler404 = 'apps.core.views.error_404'
+handler404 = 'olimpic.views.error_404'
