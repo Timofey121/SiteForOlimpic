@@ -21,3 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('olympic.urls'))
 ]
+
+handler404 = 'apps.core.views.error_404'

@@ -109,7 +109,8 @@ def FilterOlympiads(request, sub_slug):
                                'flag': True,
                                })
 
-            page_obj, paginator = pagination(NotificationDates.objects.filter(customer=usr, sub__slug=sub_slug).all(), request)
+            page_obj, paginator = pagination(NotificationDates.objects.filter(customer=usr, sub__slug=sub_slug).all(),
+                                             request)
             return render(request, 'olympic/list_of_available_subjects.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
@@ -331,3 +332,12 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)  # выход из авторизации
     return redirect('login')
+
+
+def error_404(request, exception):
+    context = {}
+    context['page_title'] = '404'
+    context['menu'] = menu
+    response = render(request, 'olympic/404.html', context=context)
+    response.status_code = 404
+    return response
