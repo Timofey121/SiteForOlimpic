@@ -5,6 +5,7 @@ import requests
 import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
 from django.core.mail import send_mail
+from selenium import webdriver
 from xvfbwrapper import Xvfb
 
 from .models import Subjects, Olympiads, NotificationDates
@@ -38,7 +39,7 @@ def add_olympiads_to_bd():
 
     vdisplay = Xvfb()
     vdisplay.start()
-    options = uc.ChromeOptions()
+    options = webdriver.ChromeOptions()
     options.add_argument("--headless")
     options.add_argument('--no-sandbox')
     options.add_argument("--disable-extensions")
@@ -46,7 +47,7 @@ def add_olympiads_to_bd():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-sandbox")
     options.add_argument('--start-maximized')
-    driver = uc.Chrome(options=options)
+    driver = webdriver.Chrome(options=options)
     time.sleep(1)
     for i in range(len(subjects)):
         try:
