@@ -21,6 +21,6 @@ app.conf.beat_schedule = {
     },
     'add_olympiads_to_bd_every_2.5_day': {
         'task': 'olympic.tasks.add_olympiads',
-        'schedule': crontab(hour='*/120')
+        'schedule': crontab(minute='*/10')
     },
 }
