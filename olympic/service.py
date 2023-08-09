@@ -2,7 +2,6 @@ import datetime
 import time
 
 import requests
-import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
 from django.core.mail import send_mail
 from selenium import webdriver

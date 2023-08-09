@@ -21,8 +21,17 @@ from environs import Env
 BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.isfile('.env.dev'):
     load_dotenv(os.path.join(BASE_DIR, '.env.dev'))
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = False
 else:
     load_dotenv(os.path.join(BASE_DIR, '.env.prod'))
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    CORS_ORIGIN_ALLOW_ALL = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 340505040
+    SECURE_SSL_REDIRECT = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -154,12 +163,3 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 340505040
-SECURE_SSL_REDIRECT = True

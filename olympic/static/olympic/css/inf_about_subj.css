@@ -1432,6 +1432,76 @@ body {
 
 }
 
+.null_olympiads {
+    margin: 0 40px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    color: #2A222B;
+    padding-bottom: 20px;
+}
+
+.null_olympiads {
+    font-size: 18px;
+}
+
+.attention_block {
+    margin-top: 130px;
+}
+
+.attention_title {
+    color: #EE3035;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 36px;
+    padding-top: 35px;
+    margin-bottom: 20px;
+}
+
+.attention_title {
+    font-size: 22px;
+}
+
+@media screen and (max-width: 1420px) {
+    .null_olympiads {
+        font-size: 16px;
+        padding-bottom: 10px;
+    }
+
+    .attention_block {
+        margin-top: 160px;
+    }
+
+    .attention_title {
+        padding-top: 20px;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .null_olympiads {
+        font-size: 16px;
+    }
+
+    .attention_block {
+        margin-top: 110px;
+    }
+
+    .attention_title {
+        font-size: 18px;
+    }
+}
+
+.attention_block {
+    width: 100%;
+    background: #F8F8F8;
+    border-radius: 20px;
+    margin: 19px auto 0;
+}
+
 /* Landscape phones and portrait tablets */
 @media screen and (max-width: 768px) {
     .list-pages {
@@ -1813,8 +1883,8 @@ body {
 
 @media screen and (max-width: 430px) {
     .list-pages {
-    text-align: center;
-    margin: 0 0 20px 0;
+        text-align: center;
+        margin: 0 0 20px 0;
     }
 
     .list-pages ul {
@@ -1860,8 +1930,8 @@ body {
 
 @media screen and (max-width: 655px) {
     .list-pages {
-    text-align: center;
-    margin: 0 0 20px 0;
+        text-align: center;
+        margin: 0 0 20px 0;
     }
 
     .list-pages ul {
@@ -1907,8 +1977,8 @@ body {
 
 @media screen and (max-width: 460px) {
     .list-pages {
-    text-align: center;
-    margin: 0 0 20px 0;
+        text-align: center;
+        margin: 0 0 20px 0;
     }
 
     .list-pages ul {
