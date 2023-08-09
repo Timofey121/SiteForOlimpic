@@ -20,8 +20,8 @@ def send_notification_email_from_olympic(self):
     try:
         all_users = RegistrationSite.objects.all()
         for user in all_users:
-            if not UserNameAndTelegramID.objects.filter(user=user).exists():
-                notifications = NotificationDates.objects.filter(user=user.user).all()
+            if not UserNameAndTelegramID.objects.filter(customer=user).exists():
+                notifications = NotificationDates.objects.filter(customer=user.customer).all()
                 final_notifications = []
                 for notif in notifications:
                     data = datetime.datetime.strptime(''.join(str(notif.start).split("-")), '%d%m%Y').date()
