@@ -120,11 +120,11 @@ def add_olympiads_to_bd():
                             Olympiads.objects.create(title=title, start=start, stage=stage, schedule=schedule,
                                                      site=site, rsoch=f, sub_id=sub_id).save()
                             for tg in NotificationDates.objects.filter(sub_id=sub_id).all():
-                                if NotificationDates.objects.filter(tg.user, title, start, stage, schedule, site, f,
+                                if NotificationDates.objects.filter(tg.customer, title, start, stage, schedule, site, f,
                                                                     sub_id).exists():
-                                    flag = bool(NotificationDates.objects.get(tg.user, sub_id).rsoch)
+                                    flag = bool(NotificationDates.objects.get(tg.customer, sub_id).rsoch)
                                     if (flag is False) or (f is True and flag is True):
-                                        NotificationDates.objects.create(tg.user, title, start, stage, schedule, site,
+                                        NotificationDates.objects.create(tg.customer, title, start, stage, schedule, site,
                                                                          f, sub_id).save()
                 except Exception as ex:
                     pass
