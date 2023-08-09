@@ -13,11 +13,11 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send-notification-every-12-hour': {
         'task': 'olympic.tasks.send_notification_email_from_olympic',
-        'schedule': crontab(hour='*/12')
+        'schedule': crontab(hour='*/720')
     },
     'delete_needs_token_every_day': {
         'task': 'olympic.tasks.delete_token_every_day',
-        'schedule': crontab(hour='*/24')
+        'schedule': crontab(minute='*/1440')
     },
     'add_olympiads_to_bd_every_2.5_day': {
         'task': 'olympic.tasks.add_olympiads',
