@@ -12,7 +12,7 @@ def send_span_email(self, name_email, user_email, body):
     try:
         send_email(name_email, user_email, body)
     except Exception as exc:
-        return self.retry(exc=exc, countdown=60)
+        return self.retry(exc=exc)
 
 
 @app.task(bind=True, default_retry_delay=5 * 60)
@@ -39,7 +39,7 @@ def send_notification_email_from_olympic(self):
                     })
                     send_email('Подключенные уведомления', user.email, html_body)
     except Exception as exc:
-        return self.retry(exc=exc, countdown=60)
+        return self.retry(exc=exc)
 
 
 @app.task(bind=True, default_retry_delay=5 * 60)
@@ -53,7 +53,7 @@ def delete_token_every_day(self):
             if flag is True:
                 ResetPassword.objects.filter(data_created=data_created).delete()
     except Exception as exc:
-        return self.retry(exc=exc, countdown=7 * 60)
+        return self.retry(exc=exc)
 
 
 @app.task(bind=True, default_retry_delay=5 * 60)
