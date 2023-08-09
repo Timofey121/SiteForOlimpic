@@ -55,7 +55,6 @@ def add_olympiads_to_bd():
 
             URL = f'https://olimpiada.ru/activities?type=any&subject%5B{numbers[subjects[i].strip().capitalize()]}' \
                   f'%5D=on&class=any&period_date=&period=week'
-            print(subjects[i], URL)
             driver.get(URL)
 
             while 'Проверка браузера перед переходом на сайт olimpiada.ru' in driver.page_source:
@@ -84,7 +83,6 @@ def add_olympiads_to_bd():
 
                     fg = "https://olimpiada.ru" + soup.find_all('tr', 'notgreyclass')[0].find("a").get('href')
 
-                    print(subjects[i], url, title, href_olimp, fg)
                     if fg != 'Расписание олимпиады в этом году пока не известно':
                         url = fg
                         req = requests.get(url=url)
