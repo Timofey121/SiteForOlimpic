@@ -105,7 +105,6 @@ def FilterOlympiads(request, sub_slug):
                                'text': "Показать все олимпиады",
                                'page_obj': page_obj,
                                'paginator': paginator,
-                               "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                                'flag': True,
                                })
 
@@ -117,7 +116,6 @@ def FilterOlympiads(request, sub_slug):
                            'title': f'Категория - {c.subject}',
                            'categories': Subjects.objects.all(),
                            'text': "Показать все олимпиады",
-                           "bad_text": f"Нет подключенных уведомлений по предмету {c.subject}!",
                            'flag': True,
                            'paginator': paginator,
                            'page_obj': page_obj,
@@ -131,7 +129,6 @@ def FilterOlympiads(request, sub_slug):
                    'text': "Показать только те олимпиады, к которым у меня подключены уведомления",
                    'page_obj': page_obj,
                    'paginator': paginator,
-                   "bad_text": f"Нет ближайших олимпиад по предмету {c.subject}!",
                    'flag': False,
                    })
 
