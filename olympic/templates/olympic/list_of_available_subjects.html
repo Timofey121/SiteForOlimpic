@@ -152,24 +152,24 @@
 </section>
 <section class="show_olympiads">
     <div class="container">
+        {% if request.user.is_authenticated %}
+            <form action="" class="activities_olimp" method="post">
+                {% csrf_token %}
+                <select name="select" class="selection_from_the_list">
+                    {% if flag is False %}
+                        <option value="all">Показать все олимпиады</option>
+                        <option value="someone">Показать олимпиады с уведомлениями</option>
+                    {% else %}
+                        <option value="someone">Показать олимпиады с уведомлениями</option>
+                        <option value="all">Показать все олимпиады</option>
+                    {% endif %}
+                </select>
+                <button name="choice" type="submit" class="olimp_choose_button">
+                    Применить
+                </button>
+            </form>
+        {% endif %}
         {% if page_obj %}
-            {% if request.user.is_authenticated %}
-                <form action="" class="activities_olimp" method="post">
-                    {% csrf_token %}
-                    <select name="select" class="selection_from_the_list">
-                        {% if flag is False %}
-                            <option value="all">Показать все олимпиады</option>
-                            <option value="someone">Показать олимпиады с уведомлениями</option>
-                        {% else %}
-                            <option value="someone">Показать олимпиады с уведомлениями</option>
-                            <option value="all">Показать все олимпиады</option>
-                        {% endif %}
-                    </select>
-                    <button name="choice" type="submit" class="olimp_choose_button">
-                        Применить
-                    </button>
-                </form>
-            {% endif %}
             {% if page_obj.has_other_pages %}
                 <nav class="list-pages">
                     <ul>
