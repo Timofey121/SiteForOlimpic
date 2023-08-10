@@ -13,7 +13,7 @@ def send_span_email(name_email, user_email, body):
 
 
 @app.task()
-def send_notification_email_from_olympic():
+def send_notification_email():
     all_users = RegistrationSite.objects.all()
     for user in all_users:
         if not UserNameAndTelegramID.objects.filter(customer=user).exists():
@@ -37,7 +37,7 @@ def send_notification_email_from_olympic():
 
 
 @app.task()
-def delete_token_every_day():
+def delete_token_in_bd():
     all_token = ResetPassword.objects.all()
     for itm in all_token:
         data_created = itm.data_created
