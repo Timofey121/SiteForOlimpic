@@ -99,54 +99,47 @@
 </div>
 <div class="nav_mobile">
     <div class="container">
-        <div class="account_cont_mobile">
-            <svg class="accout_svg_disactive" width="800px" height="800px" viewBox="0 0 20 20"
-                 xmlns="http://www.w3.org/2000/svg">
-                <g id="user-circle-2" transform="translate(-2 -2)">
-                    <path id="secondary" fill="#2ca9bc"
-                          d="M12,3A9,9,0,0,0,5.55,18.27a7,7,0,0,1,4.28-3.92h0a4,4,0,1,1,4.34,0h0a7,7,0,0,1,4.28,3.92A9,9,0,0,0,12,3Z"/>
-                    <path id="primary"
-                          d="M16,11a4,4,0,1,1-4-4A4,4,0,0,1,16,11Zm-1.83,3.35a3.95,3.95,0,0,1-4.34,0,7,7,0,0,0-4.28,3.92,9,9,0,0,0,12.81.09l.09-.09a7,7,0,0,0-4.28-3.92ZM21,12h0a9,9,0,0,0-9-9h0a9,9,0,0,0-9,9H3a9,9,0,0,0,9,9h0a9,9,0,0,0,9-9Z"
-                          fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2"/>
-                </g>
-            </svg>
-            <!-- {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #} -->
-                <button class="account_button"> {{ user.username }} | <a style="color: white"
-                                                                         href="{% url 'logout' %}">Выйти</a>
-                </button>
-                <!-- {% else %} -->
-                <button class="account_button"><a style="color: white"
-                                                  href="{% url 'registration' %}">Регистрация</a> |
-                    <a
-                            style="color: white" href="{% url 'login' %}">Войти</a></button>
-                <!-- {% endif %} -->
-        </div>
-        <div class="account_menu">
-            <ul class="open_menu_actions">
-                <li class="open_menu_actions_link"><a href="">Заявки в техподдержку</a></li>
-                <li class="open_menu_actions_link"><a href="">Подключение Telegram через токен</a></li>
-                <li class="open_menu_actions_link"><a href="">Оставить отзыв</a></li>
-            </ul>
-        </div>
-        <!-- {% if request.user.is_authenticated %} -->
-            <!-- <div class="connect_container">
-                        Подключить аккаунт Телеграмм<br>через Секретный Токен? <br>
-                        <button class="connect_button">
-                            <a style="color: white" href="{% url 'secret_token' %}">Подключить</a>
-                        </button>
-                    </div> -->
-            <!-- {% endif %} -->
-        <ul class="navigation_links_mobile">
-            <!-- {% for m in menu %} -->
-                <li class="nav_link_mobile"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
-                <!-- {% endfor %}
+        {% if request.user.is_authenticated %}
+            <div class="account_cont_mobile">
+                <svg class="accout_svg_disactive" width="800px" height="800px" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <g id="user-circle-2" transform="translate(-2 -2)">
+                        <path id="secondary" fill="#2ca9bc"
+                              d="M12,3A9,9,0,0,0,5.55,18.27a7,7,0,0,1,4.28-3.92h0a4,4,0,1,1,4.34,0h0a7,7,0,0,1,4.28,3.92A9,9,0,0,0,12,3Z"/>
+                        <path id="primary"
+                              d="M16,11a4,4,0,1,1-4-4A4,4,0,0,1,16,11Zm-1.83,3.35a3.95,3.95,0,0,1-4.34,0,7,7,0,0,0-4.28,3.92,9,9,0,0,0,12.81.09l.09-.09a7,7,0,0,0-4.28-3.92ZM21,12h0a9,9,0,0,0-9-9h0a9,9,0,0,0-9,9H3a9,9,0,0,0,9,9h0a9,9,0,0,0,9-9Z"
+                              fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="account_menu">
+                <ul class="open_menu_actions">
+                    {#                <li class="open_menu_actions_link"><a href="">Заявки в техподдержку</a></li>#}
+                    <li class="open_menu_actions_link" style="cursor: pointer;">
+                        <a href="{% url 'secret_token' %}" style="display: block;text-decoration: none;">Подключение
+                            Telegram через токен</a></li>
+                    {#                            <li class="open_menu_actions_link"><a href="">Оставить отзыв</a></li>#}
+                    <div class="open_menu_line"></div>
+                    <li class="open_menu_actions_link" style="cursor: pointer;">
+                        <a href="{% url 'logout' %}" style="display: block;text-decoration: none;">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="navigation_links_mobile">
+                <!-- {% for m in menu %} -->
+                    <li class="nav_link_mobile"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                    <!-- {% endfor %}
                     {% if request.user.is_authenticated %} {# проверка авторизованости пользователя #}
                         {% for m in additional_menu %} -->
-                <li class="nav_link_mobile"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
-                <!-- {% endfor %}
+                    <li class="nav_link_mobile"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                    <!-- {% endfor %}
                     {% endif %} -->
-        </ul>
+            </ul>
+        {% else %}
+            <button class="account_button"><a style="color: white" href="{% url 'registration' %}">
+                Регистрация</a> | <a style="color: white" href="{% url 'login' %}">Войти</a></button>
+        {% endif %}
+
     </div>
-</div>
 </div>
