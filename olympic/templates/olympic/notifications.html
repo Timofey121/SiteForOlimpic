@@ -63,11 +63,6 @@
                         Применить
                     </button>
                 </div>
-                <div class="choose_all_cont">
-                    <button type="submit" class="olimp_choose_button">
-                        Выбрать все олимпиады
-                    </button>
-                </div>
             </div>
         </section>
         {% if page_obj.has_other_pages %}
@@ -111,9 +106,15 @@
                         <div class="olimp_inner">
                             <div class="choose_this_olympiad">
                                 <label for="choose_this_olympiad_checkbox">Выбрать олимпиаду</label>
-                                <input type="checkbox" name="choose"
-                                       value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
-                                       id="choose_this_olympiad_checkbox">
+                                {% if all_checkbox is False %}
+                                    <input type="checkbox" name="choose"
+                                           value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
+                                           id="choose_this_olympiad_checkbox">
+                                {% else %}
+                                    <input type="checkbox" name="choose"
+                                           value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
+                                           id="choose_this_olympiad_checkbox" checked>
+                                {% endif %}
                             </div>
                             <div class="olimp_card">
                                 <div class="yellow_dot"></div>

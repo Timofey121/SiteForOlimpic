@@ -137,6 +137,7 @@ def Notification(request):
     if not request.user.is_authenticated:
         return redirect('home')
     page_obj, paginator = pagination(Olympiads.objects.all(), request)
+    all_checkbox = False
     if request.method == "POST":
         if 'find' in request.POST:
             search = str(request.POST['search'])
@@ -171,6 +172,7 @@ def Notification(request):
                            'paginator': paginator,
                            'categories': Subjects.objects.all(),
                            'text_for_search': search,
+                           'all_checkbox': all_checkbox,
                            })
 
         elif 'cancel' in request.POST:
@@ -216,6 +218,7 @@ def Notification(request):
                    'paginator': paginator,
                    'categories': Subjects.objects.all(),
                    'text_for_search': '',
+                   'all_checkbox': all_checkbox,
                    })
 
 
