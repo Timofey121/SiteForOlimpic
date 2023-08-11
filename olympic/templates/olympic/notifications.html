@@ -106,15 +106,9 @@
                         <div class="olimp_inner">
                             <div class="choose_this_olympiad">
                                 <label for="choose_this_olympiad_checkbox">Выбрать олимпиаду</label>
-                                {% if all_checkbox is False %}
-                                    <input type="checkbox" name="choose"
-                                           value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
-                                           id="choose_this_olympiad_checkbox">
-                                {% else %}
-                                    <input type="checkbox" name="choose"
-                                           value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
-                                           id="choose_this_olympiad_checkbox" checked>
-                                {% endif %}
+                                <input type="checkbox" name="choose"
+                                       value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
+                                       id="choose_this_olympiad_checkbox">
                             </div>
                             <div class="olimp_card">
                                 <div class="yellow_dot"></div>
