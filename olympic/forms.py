@@ -17,6 +17,10 @@ class PasswordReset(UserCreationForm):
     login_or_email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-input'}))
 
 
+class ChangeEmail(UserCreationForm):
+    new_email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-input'}))
+
+
 class PasswordResetForUser(UserCreationForm):
     new_password = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-input'}))
 

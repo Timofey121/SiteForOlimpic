@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser
+from .forms import RegisterForm, LoginUserForm, SecretTokenForm, PasswordReset, PasswordResetForUser, ChangeEmail
 from .models import Olympiads, Subjects, SecretToken, NotificationDates, UserNameAndTelegramID, RegistrationSite, \
     ResetPassword
 from .service import translate_english_letters_into_russian
@@ -45,7 +45,7 @@ def AllOlympiads(request):
                     if not g.filter(title=itm.title, start=itm.start, sub_id=itm.sub).exists():
                         gen.append(itm)
                 page_obj, paginator = pagination(gen + list(g), request)
-                return render(request, 'olympic/list_of_available_subjects.html',
+                return render(request, 'olympic/information.html',
                               {"menu": menu,
                                "additional_menu": additional_menu,
                                'title': 'Олимпиады',
@@ -58,7 +58,7 @@ def AllOlympiads(request):
                                })
 
             page_obj, paginator = pagination(NotificationDates.objects.filter(customer=usr).all(), request)
-            return render(request, 'olympic/list_of_available_subjects.html',
+            return render(request, 'olympic/information.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
                            'title': 'Олимпиады',
@@ -70,7 +70,7 @@ def AllOlympiads(request):
                            })
 
     page_obj, paginator = pagination(Olympiads.objects.all(), request)
-    return render(request, 'olympic/list_of_available_subjects.html',
+    return render(request, 'olympic/information.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,
                    'title': 'Олимпиады',
@@ -97,7 +97,7 @@ def FilterOlympiads(request, sub_slug):
                         gen.append(itm)
 
                 page_obj, paginator = pagination(gen + list(g), request)
-                return render(request, 'olympic/list_of_available_subjects.html',
+                return render(request, 'olympic/information.html',
                               {"menu": menu,
                                "additional_menu": additional_menu,
                                'title': f'Категория - {c.subject}',
@@ -110,7 +110,7 @@ def FilterOlympiads(request, sub_slug):
 
             page_obj, paginator = pagination(NotificationDates.objects.filter(customer=usr, sub__slug=sub_slug).all(),
                                              request)
-            return render(request, 'olympic/list_of_available_subjects.html',
+            return render(request, 'olympic/information.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
                            'title': f'Категория - {c.subject}',
@@ -121,7 +121,7 @@ def FilterOlympiads(request, sub_slug):
                            'page_obj': page_obj,
                            })
     page_obj, paginator = pagination(Olympiads.objects.filter(sub__slug=sub_slug), request)
-    return render(request, 'olympic/list_of_available_subjects.html',
+    return render(request, 'olympic/information.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,
                    'title': f'Категория - {c.subject}',
@@ -163,7 +163,7 @@ def Notification(request):
                 search_olympiads += list(Olympiads.objects.filter(Q(sub__slug__contains=sub_slug)))
 
             page_obj, paginator = pagination(search_olympiads, request)
-            return render(request, 'olympic/information_about_subjects.html',
+            return render(request, 'olympic/notifications.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
                            'title': 'Подключение/Удаление уведомлений',
@@ -174,7 +174,7 @@ def Notification(request):
                            })
 
         elif 'cancel' in request.POST:
-            return render(request, 'olympic/information_about_subjects.html',
+            return render(request, 'olympic/notifications.html',
                           {"menu": menu,
                            "additional_menu": additional_menu,
                            'title': 'Подключение/Удаление уведомлений',
@@ -208,7 +208,7 @@ def Notification(request):
                 if NotificationDates.objects.filter(title=title, customer=usr, sub=sub).exists():
                     NotificationDates.objects.get(title=title, customer=usr, sub=sub).delete()
 
-    return render(request, 'olympic/information_about_subjects.html',
+    return render(request, 'olympic/notifications.html',
                   {"menu": menu,
                    "additional_menu": additional_menu,
                    'title': 'Подключение/Удаление уведомлений',
@@ -219,9 +219,38 @@ def Notification(request):
                    })
 
 
+def account(request):
+    return render(request, 'olympic/account_page.html',
+                  {
+                      "menu": menu,
+                      "additional_menu": additional_menu,
+                      'title': 'Личный кабинет',
+                      'email': RegistrationSite.objects.get(customer=request.user.username).email
+                  })
+
+
+def change_email(request):
+    if request.method == "POST":
+        new_email = request.POST['new_email']
+        u = RegistrationSite.objects.get(customer=request.user.username)
+        u.email = new_email
+        u.save()
+        return render(request, 'olympic/account_page.html',
+                      {
+                          "menu": menu,
+                          "additional_menu": additional_menu,
+                          'title': 'Личный кабинет',
+                          'email': RegistrationSite.objects.get(customer=request.user.username).email
+                      })
+    return render(request, 'olympic/change_email.html', {
+        "menu": menu,
+        "additional_menu": additional_menu,
+        'title': 'Сброс Пароля',
+        'form': ChangeEmail(),
+    })
+
+
 def password_reset(request):
-    if request.user.is_authenticated:
-        return redirect('home')
     if request.method == 'POST':
         usr_or_email, usr = request.POST['login_or_email'], ''
         if RegistrationSite.objects.filter(customer=usr_or_email).exists():

@@ -24,7 +24,7 @@
 
     <div class="register_title_cont">
         <div class="register_title">
-            Сбросить Пароль
+            Изменить почту
         </div>
     </div>
 
@@ -35,12 +35,12 @@
         {% endfor %}
         <div class="input_cont">
             <div class="input_title" style="font-size: 15px">
-                Введите Логин или Email, указанный при регистрации
+                Введите НОВУЮ почту, на которую будут приходить все уведомления об олимпиадах
             </div>
-            {{ form.login_or_email }}
+            {{ form.new_email }}
         </div>
         <button name='password_reset' class="submit_button" type="submit">
-            Сбросить
+            Сохранить
         </button>
         <div class="question">
         </div>

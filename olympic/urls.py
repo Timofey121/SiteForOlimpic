@@ -6,11 +6,13 @@ from .views import *
 
 urlpatterns = [
     path('', main, name='home'),
+    path('account/', account, name='account'),
 
     path('info/', AllOlympiads, name='info'),
     path('info/<slug:sub_slug>/', FilterOlympiads, name='subject'),
 
     path('notification/', Notification, name='notification'),
+    path('change_email/', change_email, name='change_email'),
 
     path('SecretToken/', token, name='secret_token'),
     path('login/', LoginUser.as_view(), name='login'),

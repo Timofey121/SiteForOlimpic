@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" href="../../static/olympic/images/favicon.ico" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&family=Open+Sans:wght@400;600;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/olympic/css/deafult.css">
+    <link rel="stylesheet" href="../../static/olympic/css/inf_about_subj.css">
+</head>
+<body>
+{% include 'olympic/base/header.html' %}
+
+
+<section class="intro">
+    <div class="container">
+        <div class="intro_title">
+            В поиске вы можете найти нужные предметы
+        </div>
+        <div class="intro_text">
+            или, даже, названия нужных вам олимпиад.
+        </div>
+        <form action="" method="post" class="intro_search_cont">
+            {% csrf_token %}
+            <span>
+                    <input type="text" name="search" value="{{ text_for_search }}" class="search_field"
+                           placeholder="Поиск...">
+                <button name="find" type="submit" class="glass">
+                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.5001 17.5L13.7617 13.755M15.8334 8.74996C15.8334 10.6286 15.0871 12.4303 13.7588 13.7586C12.4304 15.087 10.6287 15.8333 8.75008 15.8333C6.87147 15.8333 5.06979 15.087 3.74141 13.7586C2.41303 12.4303 1.66675 10.6286 1.66675 8.74996C1.66675 6.87134 2.41303 5.06967 3.74141 3.74129C5.06979 2.4129 6.87147 1.66663 8.75008 1.66663C10.6287 1.66663 12.4304 2.4129 13.7588 3.74129C15.0871 5.06967 15.8334 6.87134 15.8334 8.74996V8.74996Z"
+                              stroke="#2575FC" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                </button>
+                </span>
+            <span>
+                <button type="submit" name="find" class="find_button">Найти</button>
+                <button type="submit" name='cancel' class="reset_button">Сбросить</button>
+            </span>
+        </form>
+        <div class="intro_line">
+        </div>
+    </div>
+</section>
+
+{% if page_obj %}
+    <form action="" class="main_form" method="post">
+        {% csrf_token %}
+        <section class="activities_with_the_olympiad">
+            <div class="container">
+                <div class="activities_olimp">
+                    <select name="select" id="" class="selection_from_the_list">
+                        <option value="nothing">Выберите из списка</option>
+                        <option value="add">Подключить уведомления</option>
+                        <option value="delete">Удалить уведомления</option>
+                    </select>
+                    <button type="submit" class="olimp_choose_button">
+                        Применить
+                    </button>
+                </div>
+                <div class="choose_all_cont">
+                    <button type="submit" class="olimp_choose_button">
+                        Выбрать все олимпиады
+                    </button>
+                </div>
+            </div>
+        </section>
+        {% if page_obj.has_other_pages %}
+            <nav class="list-pages">
+                <ul>
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">
+                            <li class="page-num">
+                                &lt;
+                            </li>
+                        </a>
+                    {% endif %}
+
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="page-num page-num-selected">{{ p }}</li>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                            <a href="?page={{ p }}">
+                                <li class="page-num">
+                                    {{ p }}
+                                </li>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">
+                            <li class="page-num">
+                                &gt;
+                            </li>
+                        </a>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        {% endif %}
+        <section class="olimpialds">
+            <div class="container">
+                <div class="selected_olympiads">
+                    {% for p in page_obj %}
+                        <div class="olimp_inner">
+                            <div class="choose_this_olympiad">
+                                <label for="choose_this_olympiad_checkbox">Выбрать олимпиаду</label>
+                                <input type="checkbox" name="choose"
+                                       value="{{ p.title }}это_!!!_бу-бу_разделитель{{ p.sub }}"
+                                       id="choose_this_olympiad_checkbox">
+                            </div>
+                            <div class="olimp_card">
+                                <div class="yellow_dot"></div>
+                                <div class="olimp_card_container">
+                                    <div class="olimp_card_intro">
+                                        {% for c in categories %}
+                                            {% if p.sub|stringformat:"s" == c.subject %}
+                                                <img src="../../static/olympic/images/{{ c.photo }}" alt=""
+                                                     class="olimp_card_img">
+                                            {% endif %}
+                                        {% endfor %}
+                                        <div class="olimp_card_intro_txt">
+                                            <span class="card_olimp_title">{{ p.sub }}</span>
+                                            <div class="olimp_description">
+                                                <span class="olimp_subtitle">{{ p.title }}</span>
+                                                <span class="olimp_class">1-11 классы</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="olimp_desc">
+                                        <div class="olimp_desc_line">
+                                            <span class="description_criterion">Начало олимпиады:</span>
+                                            <span class="information_about_the_olimp">{{ p.start }}</span>
+                                        </div>
+                                        <div class="olimp_desc_line">
+                                            <span class="description_criterion">Этап олимпиады:</span>
+                                            <span class="information_about_the_olimp">{{ p.stage }}</span>
+                                        </div>
+                                    </div>
+                                    {% if p.rsoch is False %}
+                                        <div class="classification_of_the_olympiad">
+                                            Олимпиада <span
+                                                class="classificaiton_olimp_selection">НЕ входит в РСОШ</span>
+                                        </div>
+                                    {% else %}
+                                        <div class="classification_of_the_olympiad">
+                                            Олимпиада <span class="classificaiton_olimp_selection">входит в РСОШ</span>
+                                        </div>
+                                    {% endif %}
+                                    <div class="olimp_card_button_cont">
+                                        <form action="{{ p.schedule }}" target="_blank">
+                                            <button>Посмотреть расписание</button>
+                                        </form>
+                                        <form action="{{ p.site }}" target="_blank">
+                                            <button>Перейти на сайт олимпиады</button>
+                                        </form>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if page_obj.has_other_pages %}
+                    <nav class="list-pages">
+                        <ul>
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}">
+                                    <li class="page-num">
+                                        &lt;
+                                    </li>
+                                </a>
+                            {% endif %}
+
+                            {% for p in paginator.page_range %}
+                                {% if page_obj.number == p %}
+                                    <li class="page-num page-num-selected">{{ p }}</li>
+                                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                                    <a href="?page={{ p }}">
+                                        <li class="page-num">
+                                            {{ p }}
+                                        </li>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">
+                                    <li class="page-num">
+                                        &gt;
+                                    </li>
+                                </a>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </section>
+    </form>
+{% else %}
+    {% if text_for_search.strip == '' %}
+        <div class="attention_block">
+            <div class="attention_title">
+                Небольшая ошибочка! Из-за чего она может произойти?
+            </div>
+            <div class="null_olympiads">
+                У Olympic есть два предположения из-за чего нет никаких ближайших олимпиад:<br>
+                <br>
+                1) В данный момент вообще нет ближайших олимпиад, что ОЧЕНЬ странно.<br>
+                2) Происходит обновление ближайших олимпиад в нашей Базе Данных - это займет не более 5-ти минут.<br>
+                <br>
+                Возвращайся к Olympic чуть позже и проверь, возможно, ближайшие олимпиады в нашей Базе данных уже
+                обновились.
+            </div>
+        </div>
+        <br>
+        <br>
+    {% else %}
+        <div class="attention_block">
+            <div class="attention_title">
+                По вашему запросу ничего не найдено! Проверьте правильность ввода.
+            </div>
+            <div class="null_olympiads">
+                Если Вы уверены, что ввели все верно, у Olympic есть два предположения из-за чего нет олимпиад по вашему
+                запросу:<br>
+                <br>
+                1) В данный момент нет ближайших олимпиад по искомому Вами предмету.<br>
+                2) Происходит обновление ближайших олимпиад в нашей Базе Данных - это займет не более 5-ти минут.<br>
+                <br>
+                Возвращайся к Olympic чуть позже и проверь, возможно, ближайшие олимпиады в нашей Базе данных уже
+                обновились.
+            </div>
+        </div>
+        <br>
+        <br>
+    {% endif %}
+{% endif %}
+{% include 'olympic/base/footer.html' %}
+<script src="{% static 'olympic/js/code.jquery.com_jquery-3.7.0.js' %}"></script>
+<script src="{% static 'olympic/js/script.js' %}"></script>
+</body>
+</html>

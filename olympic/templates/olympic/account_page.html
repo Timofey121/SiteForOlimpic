@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" href="../../static/olympic/images/favicon.ico" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&family=Open+Sans:wght@400;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'olympic/css/deafult.css' %}">
+    <link rel="stylesheet" href="{% static 'olympic/css/account_page.css' %}">
+</head>
+<body>
+{% include 'olympic/base/header.html' %}
+<section class="credentials">
+    <div class="container">
+        <div class="credentials_container">
+            <div class="account_inf_title">
+                Аккаунт
+            </div>
+            <div class="account_inf_cont">
+                <svg width="800px" height="800px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <g id="user-circle-2" transform="translate(-2 -2)">
+                        <path id="secondary" fill="#2ca9bc"
+                              d="M12,3A9,9,0,0,0,5.55,18.27a7,7,0,0,1,4.28-3.92h0a4,4,0,1,1,4.34,0h0a7,7,0,0,1,4.28,3.92A9,9,0,0,0,12,3Z"/>
+                        <path id="primary"
+                              d="M16,11a4,4,0,1,1-4-4A4,4,0,0,1,16,11Zm-1.83,3.35a3.95,3.95,0,0,1-4.34,0,7,7,0,0,0-4.28,3.92,9,9,0,0,0,12.81.09l.09-.09a7,7,0,0,0-4.28-3.92ZM21,12h0a9,9,0,0,0-9-9h0a9,9,0,0,0-9,9H3a9,9,0,0,0,9,9h0a9,9,0,0,0,9-9Z"
+                              fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"/>
+                    </g>
+                </svg>
+                <span class="username_on_page">
+                        {{ request.user.username }}
+                    </span>
+            </div>
+            <div class="name_of_category">
+                Учетные данные и доступ
+            </div>
+            <div class="password_cont credentials_cont">
+                <div class="password_title">
+                    Пароль
+                </div>
+                <span class="credentials_subtitle">
+                        Для доступа в Учетную запись
+                    </span>
+                <div class="link_change_password">
+                    <a href="{% url 'password_reset' %}">Изменить пароль</a>
+                </div>
+            </div>
+            <div class="email_cont credentials_cont">
+                <div class="password_title">
+                    Электронная почта
+                </div>
+                <div class="email_choose_cont">
+                    <div class="email_container">
+                            <span class="password_title email_title">
+                                Административные Email
+                            </span>
+                        <span class="credentials_subtitle">
+                                Все уведомления об олимпиадах
+                            </span>
+                        <div class="credentials_line"></div>
+                        <div class="current_email_inner">
+                            <div class="for_svg_adres_and_choose">
+                                <div class="email_inner_cont">
+                                    <svg width="800px" height="800px" viewBox="0 0 48 48" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+                                        <path d="M24 4L29.2533 7.83204L35.7557 7.81966L37.7533 14.0077L43.0211 17.8197L41 24L43.0211 30.1803L37.7533 33.9923L35.7557 40.1803L29.2533 40.168L24 44L18.7467 40.168L12.2443 40.1803L10.2467 33.9923L4.97887 30.1803L7 24L4.97887 17.8197L10.2467 14.0077L12.2443 7.81966L18.7467 7.83204L24 4Z"
+                                              fill="#2F88FF" stroke="#000000" stroke-width="4" stroke-linecap="round"
+                                              stroke-linejoin="round"/>
+                                        <path d="M17 24L22 29L32 19" stroke="white" stroke-width="4"
+                                              stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span class="email_adres">
+                                            {{ email }}
+                                        </span>
+                                </div>
+                                <div class="link_change_password change_pass_mobile">
+                                    <a href="{% url 'change_email' %}">Изменить почту</a>
+                                </div>
+                            </div>
+                            <div class="credentials_line"></div>
+                            <div class="link_change_password link_change_password_desk">
+                                <a href="{% url 'change_email' %}">Изменить почту</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'olympic/base/footer.html' %}
+<script src="{% static 'olympic/js/code.jquery.com_jquery-3.7.0.js' %}"></script>
+<script src="{% static 'olympic/js/script.js' %}"></script>
+</body>
+</html>
