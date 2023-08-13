@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'olympic.apps.OlympicConfig',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -163,3 +164,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_ENABLE_UTC = False
+CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers: DatabaseScheduler'
