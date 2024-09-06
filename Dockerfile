@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /usr/src/app
 
-COPY ./req.txt /usr/src/req.txt
+COPY requirements.txt /usr/src/req.txt
 
 # XVFB
 RUN apt-get update && apt-get install -y xvfb
@@ -23,7 +23,7 @@ RUN LATEST=`wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEA
     mv chromedriver /usr/local/bin/
 
 RUN pip install --upgrade pip
-RUN pip install -r /usr/src/req.txt
+RUN pip install -r /usr/src/requirements.txt
 
 COPY . .
 

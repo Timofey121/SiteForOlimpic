@@ -21,17 +21,17 @@ from environs import Env
 BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.isfile('.env.dev'):
     load_dotenv(os.path.join(BASE_DIR, '.env.dev'))
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
-    SECURE_SSL_REDIRECT = False
+    # SESSION_COOKIE_SECURE = False
+    # CSRF_COOKIE_SECURE = False
+    # SECURE_SSL_REDIRECT = False
 else:
     load_dotenv(os.path.join(BASE_DIR, '.env.prod'))
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    CORS_ORIGIN_ALLOW_ALL = True
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 340505040
-    SECURE_SSL_REDIRECT = True
+    # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    # CORS_ORIGIN_ALLOW_ALL = True
+    # CSRF_COOKIE_SECURE = True
+    # SESSION_COOKIE_SECURE = True
+    # SECURE_HSTS_SECONDS = 340505040
+    # SECURE_SSL_REDIRECT = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -91,23 +91,23 @@ WSGI_APPLICATION = 'SiteForOlimpic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 #
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+#         "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+#         "USER": os.environ.get("SQL_USER", "user"),
+#         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+#         "HOST": os.environ.get("SQL_HOST", "localhost"),
+#         "PORT": os.environ.get("SQL_PORT", "5432"),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
